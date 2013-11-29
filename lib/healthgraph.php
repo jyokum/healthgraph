@@ -22,6 +22,29 @@ class Client {
     return $this;
   }
 
+  public function getAuthorizationButton($client_id, $redirect_url, $text = 'connect', $color = 'blue', $caption = 'white', $size = 200, $url = 'https://runkeeper.com/apps/authorize') {
+    $url = $this->getAuthorizationLink($client_id, $redirect_url, $url);
+    $text = (in_array($text, array('connect', 'login'))) ? $text : 'connect';
+    $color = (in_array($color, array('blue', 'grey', 'black'))) ? $color : 'blue';
+    $caption = (in_array($caption, array('white', 'black'))) ? $caption : 'white';
+    switch ($size) {
+      case '300':
+        $size = '300x57';
+        break;
+
+      case '600':
+        $size = '600x114';
+        break;
+
+      default:
+        $size = '200x38';
+        break;
+    }
+    $image = "http://static1.runkeeper.com/images/assets/$text-$color-$caption-$size.png";
+    $link = "<a href='$url'><img src='$image' /></a>";
+    return $link;
+  }
+
   public function getAuthorizationLink($client_id, $redirect_url, $url = 'https://runkeeper.com/apps/authorize') {
     $data = array(
       'client_id' => $client_id,
@@ -40,7 +63,7 @@ class Client {
       'redirect_uri' => $redirect_url,
     );
     $result = $this->request($url, NULL, $params, 'POST');
-    return $result;
+    return ($result['success']) ? $result['data'] : FALSE;
   }
 
   public function deauthorize($access_token, $url = 'https://runkeeper.com/apps/de-authorize') {
@@ -48,7 +71,7 @@ class Client {
       'access_token' => $access_token,
     );
     $result = $this->request($url, NULL, $params, 'POST');
-    return $result;
+    return ($result['success']) ? $result['data'] : FALSE;
   }
 
   public function request($uri, $accept = 'application/*', $data = array(), $type = 'GET') {
@@ -92,24 +115,28 @@ class Client {
     curl_setopt_array($ch, $options);
     $json = curl_exec($ch);
     $info = curl_getinfo($ch);
+    $info['data'] = $json;
     // @todo better error checking on response
     if (curl_errno($ch)) {
+      $info['success'] = FALSE;
       $return = FALSE;
     }
     else {
+      $info['data'] = json_decode($json);
       switch ($info['http_code']) {
         case '200':
-          $return = json_decode($json);
+          $info['success'] = TRUE;
           break;
 
         default:
+          $info['success'] = FALSE;
           $return = FALSE;
           break;
       }
     }
     curl_close($ch);
 
-    return $return;
+    return $info;
   }
 
 }
@@ -122,6 +149,12 @@ abstract class Feed {
   public $items;
   public $previous;
   public $next;
+
+  protected function __construct(&$client, $uri, $type) {
+    $this->client = & $client;
+    $response = $this->client->request($uri, $type);
+    $this->defaults($response['data']);
+  }
 
   protected function defaults($data) {
     $this->size = (isset($data->size)) ? $data->size : 0;
@@ -165,21 +198,24 @@ class User {
   }
 
   public function get() {
-    $data = $this->client->request($this->uri->user, self::TYPE);
-    $this->userID = $data->userID;
-    $this->uri->profile = $data->profile;
-    $this->uri->settings = $data->settings;
-    $this->uri->fitness_activities = $data->fitness_activities;
-    $this->uri->strength_training_activities = $data->strength_training_activities;
-    $this->uri->background_activities = $data->background_activities;
-    $this->uri->sleep = $data->sleep;
-    $this->uri->nutrition = $data->nutrition;
-    $this->uri->weight = $data->weight;
-    $this->uri->general_measurements = $data->general_measurements;
-    $this->uri->diabetes = $data->diabetes;
-    $this->uri->records = $data->records;
-    $this->uri->team = $data->team;
-    $this->uri->change_log = $data->change_log;
+    $response = $this->client->request($this->uri->user, self::TYPE);
+    if ($response['success']) {
+      $data = $response['data'];
+      $this->userID = $data->userID;
+      $this->uri->profile = $data->profile;
+      $this->uri->settings = $data->settings;
+      $this->uri->fitness_activities = $data->fitness_activities;
+      $this->uri->strength_training_activities = $data->strength_training_activities;
+      $this->uri->background_activities = $data->background_activities;
+      $this->uri->sleep = $data->sleep;
+      $this->uri->nutrition = $data->nutrition;
+      $this->uri->weight = $data->weight;
+      $this->uri->general_measurements = $data->general_measurements;
+      $this->uri->diabetes = $data->diabetes;
+      $this->uri->records = $data->records;
+      $this->uri->team = $data->team;
+      $this->uri->change_log = $data->change_log;
+    }
   }
 
   public function profile($refresh = FALSE) {
@@ -296,15 +332,15 @@ class Profile {
   public function __construct(&$client, $uri) {
     $this->uri = $uri;
     $this->client = & $client;
-    $data = $this->client->request($this->uri, self::TYPE);
-    foreach ($data as $key => $value) {
+    $response = $this->client->request($this->uri, self::TYPE);
+    foreach ($response['data'] as $key => $value) {
       $this->$key = $value;
     }
   }
 
   public function update($values) {
-    $data = $this->client->request($this->uri, self::TYPE, $values, 'PUT');
-    foreach ($data as $key => $value) {
+    $response = $this->client->request($this->uri, self::TYPE, $values, 'PUT');
+    foreach ($response['data'] as $key => $value) {
       $this->$key = $value;
     }
   }
@@ -327,15 +363,15 @@ class Settings {
 
   public function __construct(&$client, $uri) {
     $this->client = & $client;
-    $data = $this->client->request($uri, self::TYPE);
-    foreach ($data as $key => $value) {
+    $response = $this->client->request($uri, self::TYPE);
+    foreach ($response['data'] as $key => $value) {
       $this->$key = $value;
     }
   }
 
   public function update($data) {
-    $data = $this->client->request($this->uri, self::TYPE, $data, 'PUT');
-    foreach ($data as $key => $value) {
+    $response = $this->client->request($this->uri, self::TYPE, $data, 'PUT');
+    foreach ($response['data'] as $key => $value) {
       $this->$key = $value;
     }
   }
@@ -347,9 +383,7 @@ class FitnessActivityFeed extends \HealthGraph\Feed {
   const TYPE = 'application/vnd.com.runkeeper.FitnessActivityFeed+json';
 
   public function __construct(&$client, $uri) {
-    $this->client = & $client;
-    $data = $this->client->request($uri, self::TYPE);
-    $this->defaults($data);
+    parent::__construct($client, $uri, self::TYPE);
     foreach ($this->items as &$item) {
       $item->start_time = strtotime($item->start_time);
       $item->total_calories = (isset($item->total_calories)) ? $item->total_calories : NULL;
@@ -363,9 +397,7 @@ class StrengthTrainingActivityFeed extends \HealthGraph\Feed {
   const TYPE = 'application/vnd.com.runkeeper.StrengthTrainingActivityFeed+json';
 
   public function __construct(&$client, $uri) {
-    $this->client = & $client;
-    $data = $this->client->request($uri, self::TYPE);
-    $this->defaults($data);
+    parent::__construct($client, $uri, self::TYPE);
   }
 
 }
@@ -375,9 +407,12 @@ class BackgroundActivitySetFeed extends \HealthGraph\Feed {
   const TYPE = 'application/vnd.com.runkeeper.BackgroundActivitySetFeed+json';
 
   public function __construct(&$client, $uri) {
-    $this->client = & $client;
-    $data = $this->client->request($uri, self::TYPE);
-    $this->defaults($data);
+    parent::__construct($client, $uri, self::TYPE);
+    foreach ($this->items as &$item) {
+      $item->timestamp = strtotime($item->timestamp);
+      $item->calories_burned = (isset($item->calories_burned)) ? $item->calories_burned : NULL;
+      $item->steps = (isset($item->steps)) ? $item->steps : NULL;
+    }
   }
 
 }
@@ -387,9 +422,7 @@ class SleepSetFeed extends \HealthGraph\Feed {
   const TYPE = 'application/vnd.com.runkeeper.SleepSetFeed+json';
 
   public function __construct(&$client, $uri) {
-    $this->client = & $client;
-    $data = $this->client->request($uri, self::TYPE);
-    $this->defaults($data);
+    parent::__construct($client, $uri, self::TYPE);
     foreach ($this->items as &$item) {
       $item->timestamp = strtotime($item->timestamp);
       $item->total_sleep = (isset($item->total_sleep)) ? $item->total_sleep : NULL;
@@ -408,9 +441,7 @@ class NutritionSetFeed extends \HealthGraph\Feed {
   const TYPE = 'application/vnd.com.runkeeper.NutritionSetFeed+json';
 
   public function __construct(&$client, $uri) {
-    $this->client = & $client;
-    $data = $this->client->request($uri, self::TYPE);
-    $this->defaults($data);
+    parent::__construct($client, $uri, self::TYPE);
   }
 
 }
@@ -420,9 +451,15 @@ class WeightSetFeed extends \HealthGraph\Feed {
   const TYPE = 'application/vnd.com.runkeeper.WeightSetFeed+json';
 
   public function __construct(&$client, $uri) {
-    $this->client = & $client;
-    $data = $this->client->request($uri, self::TYPE);
-    $this->defaults($data);
+    parent::__construct($client, $uri, self::TYPE);
+    foreach ($this->items as &$item) {
+      $item->timestamp = strtotime($item->timestamp);
+      $item->weight = (isset($item->weight)) ? $item->weight : NULL;
+      $item->free_mass = (isset($item->free_mass)) ? $item->free_mass : NULL;
+      $item->fat_percent = (isset($item->fat_percent)) ? $item->fat_percent : NULL;
+      $item->mass_weight = (isset($item->mass_weight)) ? $item->mass_weight : NULL;
+      $item->bmi = (isset($item->bmi)) ? $item->bmi : NULL;
+    }
   }
 
 }
@@ -432,9 +469,7 @@ class GeneralMeasurementSetFeed extends \HealthGraph\Feed {
   const TYPE = 'application/vnd.com.runkeeper.GeneralMeasurementSetFeed+json';
 
   public function __construct(&$client, $uri) {
-    $this->client = & $client;
-    $data = $this->client->request($uri, self::TYPE);
-    $this->defaults($data);
+    parent::__construct($client, $uri, self::TYPE);
   }
 
 }
@@ -443,20 +478,32 @@ class DiabetesMeasurementSetFeed extends \HealthGraph\Feed {
 
   const TYPE = 'application/vnd.com.runkeeper.DiabetesMeasurementSetFeed+json';
 
-  public function __construct($data) {
-    $this->defaults($data);
+  public function __construct(&$client, $uri) {
+    parent::__construct($client, $uri, self::TYPE);
   }
 
 }
 
-class Records extends \HealthGraph\Feed {
+class Records {
 
   const TYPE = 'application/vnd.com.runkeeper.Records+json';
 
-  public function __construct($data) {
-    foreach ($data as $key => $value) {
-      $this->$key = $value;
+  private $items;
+
+  public function __construct(&$client, $uri) {
+    $this->client = & $client;
+    $response = $this->client->request($uri, self::TYPE);
+    if ($response['success']) {
+      foreach ($response['data'] as $value) {
+        foreach ($value->stats as $stat) {
+          $this->items[$value->activity_type][$stat->stat_type] = $stat->value;
+        }
+      }
     }
+  }
+
+  public function items() {
+    return $this->items;
   }
 
 }
@@ -465,24 +512,25 @@ class TeamFeed extends \HealthGraph\Feed {
 
   const TYPE = 'application/vnd.com.runkeeper.TeamFeed+json';
 
-  public function __construct($data) {
-    foreach ($data as $key => $value) {
-      $this->$key = $value;
-    }
+  public function __construct(&$client, $uri) {
+    parent::__construct($client, $uri, self::TYPE);
   }
 
 }
 
-class ChangeLog extends \HealthGraph\Feed {
+class ChangeLog {
 
   const TYPE = 'application/vnd.com.runkeeper.ChangeLog+json';
 
-  public function __construct($data) {
-    foreach ($data as $key => $value) {
-      $this->$key = $value;
+  public function __construct(&$client, $uri) {
+    $this->client = & $client;
+    $response = $this->client->request($uri, self::TYPE);
+    if ($response['success']) {
+      foreach ($response['data'] as $key => $value) {
+        $this->$key = $value;
+      }
     }
   }
 
 }
-
 ?>
