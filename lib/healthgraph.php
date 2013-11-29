@@ -144,7 +144,7 @@ class Client {
 abstract class Feed {
 
   private $uri;
-  private $client;
+  protected $client;
   public $size;
   public $items;
   public $previous;
@@ -177,6 +177,11 @@ abstract class Feed {
 
   public function size() {
     return $this->size;
+  }
+
+  public function getDetail($uri, $type) {
+    $result = $this->client->request($uri, $type);
+    return ($result['success']) ? $result['data'] : FALSE;
   }
 
 }
@@ -390,6 +395,16 @@ class FitnessActivityFeed extends \HealthGraph\Feed {
     }
   }
 
+  public function getDetail($uri, $type = 'application/vnd.com.runkeeper.FitnessActivity+json') {
+    return parent::getDetail($uri, $type);
+  }
+
+  public function getSummary($uri) {
+    $type = 'application/vnd.com.runkeeper.FitnessActivitySummary+json';
+    $result = $this->client->request($uri, $type);
+    return $result['data'];
+  }
+
 }
 
 class StrengthTrainingActivityFeed extends \HealthGraph\Feed {
@@ -398,6 +413,10 @@ class StrengthTrainingActivityFeed extends \HealthGraph\Feed {
 
   public function __construct(&$client, $uri) {
     parent::__construct($client, $uri, self::TYPE);
+  }
+
+  public function getDetail($uri, $type = 'application/vnd.com.runkeeper.StrengthTrainingActivity+json') {
+    return parent::getDetail($uri, $type);
   }
 
 }
@@ -413,6 +432,10 @@ class BackgroundActivitySetFeed extends \HealthGraph\Feed {
       $item->calories_burned = (isset($item->calories_burned)) ? $item->calories_burned : NULL;
       $item->steps = (isset($item->steps)) ? $item->steps : NULL;
     }
+  }
+
+  public function getDetail($uri, $type = 'application/vnd.com.runkeeper.BackgroundActivitySet+json') {
+    return parent::getDetail($uri, $type);
   }
 
 }
@@ -434,6 +457,10 @@ class SleepSetFeed extends \HealthGraph\Feed {
     }
   }
 
+  public function getDetail($uri, $type = 'application/vnd.com.runkeeper.SleepSet+json') {
+    return parent::getDetail($uri, $type);
+  }
+
 }
 
 class NutritionSetFeed extends \HealthGraph\Feed {
@@ -442,6 +469,10 @@ class NutritionSetFeed extends \HealthGraph\Feed {
 
   public function __construct(&$client, $uri) {
     parent::__construct($client, $uri, self::TYPE);
+  }
+
+  public function getDetail($uri, $type = 'application/vnd.com.runkeeper.NutritionSet+json') {
+    return parent::getDetail($uri, $type);
   }
 
 }
@@ -462,6 +493,10 @@ class WeightSetFeed extends \HealthGraph\Feed {
     }
   }
 
+  public function getDetail($uri, $type = 'application/vnd.com.runkeeper.WeightSet+json') {
+    return parent::getDetail($uri, $type);
+  }
+
 }
 
 class GeneralMeasurementSetFeed extends \HealthGraph\Feed {
@@ -472,6 +507,10 @@ class GeneralMeasurementSetFeed extends \HealthGraph\Feed {
     parent::__construct($client, $uri, self::TYPE);
   }
 
+  public function getDetail($uri, $type = 'application/vnd.com.runkeeper.GeneralMeasurementSet+json') {
+    return parent::getDetail($uri, $type);
+  }
+
 }
 
 class DiabetesMeasurementSetFeed extends \HealthGraph\Feed {
@@ -480,6 +519,10 @@ class DiabetesMeasurementSetFeed extends \HealthGraph\Feed {
 
   public function __construct(&$client, $uri) {
     parent::__construct($client, $uri, self::TYPE);
+  }
+
+  public function getDetail($uri, $type = 'application/vnd.com.runkeeper.DiabetesMeasurementSet+json') {
+    return parent::getDetail($uri, $type);
   }
 
 }
