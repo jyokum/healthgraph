@@ -1,8 +1,8 @@
 <?php
 
 session_start();
-require_once 'settings.php'; // contains info we don't want committed to repo
-require_once 'lib/healthgraph.php';
+$loader = require 'vendor/autoload.php';
+require 'settings.php'; // contains info we don't want committed to repo
 
 $auth_url = 'http://localhost/healthgraph/authorization.php';
 $home = 'http://localhost/healthgraph/';

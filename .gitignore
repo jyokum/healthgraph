@@ -1,1 +1,4 @@
-/settings.php
+settings.php
+composer.lock
+/tests/configuration.xml
+/vendor/

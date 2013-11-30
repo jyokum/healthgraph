@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-require_once 'lib/healthgraph.php';
+$loader = require 'vendor/autoload.php';;
 
 if (!isset($_SESSION['token'])) {
   header("Location: authorization.php");
@@ -9,9 +9,8 @@ if (!isset($_SESSION['token'])) {
 }
 else {
   echo "<a href='authorization.php?revoke'>Disconnect</a>";
-
   $hgu = new \HealthGraph\User($_SESSION['token']->access_token);
-//  $hgu->profile();
+  $hgu->profile();
 //  $hgu->settings();
 //  $hgu->fitness_activities();
 //  $hgu->strength_training_activities();
@@ -24,14 +23,8 @@ else {
 //  $hgu->records();
 //  $hgu->team();
 //  $hgu->change_log();
-  $items = $hgu->fitness_activities()->items();
-  var_dump($items);
-  $detail = $hgu->fitness_activities()->detail($items[0]->uri);
-  var_dump($detail);
-//  $summary = $hgu->fitness_activities()->summary($items[0]->uri);
-//  var_dump($summary);
-
+  $hgu->profile()->setAthleteType('Athlete');
+//  $items = $hgu->records()->items();
+//  var_dump($items);
   var_dump($hgu);
-//  $hgu->profile()->setAthleteType('Athlete');
 }
-?>
