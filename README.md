@@ -36,7 +36,7 @@ PHP class for interacting with the Health Graph API by RunKeeper
 
     require 'lib/healthgraph.php'
     $token = some_function_to_retrieve_the_token();
-    \HealthGraph\Authorization::deauthorize($_SESSION['token']->access_token);
+    \HealthGraph\Authorization::deauthorize($token->access_token);
 
 ### Retrieve data for a user
 

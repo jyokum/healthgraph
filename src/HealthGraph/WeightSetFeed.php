@@ -6,12 +6,8 @@ class WeightSetFeed extends \HealthGraph\Feed {
 
   const TYPE = 'application/vnd.com.runkeeper.WeightSetFeed+json';
 
-  public function __construct(&$client, $uri) {
-    parent::__construct($client, $uri);
-  }
-
   public function items() {
-    $this->getItems($this->uri, self::TYPE);
+    parent::items();
     foreach ($this->items as &$item) {
       $item->timestamp = strtotime($item->timestamp);
       $item->weight = (isset($item->weight)) ? $item->weight : NULL;

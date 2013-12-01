@@ -27,7 +27,7 @@ else {
   echo "<a href='authorization.php?revoke'>Disconnect</a>";
   $hgu = new \HealthGraph\User($token->access_token);
   $hgu->profile();
-  $hgu->settings();
+//  $hgu->settings();
 //  $hgu->fitness_activities();
 //  $hgu->strength_training_activities();
 //  $hgu->background_activities();
@@ -39,8 +39,17 @@ else {
 //  $hgu->records();
 //  $hgu->team();
 //  $hgu->change_log();
-//  $hgu->profile()->setAthleteType('Athlete');
-  $items = $hgu->weight()->items();
-  var_dump($items);
+  $hgu->profile()->setAthleteType('Athlete');
+//  $items = $hgu->fitness_activities()->items();
+//  var_dump($items);
   var_dump($hgu);
+//  $data = array(
+//    'share_fitness_activities' => 'Friends',
+//  );
+//  if($hgu->settings()->update($data)) {
+//      var_dump($hgu);
+//  }
+//  else {
+//    echo '<h3>fail</h3>';
+//  }
 }

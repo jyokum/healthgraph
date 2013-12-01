@@ -10,6 +10,7 @@ class Settings {
   private $client;
 
   public function __construct(&$client, $uri) {
+    $this->uri = $uri;
     $this->client = & $client;
     $response = $this->client->request($uri, self::TYPE);
     foreach ($response['data'] as $key => $value) {
@@ -19,8 +20,14 @@ class Settings {
 
   public function update($data) {
     $response = $this->client->request($this->uri, self::TYPE, $data, 'PUT');
-    foreach ($response['data'] as $key => $value) {
-      $this->$key = $value;
+    if ($response['success']) {
+      foreach ($response['data'] as $key => $value) {
+        $this->$key = $value;
+      }
+      return TRUE;
+    }
+    else {
+      return FALSE;
     }
   }
 

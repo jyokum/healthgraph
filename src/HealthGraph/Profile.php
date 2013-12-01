@@ -31,14 +31,20 @@ class Profile {
 
   public function update($values) {
     $response = $this->client->request($this->uri, self::TYPE, $values, 'PUT');
-    foreach ($response['data'] as $key => $value) {
-      $this->$key = $value;
+    if ($response['success']) {
+      foreach ($response['data'] as $key => $value) {
+        $this->$key = $value;
+      }
+      return TRUE;
+    }
+    else {
+      return FALSE;
     }
   }
 
   public function setAthleteType($value) {
     $data = array('athlete_type' => $value);
-    $this->update($data);
+    return $this->update($data);
   }
 
 }

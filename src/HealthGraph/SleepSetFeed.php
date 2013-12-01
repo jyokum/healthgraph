@@ -6,12 +6,8 @@ class SleepSetFeed extends \HealthGraph\Feed {
 
   const TYPE = 'application/vnd.com.runkeeper.SleepSetFeed+json';
 
-  public function __construct(&$client, $uri) {
-    parent::__construct($client, $uri);
-  }
-
   public function items() {
-    $this->getItems($this->uri, self::TYPE);
+    parent::items();
     foreach ($this->items as &$item) {
       $item->timestamp = strtotime($item->timestamp);
       $item->total_sleep = (isset($item->total_sleep)) ? $item->total_sleep : NULL;

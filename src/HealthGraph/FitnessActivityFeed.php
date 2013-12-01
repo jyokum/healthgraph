@@ -6,12 +6,8 @@ class FitnessActivityFeed extends \HealthGraph\Feed {
 
   const TYPE = 'application/vnd.com.runkeeper.FitnessActivityFeed+json';
 
-  public function __construct(&$client, $uri) {
-    parent::__construct($client, $uri);
-  }
-
   public function items() {
-    $this->getItems($this->uri, self::TYPE);
+    parent::items();
     foreach ($this->items as &$item) {
       $item->start_time = strtotime($item->start_time);
       $item->total_calories = (isset($item->total_calories)) ? $item->total_calories : NULL;
