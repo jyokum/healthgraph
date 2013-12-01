@@ -27,6 +27,6 @@ else {
   if (isset($_REQUEST['error'])) {
     echo "<h2>You seem to have refused access</h2>";
   }
-  echo \HealthGraph\Authorization::getAuthorizationButton($client_id, $auth_url);
+  $button = \HealthGraph\Authorization::getAuthorizationButton($client_id, $auth_url);
+  echo $button['html'];
 }
-?>

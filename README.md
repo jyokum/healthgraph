@@ -16,8 +16,8 @@ PHP class for interacting with the Health Graph API by RunKeeper
     echo "<a href='$link'>Connect</a>";
     
     // Button
-    $button \HealthGraph\Client::getAuthorizationButton($client_id, $redirect_url);
-    echo $button;
+    $button = \HealthGraph\Client::getAuthorizationButton($client_id, $redirect_url);
+    echo $button['html'];
 
 ### Obtain a token from an auth code
 

@@ -34,20 +34,22 @@ class AuthorizationTest extends \PHPUnit_Framework_TestCase {
    */
   public function testGetAuthorizationButton() {
     $button = $this->object->getAuthorizationButton($GLOBALS['client_id'], 'redirect');
-    $this->assertContains("https://runkeeper.com/apps/authorize?client_id=" . $GLOBALS['client_id'] . "&response_type=code&redirect_uri=redirect", $button);
-    $this->assertContains("http://static1.runkeeper.com/images/assets/connect-blue-white-200x38.png", $button);
+    $this->assertEquals("https://runkeeper.com/apps/authorize?client_id=" . $GLOBALS['client_id'] . "&response_type=code&redirect_uri=redirect", $button['link']);
+    $this->assertEquals("http://static1.runkeeper.com/images/assets/connect-blue-white-200x38.png", $button['image']);
+    $this->assertContains('<a href', $button['html']);
+    $this->assertContains('<img', $button['html']);
     
     $button = $this->object->getAuthorizationButton($GLOBALS['client_id'], 'redirect', 'login', 'black', 'black', 300);
-    $this->assertContains("https://runkeeper.com/apps/authorize?client_id=" . $GLOBALS['client_id'] . "&response_type=code&redirect_uri=redirect", $button);
-    $this->assertContains("http://static1.runkeeper.com/images/assets/login-black-black-300x57.png", $button);
+    $this->assertEquals("https://runkeeper.com/apps/authorize?client_id=" . $GLOBALS['client_id'] . "&response_type=code&redirect_uri=redirect", $button['link']);
+    $this->assertEquals("http://static1.runkeeper.com/images/assets/login-black-black-300x57.png", $button['image']);
     
     $button = $this->object->getAuthorizationButton($GLOBALS['client_id'], 'redirect', 'login', 'grey', 'white', 600);
-    $this->assertContains("https://runkeeper.com/apps/authorize?client_id=" . $GLOBALS['client_id'] . "&response_type=code&redirect_uri=redirect", $button);
-    $this->assertContains("http://static1.runkeeper.com/images/assets/login-grey-white-600x114.png", $button);
+    $this->assertEquals("https://runkeeper.com/apps/authorize?client_id=" . $GLOBALS['client_id'] . "&response_type=code&redirect_uri=redirect", $button['link']);
+    $this->assertEquals("http://static1.runkeeper.com/images/assets/login-grey-white-600x114.png", $button['image']);
     
     $button = $this->object->getAuthorizationButton($GLOBALS['client_id'], 'redirect', 'foo', 'foo', 'foo', 'foo');
-    $this->assertContains("https://runkeeper.com/apps/authorize?client_id=" . $GLOBALS['client_id'] . "&response_type=code&redirect_uri=redirect", $button);
-    $this->assertContains("http://static1.runkeeper.com/images/assets/connect-blue-white-200x38.png", $button);
+    $this->assertEquals("https://runkeeper.com/apps/authorize?client_id=" . $GLOBALS['client_id'] . "&response_type=code&redirect_uri=redirect", $button['link']);
+    $this->assertEquals("http://static1.runkeeper.com/images/assets/connect-blue-white-200x38.png", $button['image']);
   }
 
   /**
@@ -55,10 +57,10 @@ class AuthorizationTest extends \PHPUnit_Framework_TestCase {
    */
   public function testGetAuthorizationLink() {
     $link = $this->object->getAuthorizationLink($GLOBALS['client_id'], 'redirect');
-    $this->assertContains("https://runkeeper.com/apps/authorize?client_id=" . $GLOBALS['client_id'] . "&response_type=code&redirect_uri=redirect", $link);
+    $this->assertEquals("https://runkeeper.com/apps/authorize?client_id=" . $GLOBALS['client_id'] . "&response_type=code&redirect_uri=redirect", $link);
     
     $link = $this->object->getAuthorizationLink('example', 'example', 'http://example.com');
-    $this->assertContains("http://example.com?client_id=example&response_type=code&redirect_uri=example", $link);
+    $this->assertEquals("http://example.com?client_id=example&response_type=code&redirect_uri=example", $link);
   }
 
   /**

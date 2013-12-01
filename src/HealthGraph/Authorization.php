@@ -4,6 +4,25 @@ namespace HealthGraph;
 
 class Authorization {
 
+  /**
+   * Generates a button for establishing a connection with a RunKeeper account.
+   *
+   * @param string $client_id
+   *   The unique identifier that your application received upon registration.
+   * @param string $redirect_url
+   *   The page on your site where the user will be redirected after accepting
+   *   or denying the access request.
+   * @param string $text
+   *   Type of button to generate. Default is "connect", valid options are: connect, login
+   * @param string $color
+   *   Color to use for button text. Default is "blue", valid options are: blue, grey, black
+   * @param string $caption
+   *   Color to use for button caption. Default is 200, valid options are: white, black
+   * @param int $size
+   *   Width of the button. Valid options are: 200, 300, 600
+   * @param string $url
+   * @return array
+   */
   public static function getAuthorizationButton($client_id, $redirect_url, $text = 'connect', $color = 'blue', $caption = 'white', $size = 200, $url = 'https://runkeeper.com/apps/authorize') {
     $data = array(
       'client_id' => $client_id,
@@ -28,10 +47,25 @@ class Authorization {
         break;
     }
     $image = "http://static1.runkeeper.com/images/assets/$text-$color-$caption-$size.png";
-    $link = "<a href='$link'><img src='$image' /></a>";
-    return $link;
+    $button = array(
+      'link' => $link,
+      'image' => $image,
+      'html' => "<a href='$link'><img src='$image' /></a>",
+    );
+    return $button;
   }
 
+  /**
+   * Generates a link for establishing a connection with a RunKeeper account.
+   *
+   * @param string $client_id
+   *   The unique identifier that your application received upon registration.
+   * @param string $redirect_url
+   *   The page on your site where the user will be redirected after accepting
+   *   or denying the access request.
+   * @param string $url
+   * @return string
+   */
   public static function getAuthorizationLink($client_id, $redirect_url, $url = 'https://runkeeper.com/apps/authorize') {
     $data = array(
       'client_id' => $client_id,
