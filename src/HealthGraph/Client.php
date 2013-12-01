@@ -61,24 +61,29 @@ class Client {
     }
 
     curl_setopt_array($ch, $options);
-    $json = curl_exec($ch);
+    $response = curl_exec($ch);
     $info = curl_getinfo($ch);
-    $info['data'] = $json;
+    $info['data'] = $response;
     // @todo better error checking on response
     if (curl_errno($ch)) {
       $info['success'] = FALSE;
-      $return = FALSE;
     }
     else {
-      $info['data'] = json_decode($json);
       switch ($info['http_code']) {
         case '200':
-          $info['success'] = TRUE;
+          $json = json_decode($response);
+          if (is_null($json) && strlen($response)) {
+            // There is likely an HTML formatted error in the response
+            $info['success'] = FALSE;
+          }
+          else {
+            $info['success'] = TRUE;
+            $info['data'] = $json;
+          }
           break;
 
         default:
           $info['success'] = FALSE;
-          $return = FALSE;
           break;
       }
     }

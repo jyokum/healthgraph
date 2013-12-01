@@ -56,7 +56,6 @@ class UserTest extends \PHPUnit_Framework_TestCase {
 
   /**
    * @covers HealthGraph\User::fitness_activities
-   * @todo   Implement testFitness_activities().
    */
   public function testFitness_activities() {
     $obj = $this->object->fitness_activities();
@@ -65,7 +64,6 @@ class UserTest extends \PHPUnit_Framework_TestCase {
 
   /**
    * @covers HealthGraph\User::strength_training_activities
-   * @todo   Implement testStrength_training_activities().
    */
   public function testStrength_training_activities() {
     $obj = $this->object->strength_training_activities();
@@ -74,7 +72,6 @@ class UserTest extends \PHPUnit_Framework_TestCase {
 
   /**
    * @covers HealthGraph\User::background_activities
-   * @todo   Implement testBackground_activities().
    */
   public function testBackground_activities() {
     $obj = $this->object->background_activities();
@@ -83,7 +80,6 @@ class UserTest extends \PHPUnit_Framework_TestCase {
 
   /**
    * @covers HealthGraph\User::sleep
-   * @todo   Implement testSleep().
    */
   public function testSleep() {
     $obj = $this->object->sleep();
@@ -92,7 +88,6 @@ class UserTest extends \PHPUnit_Framework_TestCase {
 
   /**
    * @covers HealthGraph\User::nutrition
-   * @todo   Implement testNutrition().
    */
   public function testNutrition() {
     $obj = $this->object->nutrition();
@@ -101,7 +96,6 @@ class UserTest extends \PHPUnit_Framework_TestCase {
 
   /**
    * @covers HealthGraph\User::weight
-   * @todo   Implement testWeight().
    */
   public function testWeight() {
     $obj = $this->object->weight();
@@ -110,7 +104,6 @@ class UserTest extends \PHPUnit_Framework_TestCase {
 
   /**
    * @covers HealthGraph\User::general_measurements
-   * @todo   Implement testGeneral_measurements().
    */
   public function testGeneral_measurements() {
     $obj = $this->object->general_measurements();
@@ -119,7 +112,6 @@ class UserTest extends \PHPUnit_Framework_TestCase {
 
   /**
    * @covers HealthGraph\User::diabetes
-   * @todo   Implement testDiabetes().
    */
   public function testDiabetes() {
     $obj = $this->object->diabetes();
@@ -128,7 +120,6 @@ class UserTest extends \PHPUnit_Framework_TestCase {
 
   /**
    * @covers HealthGraph\User::records
-   * @todo   Implement testRecords().
    */
   public function testRecords() {
     $obj = $this->object->records();
@@ -137,7 +128,6 @@ class UserTest extends \PHPUnit_Framework_TestCase {
 
   /**
    * @covers HealthGraph\User::team
-   * @todo   Implement testTeam().
    */
   public function testTeam() {
     $obj = $this->object->team();
@@ -146,7 +136,6 @@ class UserTest extends \PHPUnit_Framework_TestCase {
 
   /**
    * @covers HealthGraph\User::change_log
-   * @todo   Implement testChange_log().
    */
   public function testChange_log() {
     $obj = $this->object->change_log();

@@ -41,6 +41,10 @@ class AuthorizationTest extends \PHPUnit_Framework_TestCase {
     $this->assertContains("https://runkeeper.com/apps/authorize?client_id=" . $GLOBALS['client_id'] . "&response_type=code&redirect_uri=redirect", $button);
     $this->assertContains("http://static1.runkeeper.com/images/assets/login-black-black-300x57.png", $button);
     
+    $button = $this->object->getAuthorizationButton($GLOBALS['client_id'], 'redirect', 'login', 'grey', 'white', 600);
+    $this->assertContains("https://runkeeper.com/apps/authorize?client_id=" . $GLOBALS['client_id'] . "&response_type=code&redirect_uri=redirect", $button);
+    $this->assertContains("http://static1.runkeeper.com/images/assets/login-grey-white-600x114.png", $button);
+    
     $button = $this->object->getAuthorizationButton($GLOBALS['client_id'], 'redirect', 'foo', 'foo', 'foo', 'foo');
     $this->assertContains("https://runkeeper.com/apps/authorize?client_id=" . $GLOBALS['client_id'] . "&response_type=code&redirect_uri=redirect", $button);
     $this->assertContains("http://static1.runkeeper.com/images/assets/connect-blue-white-200x38.png", $button);
@@ -48,7 +52,6 @@ class AuthorizationTest extends \PHPUnit_Framework_TestCase {
 
   /**
    * @covers HealthGraph\Authorization::getAuthorizationLink
-   * @todo   Implement testGetAuthorizationLink().
    */
   public function testGetAuthorizationLink() {
     $link = $this->object->getAuthorizationLink($GLOBALS['client_id'], 'redirect');
@@ -60,24 +63,22 @@ class AuthorizationTest extends \PHPUnit_Framework_TestCase {
 
   /**
    * @covers HealthGraph\Authorization::authorize
-   * @todo   Implement testAuthorize().
+   * @todo   Implement better testAuthorize().
    */
   public function testAuthorize() {
-    // Remove the following lines when you implement this test.
-    $this->markTestIncomplete(
-      'This test has not been implemented yet.'
-    );
+    $authorization_code = 'xxxxxxxxxxxxxxxxxxx';
+    $token = $this->object->authorize($authorization_code, $GLOBALS['client_id'], $GLOBALS['client_secret'], $GLOBALS['redirect_url']);
+    $this->assertFalse($token);
   }
 
   /**
    * @covers HealthGraph\Authorization::deauthorize
-   * @todo   Implement testDeauthorize().
+   * @todo   Implement better testDeauthorize().
    */
   public function testDeauthorize() {
-    // Remove the following lines when you implement this test.
-    $this->markTestIncomplete(
-      'This test has not been implemented yet.'
-    );
+    $access_token = 'yyyyyyyyyyyyyyyyyyyyy';
+    $result = $this->object->deauthorize($access_token);
+    $this->assertFalse($result);
   }
 
 }

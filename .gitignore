@@ -1,4 +1,5 @@
 settings.php
 composer.lock
+/token.json
 /tests/configuration.xml
 /vendor/
