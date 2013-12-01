@@ -23,13 +23,8 @@ class Authorization {
    * @param string $url
    * @return array
    */
-  public static function getAuthorizationButton($client_id, $redirect_url, $text = 'connect', $color = 'blue', $caption = 'white', $size = 200, $url = 'https://runkeeper.com/apps/authorize') {
-    $data = array(
-      'client_id' => $client_id,
-      'response_type' => 'code',
-      'redirect_uri' => $redirect_url,
-    );
-    $link = $url . '?' . http_build_query($data);
+  public static function getAuthorizationButton($client_id, $redirect_url, $state = '', $text = 'connect', $color = 'blue', $caption = 'white', $size = 200, $url = 'https://runkeeper.com/apps/authorize') {
+    $link = self::getAuthorizationLink($client_id, $redirect_url, $state);
     $text = (in_array($text, array('connect', 'login'))) ? $text : 'connect';
     $color = (in_array($color, array('blue', 'grey', 'black'))) ? $color : 'blue';
     $caption = (in_array($caption, array('white', 'black'))) ? $caption : 'white';
@@ -66,11 +61,12 @@ class Authorization {
    * @param string $url
    * @return string
    */
-  public static function getAuthorizationLink($client_id, $redirect_url, $url = 'https://runkeeper.com/apps/authorize') {
+  public static function getAuthorizationLink($client_id, $redirect_url, $state = '', $url = 'https://runkeeper.com/apps/authorize') {
     $data = array(
       'client_id' => $client_id,
       'response_type' => 'code',
       'redirect_uri' => $redirect_url,
+      'state' => $state,
     );
     return $url . '?' . http_build_query($data);
   }
