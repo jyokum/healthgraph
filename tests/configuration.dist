@@ -5,11 +5,8 @@ Set use_local_token to TRUE and access_token to a valid token value
 
 <phpunit bootstrap="../vendor/autoload.php" colors="false">
   <php>
-    <var name="client_id" value="xxxxxxxxxxxxxxxxxx" />
-    <var name="client_secret" value="xxxxxxxxxxxxxxxxxx" />
+    <var name="client_id" value="" />
+    <var name="client_secret" value="" />
     <var name="redirect_url" value="http://example.com" />
-    <var name="use_local_token" value="TRUE" />
-    <var name="access_token" value="xxxxxxxxxxxxxxxxxx" />
-    <var name="token_type" value="Bearer" />
   </php>
 </phpunit>

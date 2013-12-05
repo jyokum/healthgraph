@@ -68,7 +68,7 @@ class Authorization {
       'redirect_uri' => $redirect_url,
       'state' => $state,
     );
-    return $url . '?' . http_build_query($data);
+    return (string) \Guzzle\Http\Url::factory($url)->setQuery($data);
   }
 
   public static function authorize($authorization_code, $client_id, $client_secret, $redirect_url, $url = 'https://runkeeper.com/apps/token') {
@@ -79,18 +79,30 @@ class Authorization {
       'client_secret' => $client_secret,
       'redirect_uri' => $redirect_url,
     );
-    $client = new \HealthGraph\Client();
-    $result = $client->request($url, NULL, $params, 'POST');
-    return ($result['success']) ? $result['data'] : FALSE;
+    $client = new \Guzzle\Service\Client();
+    try {
+      $response = $client->post($url, NULL, $params)->send();
+      $result = $response->json();
+    }
+    catch (\Guzzle\Http\Exception\BadResponseException $e) {
+      // Denied
+      $result = FALSE;
+    }
+    catch (\Guzzle\Common\Exception\RuntimeException $e) {
+      // Something blew up
+      $result = FALSE;
+    }
+
+    return $result;
   }
 
   public static function deauthorize($access_token, $url = 'https://runkeeper.com/apps/de-authorize') {
     $params = array(
       'access_token' => $access_token,
     );
-    $client = new \HealthGraph\Client();
-    $result = $client->request($url, NULL, $params, 'POST');
-    return ($result['success']) ? $result['data'] : FALSE;
+    $client = new \Guzzle\Service\Client();
+    $response = $client->post($url, NULL, $params)->send();
+    return ($response->getStatusCode() == 204) ? TRUE : FALSE;
   }
 
 }

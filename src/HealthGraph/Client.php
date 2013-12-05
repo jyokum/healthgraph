@@ -2,94 +2,32 @@
 
 namespace HealthGraph;
 
-class Client {
+use Guzzle\Common\Collection;
+use Guzzle\Service\Description\ServiceDescription;
 
-  protected $api_base_url;
-  private $token;
+class Client extends \Guzzle\Service\Client {
 
-  public function __construct($api_base_url = 'https://api.runkeeper.com') {
-    $this->api_base_url = $api_base_url;
-  }
+  public static function factory($config = array()) {
+    // Provide a hash of default client configuration options
+    $default = array('base_url' => 'https://api.runkeeper.com');
 
-  public function getToken() {
-    return $this->token;
-  }
+    // The following values are required when creating the client
+    $required = array(
+      'base_url',
+      'access_token',
+      'token_type',
+    );
 
-  public function setToken($access_token, $token_type = 'Bearer') {
-    $this->token = new \stdClass();
-    $this->token->access_token = $access_token;
-    $this->token->token_type = $token_type;
-    return $this;
-  }
+    // Merge in default settings and validate the config
+    $config = Collection::fromConfig($config, $default, $required);
+    // Create a new HealthGraph client
+    $client = new self($config->get('base_url'), $config);
+    $client->setDefaultOption('headers/Authorization', $config->get('token_type') . ' ' . $config->get('access_token'));
+    $client->setDescription(ServiceDescription::factory('healthgraph.json'));
+    
+    $client->getUser();
 
-  public function request($uri, $accept = 'application/*', $data = array(), $type = 'GET') {
-    // is this an absolute URL or just a segment
-    if (filter_var($uri, FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED)) {
-      $url = $uri;
-    }
-    else {
-      $url = $this->api_base_url . $uri;
-    }
-    $ch = curl_init($url);
-
-    $options[CURLOPT_SSL_VERIFYPEER] = FALSE;
-    $options[CURLINFO_HEADER_OUT] = TRUE;
-    $options[CURLOPT_RETURNTRANSFER] = TRUE;
-
-    switch ($type) {
-      case 'GET':
-        $options[CURLOPT_HTTPHEADER][] = 'Authorization: ' . $this->token->token_type . ' ' . $this->token->access_token;
-        $options[CURLOPT_HTTPHEADER][] = 'Accept: ' . $accept;
-
-        break;
-
-      case 'POST':
-        $options[CURLOPT_POST] = TRUE;
-        $options[CURLOPT_POSTFIELDS] = $data;
-
-        break;
-
-      case 'PUT':
-        $options[CURLOPT_HTTPHEADER][] = 'Authorization: ' . $this->token->token_type . ' ' . $this->token->access_token;
-        $options[CURLOPT_HTTPHEADER][] = 'Content-Type: ' . $accept;
-        $options[CURLOPT_CUSTOMREQUEST] = 'PUT';
-        $options[CURLOPT_POSTFIELDS] = json_encode($data);
-        break;
-
-      default:
-        break;
-    }
-
-    curl_setopt_array($ch, $options);
-    $response = curl_exec($ch);
-    $info = curl_getinfo($ch);
-    $info['data'] = $response;
-    // @todo better error checking on response
-    if (curl_errno($ch)) {
-      $info['success'] = FALSE;
-    }
-    else {
-      switch ($info['http_code']) {
-        case '200':
-          $json = json_decode($response);
-          if (is_null($json) && strlen($response)) {
-            // There is likely an HTML formatted error in the response
-            $info['success'] = FALSE;
-          }
-          else {
-            $info['success'] = TRUE;
-            $info['data'] = $json;
-          }
-          break;
-
-        default:
-          $info['success'] = FALSE;
-          break;
-      }
-    }
-    curl_close($ch);
-
-    return $info;
+    return $client;
   }
 
 }

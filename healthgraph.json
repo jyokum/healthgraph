@@ -1,0 +1,40 @@
+{
+    "name": "HealthGraph",
+    "apiVersion": "1.0",
+    "baseUrl": "https://api.runkeeper.com",
+    "description": "Health Graph API client",
+    "operations": {
+        "GetProfile": {
+            "httpMethod": "GET",
+            "uri": "{+hg.profile}",
+            "summary": "Returns profile information for the given user.",
+            "responseClass": "GetGenericOutput"
+        },
+        "GetSettings": {
+            "httpMethod": "GET",
+            "uri": "{+hg.settings}",
+            "summary": "Returns settings for the given user.",
+            "responseClass": "GetGenericOutput"
+        },
+        "GetFitnessActivities": {
+            "httpMethod": "GET",
+            "uri": "{+hg.fitness_activities}",
+            "summary": "Returns fitness (cardio) activities for the given user.",
+            "responseClass": "GetGenericOutput"
+        },
+        "GetStrengthActivities": {
+            "httpMethod": "GET",
+            "uri": "{+hg.strength_activities}",
+            "summary": "Returns strength activities for the given user.",
+            "responseClass": "GetGenericOutput"
+        }
+    },
+    "models": {
+        "GetGenericOutput": {
+            "type": "object",
+            "additionalProperties": {
+                "location": "json"
+            }
+        }
+    }
+}
