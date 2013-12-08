@@ -1,0 +1,202 @@
+
+{
+    "name": "HealthGraph",
+    "apiVersion": "1.0",
+    "baseUrl": "https://api.runkeeper.com",
+    "description": "Health Graph API client",
+    "operations": {
+        "Profile": {
+            "httpMethod": "GET",
+            "uri": "{+hg.profile}",
+            "summary": "Returns profile information for the given user.",
+            "responseClass": "GenericOutput",
+            "parameters": {
+                "Content-Type":{
+                    "location": "header",
+                    "static": true,
+                    "default": "application/vnd.com.runkeeper.Profile+json"
+                }
+            }
+        },
+        "Settings": {
+            "httpMethod": "GET",
+            "uri": "{+hg.settings}",
+            "summary": "Returns settings for the given user.",
+            "responseClass": "GenericOutput",
+            "parameters": {
+                "Content-Type":{
+                    "location": "header",
+                    "static": true,
+                    "default": "application/vnd.com.runkeeper.Settings+json"
+                }
+            }
+        },
+        "FeedDefaults" : {
+            "httpMethod": "GET",
+            "responseClass": "GenericOutput",
+            "data": {
+                "iteratorClass": "FeedIterator"
+            },
+            "parameters": {
+                "pageSize": {
+                    "location": "query"
+                },
+                "noEarlierThan": {
+                    "location": "query"
+                },
+                "noLaterThan": {
+                    "location": "query"
+                },
+                "modifiedNoEarlierThan": {
+                    "location": "query"
+                },
+                "modifiedNoLaterThan": {
+                    "location": "query"
+                }
+
+            }
+        },
+        "FitnessActivityFeed": {
+            "extends": "FeedDefaults",
+            "uri": "{+hg.fitness_activities}",
+            "summary": "Returns fitness (cardio) activities for the given user.",
+            "parameters": {
+                "Content-Type":{
+                    "location": "header",
+                    "static": true,
+                    "default": "application/vnd.com.runkeeper.FitnessActivityFeed+json"
+                }
+            }
+        },
+        "StrengthTrainingActivityFeed": {
+            "extends": "FeedDefaults",
+            "uri": "{+hg.strength_training_activities}",
+            "summary": "Returns strength activities for the given user.",
+            "parameters": {
+                "Content-Type":{
+                    "location": "header",
+                    "static": true,
+                    "default": "application/vnd.com.runkeeper.FitnessActivityFeed+json"
+                }
+            }
+        },
+        "BackgroundActivitySetFeed": {
+            "extends": "FeedDefaults",
+            "uri": "{+hg.background_activities}",
+            "summary": "Returns background activities for the given user.",
+            "parameters": {
+                "Content-Type":{
+                    "location": "header",
+                    "static": true,
+                    "default": "application/vnd.com.runkeeper.BackgroundActivitySetFeed+json"
+                }
+            }
+        },
+        "SleepSetFeed": {
+            "extends": "FeedDefaults",
+            "uri": "{+hg.sleep}",
+            "summary": "Returns sleep activities for the given user.",
+            "parameters": {
+                "Content-Type":{
+                    "location": "header",
+                    "static": true,
+                    "default": "application/vnd.com.runkeeper.SleepSetFeed+json"
+                }
+            }
+        },
+        "NutritionSetFeed": {
+            "extends": "FeedDefaults",
+            "uri": "{+hg.nutrition}",
+            "summary": "Returns nutrition activities for the given user.",
+            "parameters": {
+                "Content-Type":{
+                    "location": "header",
+                    "static": true,
+                    "default": "application/vnd.com.runkeeper.NutritionSetFeed+json"
+                }
+            }
+        },
+        "WeightSetFeed": {
+            "extends": "FeedDefaults",
+            "uri": "{+hg.weight}",
+            "summary": "Returns weight activities for the given user.",
+            "parameters": {
+                "Content-Type":{
+                    "location": "header",
+                    "static": true,
+                    "default": "application/vnd.com.runkeeper.WeightSetFeed+json"
+                }
+            }
+        },
+        "GeneralMeasurementSetFeed": {
+            "extends": "FeedDefaults",
+            "uri": "{+hg.general_measurements}",
+            "summary": "Returns general measurement activities for the given user.",
+            "parameters": {
+                "Content-Type":{
+                    "location": "header",
+                    "static": true,
+                    "default": "application/vnd.com.runkeeper.GeneralMeasurementSetFeed+json"
+                }
+            }
+        },
+        "DiabetesMeasurementSetFeed": {
+            "extends": "FeedDefaults",
+            "uri": "{+hg.diabetes}",
+            "summary": "Returns diabetes activities for the given user.",
+            "parameters": {
+                "Content-Type":{
+                    "location": "header",
+                    "static": true,
+                    "default": "application/vnd.com.runkeeper.DiabetesMeasurementSetFeed+json"
+                }
+            }
+        },
+        "Records": {
+            "httpMethod": "GET",
+            "uri": "{+hg.records}",
+            "summary": "Returns records for the given user.",
+            "responseClass": "GenericOutput",
+            "parameters": {
+                "Content-Type":{
+                    "location": "header",
+                    "static": true,
+                    "default": "application/vnd.com.runkeeper.Records+json"
+                }
+            }
+        },
+        "TeamFeed": {
+            "extends": "FeedDefaults",
+            "uri": "{+hg.team}",
+            "summary": "Returns records for the given user.",
+            "parameters": {
+                "Content-Type":{
+                    "location": "header",
+                    "static": true,
+                    "default": "application/vnd.com.runkeeper.TeamFeed+json"
+                }
+            }
+        },
+        "ChangeLog": {
+            "httpMethod": "GET",
+            "uri": "{+hg.change_log}",
+            "summary": "Returns records for the given user.",
+            "responseClass": "GenericOutput",
+            "parameters": {
+                "Content-Type":{
+                    "location": "header",
+                    "static": true,
+                    "default": "application/vnd.com.runkeeper.ChangeLog+json"
+                }
+            }
+        }
+    },
+    "models": {
+        "GenericOutput": {
+            "type": "object",
+            "additionalProperties": {
+                "location": "json"
+            }
+        }
+    }
+}

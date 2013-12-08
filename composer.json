@@ -1,15 +1,19 @@
 {
     "name": "jyokum/healthgraph",
-    "description": "Health Graph API",
-    "minimum-stability": "dev",
+    "type": "library",
+    "description": "Health Graph",
+    "keywords": ["Guzzle"],
+    "authors": [
+        {
+            "name": "Jeff Yokum",
+            "email": "jyokum@gmail.com"
+        }
+    ],
     "require": {
-        "php": ">=5.3.0",
-        "lib-curl" : "*",
-        "guzzle/guzzle": "~3.7"
+        "php": ">=5.3.2",
+        "guzzle/guzzle": "*"
     },
     "autoload": {
-        "psr-0": {
-            "HealthGraph\\": "src/"
-        }
+        "psr-0": { "HealthGraph": "src/" }
     }
 }

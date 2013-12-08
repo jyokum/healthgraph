@@ -1,4 +1,5 @@
 composer.lock
-./index.php
+index.php
+phpunit.xml
 /tests/configuration.xml
 /vendor/

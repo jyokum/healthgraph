@@ -1,6 +1,6 @@
 <?php
 
-namespace HealthGraph\Model;
+namespace HealthGraph\Common\Iterator;
 
 use Guzzle\Service\Resource\ResourceIterator;
 
