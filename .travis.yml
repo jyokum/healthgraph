@@ -3,7 +3,7 @@ php:
   - 5.3
   - 5.4
 before_script:
-  - composer install --install-suggests
+  - composer install
   - cp phpunit.xml.dist phpunit.xml
   - ~/.nvm/nvm.sh run default vendor/guzzle/guzzle/tests/Guzzle/Tests/Http/server.js &
 script: phpunit
