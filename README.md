@@ -1,5 +1,4 @@
-[![Build Status](https://travis-ci.org/jyokum/healthgraph.png)](https://travis-ci.org/jyokum/healthgraph)
-
+[![Build Status](https://travis-ci.org/jyokum/healthgraph.png?branch=master)](https://travis-ci.org/jyokum/healthgraph)
 # Health Graph API
 
 Guzzle client for interacting with the Health Graph API by RunKeeper
@@ -86,8 +85,22 @@ $hgc = HealthGraphClient::factory(array(
 ));
 
 // get profile
-$hgc->profile();
+$hgc->GetProfile();
+
+// get settings
+$hgc->GetSettings();
 
 // get fitness activity list
 $activities = $hgc->FitnessActivityFeed()->getAll();
+```
+
+### Update profile
+
+```php
+$hgc = HealthGraphClient::factory(array(
+    'access_token' => $token['access_token'],
+    'token_type' => $token['token_type'],
+));
+$data = array('athlete_type' => 'Athlete');
+$hgc->UpdateProfile($data);
 ```

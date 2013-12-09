@@ -1,39 +1,165 @@
-
 {
     "name": "HealthGraph",
     "apiVersion": "1.0",
     "baseUrl": "https://api.runkeeper.com",
     "description": "Health Graph API client",
     "operations": {
-        "Profile": {
+        "GetProfile": {
             "httpMethod": "GET",
             "uri": "{+hg.profile}",
-            "summary": "Returns profile information for the given user.",
-            "responseClass": "GenericOutput",
+            "summary": "Returns profile information for the current user.",
+            "responseClass": "Profile",
             "parameters": {
-                "Content-Type":{
+                "Content-Type": {
                     "location": "header",
                     "static": true,
                     "default": "application/vnd.com.runkeeper.Profile+json"
                 }
             }
         },
-        "Settings": {
+        "UpdateProfile": {
+            "extends": "GetProfile",
+            "httpMethod": "PUT",
+            "summary": "Updates profile information for the current user and returns the updated profile.",
+            "parameters": {
+                "athlete_type": {
+                    "type": "string",
+                    "location": "json"
+                }
+            }
+        },
+        "GetSettings": {
             "httpMethod": "GET",
             "uri": "{+hg.settings}",
             "summary": "Returns settings for the given user.",
             "responseClass": "GenericOutput",
             "parameters": {
-                "Content-Type":{
+                "Content-Type": {
                     "location": "header",
                     "static": true,
                     "default": "application/vnd.com.runkeeper.Settings+json"
                 }
             }
         },
-        "FeedDefaults" : {
+        "UpdateSettings": {
+            "extends": "GetSettings",
+            "httpMethod": "PUT",
+            "summary": "Updates settings for the given user and returns the updated settings.",
+            "parameters": {
+                "share_fitness_activities": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "share_map": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "post_fitness_activity_facebook": {
+                    "location": "json",
+                    "type": "boolean"
+                },
+                "post_fitness_activity_twitter": {
+                    "location": "json",
+                    "type": "boolean"
+                },
+                "post_live_fitness_activity_facebook": {
+                    "location": "json",
+                    "type": "boolean"
+                },
+                "post_live_fitness_activity_twitter": {
+                    "location": "json",
+                    "type": "boolean"
+                },
+                "share_background_activities": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "post_background_activity_facebook": {
+                    "location": "json",
+                    "type": "boolean"
+                },
+                "post_background_activity_twitter": {
+                    "location": "json",
+                    "type": "boolean"
+                },
+                "share_sleep": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "post_sleep_facebook": {
+                    "location": "json",
+                    "type": "boolean"
+                },
+                "post_sleep_twitter": {
+                    "location": "json",
+                    "type": "boolean"
+                },
+                "share_nutrition": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "post_nutrition_facebook": {
+                    "location": "json",
+                    "type": "boolean"
+                },
+                "post_nutrition_twitter": {
+                    "location": "json",
+                    "type": "boolean"
+                },
+                "share_weight": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "post_weight_facebook": {
+                    "location": "json",
+                    "type": "boolean"
+                },
+                "post_weight_twitter": {
+                    "location": "json",
+                    "type": "boolean"
+                },
+                "share_general_measurements": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "post_general_measurements_facebook": {
+                    "location": "json",
+                    "type": "boolean"
+                },
+                "post_general_measurements_twitter": {
+                    "location": "json",
+                    "type": "boolean"
+                },
+                "share_diabetes": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "post_diabetes_facebook": {
+                    "location": "json",
+                    "type": "boolean"
+                },
+                "post_diabetes_twitter": {
+                    "location": "json",
+                    "type": "boolean"
+                },
+                "distance_units": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "weight_units": {
+                    "location": "json",
+                    "type": "string"
+                },
+                "first_day_of_week": {
+                    "location": "json",
+                    "type": "string"
+                }
+            }
+        },
+        "FeedDefaults": {
             "httpMethod": "GET",
-            "responseClass": "GenericOutput",
+            "responseClass": "FeedResponse",
+            "responseType": "model",
             "data": {
                 "iteratorClass": "FeedIterator"
             },
@@ -58,10 +184,11 @@
         },
         "FitnessActivityFeed": {
             "extends": "FeedDefaults",
+            "responseClass": "FitnessActivityFeedResponse",
             "uri": "{+hg.fitness_activities}",
             "summary": "Returns fitness (cardio) activities for the given user.",
             "parameters": {
-                "Content-Type":{
+                "Content-Type": {
                     "location": "header",
                     "static": true,
                     "default": "application/vnd.com.runkeeper.FitnessActivityFeed+json"
@@ -73,7 +200,7 @@
             "uri": "{+hg.strength_training_activities}",
             "summary": "Returns strength activities for the given user.",
             "parameters": {
-                "Content-Type":{
+                "Content-Type": {
                     "location": "header",
                     "static": true,
                     "default": "application/vnd.com.runkeeper.FitnessActivityFeed+json"
@@ -85,7 +212,7 @@
             "uri": "{+hg.background_activities}",
             "summary": "Returns background activities for the given user.",
             "parameters": {
-                "Content-Type":{
+                "Content-Type": {
                     "location": "header",
                     "static": true,
                     "default": "application/vnd.com.runkeeper.BackgroundActivitySetFeed+json"
@@ -94,10 +221,11 @@
         },
         "SleepSetFeed": {
             "extends": "FeedDefaults",
+            "responseClass": "SleepSetFeedResponse",
             "uri": "{+hg.sleep}",
             "summary": "Returns sleep activities for the given user.",
             "parameters": {
-                "Content-Type":{
+                "Content-Type": {
                     "location": "header",
                     "static": true,
                     "default": "application/vnd.com.runkeeper.SleepSetFeed+json"
@@ -109,7 +237,7 @@
             "uri": "{+hg.nutrition}",
             "summary": "Returns nutrition activities for the given user.",
             "parameters": {
-                "Content-Type":{
+                "Content-Type": {
                     "location": "header",
                     "static": true,
                     "default": "application/vnd.com.runkeeper.NutritionSetFeed+json"
@@ -121,7 +249,7 @@
             "uri": "{+hg.weight}",
             "summary": "Returns weight activities for the given user.",
             "parameters": {
-                "Content-Type":{
+                "Content-Type": {
                     "location": "header",
                     "static": true,
                     "default": "application/vnd.com.runkeeper.WeightSetFeed+json"
@@ -133,7 +261,7 @@
             "uri": "{+hg.general_measurements}",
             "summary": "Returns general measurement activities for the given user.",
             "parameters": {
-                "Content-Type":{
+                "Content-Type": {
                     "location": "header",
                     "static": true,
                     "default": "application/vnd.com.runkeeper.GeneralMeasurementSetFeed+json"
@@ -145,7 +273,7 @@
             "uri": "{+hg.diabetes}",
             "summary": "Returns diabetes activities for the given user.",
             "parameters": {
-                "Content-Type":{
+                "Content-Type": {
                     "location": "header",
                     "static": true,
                     "default": "application/vnd.com.runkeeper.DiabetesMeasurementSetFeed+json"
@@ -158,7 +286,7 @@
             "summary": "Returns records for the given user.",
             "responseClass": "GenericOutput",
             "parameters": {
-                "Content-Type":{
+                "Content-Type": {
                     "location": "header",
                     "static": true,
                     "default": "application/vnd.com.runkeeper.Records+json"
@@ -170,7 +298,7 @@
             "uri": "{+hg.team}",
             "summary": "Returns records for the given user.",
             "parameters": {
-                "Content-Type":{
+                "Content-Type": {
                     "location": "header",
                     "static": true,
                     "default": "application/vnd.com.runkeeper.TeamFeed+json"
@@ -183,7 +311,7 @@
             "summary": "Returns records for the given user.",
             "responseClass": "GenericOutput",
             "parameters": {
-                "Content-Type":{
+                "Content-Type": {
                     "location": "header",
                     "static": true,
                     "default": "application/vnd.com.runkeeper.ChangeLog+json"
@@ -196,6 +324,179 @@
             "type": "object",
             "additionalProperties": {
                 "location": "json"
+            }
+        },
+        "Profile": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "The user's full name (omitted if not yet specified)",
+                    "location": "json"
+                },
+                "location": {
+                    "type": "string",
+                    "description": "The user's geographical location (omitted if not yet specified)",
+                    "location": "json"
+                },
+                "athlete_type": {
+                    "type": "string",
+                    "description": "One of the following values: Athlete, Runner, Marathoner, Ultra Marathoner, Cyclist, Tri-Athlete, Walker, Hiker, Skier, Snowboarder, Skater, Swimmer, Rower (omitted if not yet specified)",
+                    "location": "json"
+                },
+                "gender": {
+                    "type": "string",
+                    "description": "One of the following values: M, F (omitted if not yet specified)",
+                    "location": "json"
+                },
+                "birthday": {
+                    "type": "string",
+                    "description": "The user's birthday (e.g., Sat, 1 Jan 2011 00:00:00) (omitted if not yet specified)",
+                    "location": "json"
+                },
+                "elite": {
+                    "type": "boolean",
+                    "description": "true if the user subscribes to RunKeeper Elite, false otherwise",
+                    "location": "json"
+                },
+                "profile": {
+                    "type": "string",
+                    "description": "The URL of the user's public, human-readable profile on the RunKeeper Web site",
+                    "location": "json"
+                },
+                "small_picture": {
+                    "type": "string",
+                    "description": "The URI of the small (50×50 pixels) version of the user's profile picture on the RunKeeper Web site (omitted if the user has no such picture)",
+                    "location": "json"
+                },
+                "normal_picture": {
+                    "type": "string",
+                    "description": "The URI of the small (100×100 pixels) version of the user's profile picture on the RunKeeper Web site (omitted if the user has no such picture)",
+                    "location": "json"
+                },
+                "medium_picture": {
+                    "type": "string",
+                    "description": "The URI of the small (200×600 pixels) version of the user's profile picture on the RunKeeper Web site (omitted if the user has no such picture)",
+                    "location": "json"
+                },
+                "large_picture": {
+                    "type": "string",
+                    "description": "The URI of the small (600×1800 pixels) version of the user's profile picture on the RunKeeper Web site (omitted if the user has no such picture)",
+                    "location": "json"
+                }
+            }
+        },
+        "FeedResponse": {
+            "type": "object",
+            "properties": {
+                "size": {
+                    "type": "integer",
+                    "location": "json"
+                },
+                "items": {
+                    "type": "array",
+                    "location": "json",
+                    "items": {
+                        "type": "object"
+                    }
+                },
+                "previous": {
+                    "type": "string",
+                    "location": "json"
+                },
+                "next": {
+                    "type": "string",
+                    "location": "json",
+                    "filters": "strtoupper"
+                }
+            }
+        },
+        "FitnessActivityFeedResponse": {
+            "type": "object",
+            "properties": {
+                "items": {
+                    "type": "array",
+                    "location": "json",
+                    "items": {
+                        "$ref": "FitnessActivityFeedItem"
+                    }
+                }
+            }
+        },
+        "FitnessActivityFeedItem": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "filters": "strtoupper"
+                },
+                "start_time": {
+                    "type": "string"
+                },
+                "total_distance": {
+                    "type": "number"
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "total_calories": {
+                    "type": "number"
+                },
+                "source": {
+                    "type": "string"
+                },
+                "entry_mode": {
+                    "type": "string"
+                },
+                "has_path": {
+                    "type": "boolean"
+                },
+                "uri": {
+                    "type": "string"
+                }
+            }
+        },
+        "SleepSetFeedResponse": {
+            "type": "object",
+            "properties": {
+                "items": {
+                    "type": "array",
+                    "location": "json",
+                    "items": {
+                        "$ref": "SleepSetFeedFeedItem"
+                    }
+                }
+            }
+        },
+        "SleepSetFeedFeedItem": {
+            "type": "object",
+            "properties": {
+                "uri": {
+                    "type": "string"
+                },
+                "timestamp": {
+                    "type": "string",
+                    "filters": "strtotime"
+                },
+                "total_sleep": {
+                    "type": "number"
+                },
+                "deep": {
+                    "type": "number"
+                },
+                "rem": {
+                    "type": "number"
+                },
+                "light": {
+                    "type": "number"
+                },
+                "awake": {
+                    "type": "number"
+                },
+                "times_woken": {
+                    "type": "number"
+                }
             }
         }
     }

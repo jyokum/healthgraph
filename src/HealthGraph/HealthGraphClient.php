@@ -9,6 +9,7 @@ use Guzzle\Service\Description\ServiceDescription;
 
 class HealthGraphClient extends Client
 {
+
     /**
      * Factory method to create a new HealthGraphClient
      *
@@ -22,7 +23,7 @@ class HealthGraphClient extends Client
     public static function factory($config = array())
     {
         $default = array('base_url' => 'https://api.runkeeper.com');
-        
+
         $required = array(
             'base_url',
             'access_token',
@@ -34,9 +35,9 @@ class HealthGraphClient extends Client
         $client->setConfig($config);
         $client->setDefaultOption('headers/Authorization', $config->get('token_type') . ' ' . $config->get('access_token'));
         $client->setDescription(ServiceDescription::factory(__DIR__ . DIRECTORY_SEPARATOR . 'client.json'));
-        
+
         $client->setDefaultOption("debug", true);
-        
+
         // Set the iterator resource factory based on the provided iterators config
         $clientClass = get_class();
         $prefix = substr($clientClass, 0, strrpos($clientClass, '\\'));
@@ -47,4 +48,5 @@ class HealthGraphClient extends Client
         $client->getUser();
         return $client;
     }
+
 }
