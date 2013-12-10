@@ -207,6 +207,45 @@
                 }
             }
         },
+        "GetFitnessActivity": {
+            "uri": "{+uri}",
+            "httpMethod": "GET",
+            "responseClass": "FitnessActivity",
+            "parameters": {
+                "uri": {
+                    "location": "uri",
+                    "type": "string",
+                    "required": true
+                },
+                "Content-Type": {
+                    "location": "header",
+                    "static": true,
+                    "default": "application/vnd.com.runkeeper.FitnessActivity+json"
+                }
+            }
+        },
+        "GetFitnessActivitySummary": {
+            "uri": "{+uri}",
+            "httpMethod": "GET",
+            "responseClass": "FitnessActivitySummary",
+            "parameters": {
+                "uri": {
+                    "location": "uri",
+                    "type": "string",
+                    "required": true
+                },
+                "Content-Type": {
+                    "location": "header",
+                    "static": true,
+                    "default": "application/vnd.com.runkeeper.FitnessActivitySummary+json"
+                },
+                "Accept": {
+                    "location": "header",
+                    "static": true,
+                    "default": "application/vnd.com.runkeeper.FitnessActivitySummary+json"
+                }
+            }
+        },
         "NewFitnessActivity": {
             "uri": "{+hg.fitness_activities}",
             "httpMethod": "POST",
@@ -551,6 +590,156 @@
                 }
             }
         },
+        "FitnessActivity": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "uri": {
+                    "type": "string",
+                    "location": "json"
+                },
+                "userID": {
+                    "type": "integer"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "secondary_type": {
+                    "type": "string"
+                },
+                "equipment": {
+                    "type": "string"
+                },
+                "start_time": {
+                    "type": "string"
+                },
+                "total_distance": {
+                    "type": "number"
+                },
+                "distance": {
+                    "type": "array",
+                    "location": "json",
+                    "items": {
+                        "$ref": "Distance"
+                    }
+                },
+                "duration": {
+                    "type": "number"
+                },
+                "average_heart_rate": {
+                    "type": "integer"
+                },
+                "heart_rate": {
+                    "type": "array",
+                    "location": "json",
+                    "items": {
+                        "$ref": "HeartRate"
+                    }
+                },
+                "total_calories": {
+                    "type": "number"
+                },
+                "calories": {
+                    "type": "array",
+                    "location": "json",
+                    "items": {
+                        "$ref": "Calories"
+                    }
+                },
+                "climb": {
+                    "type": "number"
+                },
+                "notes": {
+                    "type": "string"
+                },
+                "is_live": {
+                    "type": "boolean"
+                },
+                "path": {
+                    "type": "array",
+                    "location": "json",
+                    "items": {
+                        "$ref": "Path"
+                    }
+                },
+                "images": {
+                    "type": "array",
+                    "location": "json",
+                    "items": {
+                        "$ref": "Image"
+                    }
+                },
+                "share": {
+                    "type": "string"
+                },
+                "share_map": {
+                    "type": "string"
+                },
+                "source": {
+                    "type": "string"
+                },
+                "entry_mode": {
+                    "type": "string"
+                },
+                "activity": {
+                    "type": "string"
+                },
+                "comments": {
+                    "type": "string"
+                },
+                "previous": {
+                    "type": "string"
+                },
+                "next": {
+                    "type": "string"
+                },
+                "nearest_teammate_fitness_activities": {
+                    "type": "string"
+                },
+                "nearest_strength_training_activity": {
+                    "type": "string"
+                },
+                "nearest_teammate_strength_training_activities": {
+                    "type": "string"
+                },
+                "nearest_background_activity": {
+                    "type": "string"
+                },
+                "nearest_teammate_background_activities": {
+                    "type": "string"
+                },
+                "nearest_sleep": {
+                    "type": "string"
+                },
+                "nearest_teammate_sleep": {
+                    "type": "string"
+                },
+                "nearest_nutrition": {
+                    "type": "string"
+                },
+                "nearest_teammate_nutrition": {
+                    "type": "string"
+                },
+                "nearest_weight": {
+                    "type": "string"
+                },
+                "nearest_teammate_weight": {
+                    "type": "string"
+                },
+                "nearest_general_measurement": {
+                    "type": "string"
+                },
+                "nearest_teammate_general_measurements": {
+                    "type": "string"
+                },
+                "nearest_diabetes": {
+                    "type": "string"
+                },
+                "nearest_teammate_diabetes": {
+                    "type": "string"
+                }
+            }
+        },
         "SleepSetFeedResponse": {
             "type": "object",
             "properties": {
@@ -589,6 +778,100 @@
                 },
                 "times_woken": {
                     "type": "number"
+                }
+            }
+        },
+        "Calories": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "timestamp": {
+                    "type": "number",
+                    "description": "The number of seconds since the start of the activity"
+                },
+                "calories": {
+                    "type": "number",
+                    "description": "The total calories burned since the start of the activity"
+                }
+            }
+        },
+        "Distance": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "timestamp": {
+                    "type": "number",
+                    "description": "The number of seconds since the start of the activity"
+                },
+                "distance": {
+                    "type": "number",
+                    "description": "The total distance traveled since the start of the activity, in meters"
+                }
+            }
+        },
+        "HeartRate": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "timestamp": {
+                    "type": "number",
+                    "description": "The number of seconds since the start of the activity"
+                },
+                "heart_rate": {
+                    "type": "integer",
+                    "description": "The instantaneous heart rate, in beats per minute"
+                }
+            }
+        },
+        "Image": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "timestamp": {
+                    "type": "number",
+                    "description": "The number of seconds since the start of the activity"
+                },
+                "latitude": {
+                    "type": "number",
+                    "description": "The latitude, in degrees (values increase northward and decrease southward)"
+                },
+                "longitude": {
+                    "type": "number",
+                    "description": "The longitude, in degrees (values increase eastward and decrease westward)"
+                },
+                "uri": {
+                    "type": "string",
+                    "description": "The URI of the image"
+                },
+                "thumbnail_uri": {
+                    "type": "string",
+                    "description": "The URI of the thumbnail version of the image"
+                }
+            }
+        },
+        "Path": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "timestamp": {
+                    "type": "number",
+                    "description": "The number of seconds since the start of the activity"
+                },
+                "latitude": {
+                    "type": "number",
+                    "description": "The latitude, in degrees (values increase northward and decrease southward)"
+                },
+                "longitude": {
+                    "type": "number",
+                    "description": "The longitude, in degrees (values increase eastward and decrease westward)"
+                },
+                "altitude": {
+                    "type": "number",
+                    "description": "The altitude of the point, in meters"
+                },
+                "type": {
+                    "type": "string",
+                    "description": "One of the following values: start, end, gps, pause, resume, manual"
                 }
             }
         }
