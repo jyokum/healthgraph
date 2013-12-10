@@ -22,5 +22,4 @@ class FeedIterator extends ResourceIterator
 
         return $result['items'];
     }
-
 }

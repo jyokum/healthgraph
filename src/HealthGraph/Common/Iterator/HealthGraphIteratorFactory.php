@@ -69,5 +69,4 @@ class HealthGraphIteratorFactory extends AbstractResourceIteratorFactory
 
         return false;
     }
-
 }

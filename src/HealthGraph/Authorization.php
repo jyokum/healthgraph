@@ -24,8 +24,16 @@ class Authorization
      * @param string $url
      * @return array
      */
-    public static function getAuthorizationButton($client_id, $redirect_url, $state = '', $text = 'connect', $color = 'blue', $caption = 'white', $size = 200, $url = 'https://runkeeper.com/apps/authorize')
-    {
+    public static function getAuthorizationButton(
+        $client_id,
+        $redirect_url,
+        $state = '',
+        $text = 'connect',
+        $color = 'blue',
+        $caption = 'white',
+        $size = 200,
+        $url = 'https://runkeeper.com/apps/authorize'
+    ) {
         $link = self::getAuthorizationLink($client_id, $redirect_url, $state);
         $text = (in_array($text, array('connect', 'login'))) ? $text : 'connect';
         $color = (in_array($color, array('blue', 'grey', 'black'))) ? $color : 'blue';
@@ -63,8 +71,12 @@ class Authorization
      * @param string $url
      * @return string
      */
-    public static function getAuthorizationLink($client_id, $redirect_url, $state = '', $url = 'https://runkeeper.com/apps/authorize')
-    {
+    public static function getAuthorizationLink(
+        $client_id,
+        $redirect_url,
+        $state = '',
+        $url = 'https://runkeeper.com/apps/authorize'
+    ) {
         $data = array(
             'client_id' => $client_id,
             'response_type' => 'code',
@@ -74,8 +86,13 @@ class Authorization
         return (string) \Guzzle\Http\Url::factory($url)->setQuery($data);
     }
 
-    public static function authorize($authorization_code, $client_id, $client_secret, $redirect_url, $url = 'https://runkeeper.com/apps/token')
-    {
+    public static function authorize(
+        $authorization_code,
+        $client_id,
+        $client_secret,
+        $redirect_url,
+        $url = 'https://runkeeper.com/apps/token'
+    ) {
         $params = array(
             'grant_type' => 'authorization_code',
             'code' => $authorization_code,
@@ -98,8 +115,10 @@ class Authorization
         return $result;
     }
 
-    public static function deauthorize($access_token, $url = 'https://runkeeper.com/apps/de-authorize')
-    {
+    public static function deauthorize(
+        $access_token,
+        $url = 'https://runkeeper.com/apps/de-authorize'
+    ) {
         $params = array(
             'access_token' => $access_token,
         );
@@ -107,5 +126,4 @@ class Authorization
         $response = $client->post($url, null, $params)->send();
         return ($response->getStatusCode() == 204) ? true : false;
     }
-
 }

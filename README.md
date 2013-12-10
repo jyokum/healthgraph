@@ -104,3 +104,20 @@ $hgc = HealthGraphClient::factory(array(
 $data = array('athlete_type' => 'Athlete');
 $hgc->UpdateProfile($data);
 ```
+
+### Add a new fitness (cardio) activity
+
+```php
+$hgc = HealthGraphClient::factory(array(
+    'access_token' => $token['access_token'],
+    'token_type' => $token['token_type'],
+));
+$command = $hgc->getCommand('NewFitnessActivity', array(
+    "type" => "Running",
+    "start_time" => "Sat, 1 Jan 2011 00:00:00",
+    "duration" => 600,
+    "total_distance" => 1000,
+    "notes" => "Ran 1000 meters in 600 seconds"
+));
+$result = $command->execute();
+```

@@ -1,5 +1,6 @@
 composer.lock
 index.php
+client.log
 phpunit.xml
 /tests/configuration.xml
 /vendor/

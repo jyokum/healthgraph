@@ -24,7 +24,8 @@
             "parameters": {
                 "athlete_type": {
                     "type": "string",
-                    "location": "json"
+                    "location": "json",
+                    "enum": ["Athlete", "Runner", "Marathoner", "Ultra Marathoner", "Cyclist", "Tri-Athlete", "Walker", "Hiker", "Skier", "Snowboarder", "Skater", "Swimmer", "Rower"]
                 }
             }
         },
@@ -48,11 +49,13 @@
             "parameters": {
                 "share_fitness_activities": {
                     "location": "json",
-                    "type": "string"
+                    "type": "string",
+                    "enum": ["Just Me", "Friends", "Everyone"]
                 },
                 "share_map": {
                     "location": "json",
-                    "type": "string"
+                    "type": "string",
+                    "enum": ["Just Me", "Friends", "Everyone"]
                 },
                 "post_fitness_activity_facebook": {
                     "location": "json",
@@ -72,7 +75,8 @@
                 },
                 "share_background_activities": {
                     "location": "json",
-                    "type": "string"
+                    "type": "string",
+                    "enum": ["Just Me", "Friends", "Everyone"]
                 },
                 "post_background_activity_facebook": {
                     "location": "json",
@@ -84,7 +88,8 @@
                 },
                 "share_sleep": {
                     "location": "json",
-                    "type": "string"
+                    "type": "string",
+                    "enum": ["Just Me", "Friends", "Everyone"]
                 },
                 "post_sleep_facebook": {
                     "location": "json",
@@ -96,7 +101,8 @@
                 },
                 "share_nutrition": {
                     "location": "json",
-                    "type": "string"
+                    "type": "string",
+                    "enum": ["Just Me", "Friends", "Everyone"]
                 },
                 "post_nutrition_facebook": {
                     "location": "json",
@@ -108,7 +114,8 @@
                 },
                 "share_weight": {
                     "location": "json",
-                    "type": "string"
+                    "type": "string",
+                    "enum": ["Just Me", "Friends", "Everyone"]
                 },
                 "post_weight_facebook": {
                     "location": "json",
@@ -120,7 +127,8 @@
                 },
                 "share_general_measurements": {
                     "location": "json",
-                    "type": "string"
+                    "type": "string",
+                    "enum": ["Just Me", "Friends", "Everyone"]
                 },
                 "post_general_measurements_facebook": {
                     "location": "json",
@@ -132,7 +140,8 @@
                 },
                 "share_diabetes": {
                     "location": "json",
-                    "type": "string"
+                    "type": "string",
+                    "enum": ["Just Me", "Friends", "Everyone"]
                 },
                 "post_diabetes_facebook": {
                     "location": "json",
@@ -144,15 +153,18 @@
                 },
                 "distance_units": {
                     "location": "json",
-                    "type": "string"
+                    "type": "string",
+                    "enum": ["mi", "km"]
                 },
                 "weight_units": {
                     "location": "json",
-                    "type": "string"
+                    "type": "string",
+                    "enum": ["lbs", "kg"]
                 },
                 "first_day_of_week": {
                     "location": "json",
-                    "type": "string"
+                    "type": "string",
+                    "enum": ["Sunday", "Monday"]
                 }
             }
         },
@@ -182,7 +194,7 @@
 
             }
         },
-        "FitnessActivityFeed": {
+        "GetFitnessActivityFeed": {
             "extends": "FeedDefaults",
             "responseClass": "FitnessActivityFeedResponse",
             "uri": "{+hg.fitness_activities}",
@@ -192,6 +204,79 @@
                     "location": "header",
                     "static": true,
                     "default": "application/vnd.com.runkeeper.FitnessActivityFeed+json"
+                }
+            }
+        },
+        "NewFitnessActivity": {
+            "uri": "{+hg.fitness_activities}",
+            "httpMethod": "POST",
+            "responseClass": "GenericOutput",
+            "parameters": {
+                "Content-Type": {
+                    "location": "header",
+                    "static": true,
+                    "default": "application/vnd.com.runkeeper.NewFitnessActivity+json"
+                },
+                "type": {
+                    "type": "string",
+                    "location": "json",
+                    "required": true,
+                    "enum": ["Running", "Cycling", "Mountain Biking", "Walking", "Hiking", "Downhill Skiing", "Cross-Country Skiing", "Snowboarding", "Skating", "Swimming", "Wheelchair", "Rowing", "Elliptical", "Other"]
+                },
+                "secondary_type": {
+                    "type": "string",
+                    "location": "json"
+                },
+                "equipment": {
+                    "type": "string",
+                    "location": "json",
+                    "enum": ["None", "Treadmill", "Stationary Bike", "Elliptical", "Row Machine"]
+                },
+                "start_time": {
+                    "type": "string",
+                    "location": "json",
+                    "required": true
+                },
+                "total_distance": {
+                    "type": "number",
+                    "location": "json"
+                },
+                "duration": {
+                    "type": "number",
+                    "location": "json",
+                    "required": true
+                },
+                "average_heart_rate": {
+                    "type": "integer",
+                    "location": "json"
+                },
+                "heart_rate": {
+                    "type": "string",
+                    "location": "json"
+                },
+                "total_calories": {
+                    "type": "number",
+                    "location": "json"
+                },
+                "notes": {
+                    "type": "string",
+                    "location": "json"
+                },
+                "path": {
+                    "type": "number",
+                    "location": "json"
+                },
+                "post_to_facebook": {
+                    "type": "boolean",
+                    "location": "json"
+                },
+                "post_to_twitter": {
+                    "type": "boolean",
+                    "location": "json"
+                },
+                "detect_pauses": {
+                    "type": "boolean",
+                    "location": "json"
                 }
             }
         },
@@ -322,6 +407,17 @@
     "models": {
         "GenericOutput": {
             "type": "object",
+            "properties": {
+                "status": {
+                    "location": "statusCode",
+                    "type": "integer"
+                },
+                "location": {
+                    "sentAs": "Location",
+                    "location": "header",
+                    "type": "string"
+                }
+            },
             "additionalProperties": {
                 "location": "json"
             }
@@ -406,8 +502,7 @@
                 },
                 "next": {
                     "type": "string",
-                    "location": "json",
-                    "filters": "strtoupper"
+                    "location": "json"
                 }
             }
         },
@@ -428,8 +523,7 @@
             "additionalProperties": false,
             "properties": {
                 "type": {
-                    "type": "string",
-                    "filters": "strtoupper"
+                    "type": "string"
                 },
                 "start_time": {
                     "type": "string"
@@ -476,8 +570,7 @@
                     "type": "string"
                 },
                 "timestamp": {
-                    "type": "string",
-                    "filters": "strtotime"
+                    "type": "string"
                 },
                 "total_sleep": {
                     "type": "number"

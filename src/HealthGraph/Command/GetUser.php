@@ -9,7 +9,10 @@ class GetUser extends AbstractCommand
 
     protected function build()
     {
-        $this->request = $this->client->get('/user');
+        $this->request = $this->client->get(
+            '/user',
+            array('Content-Type' => 'application/vnd.com.runkeeper.User+json')
+        );
     }
 
     public function execute()
@@ -21,5 +24,4 @@ class GetUser extends AbstractCommand
         }
         return $result;
     }
-
 }

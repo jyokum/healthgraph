@@ -20,7 +20,7 @@ class HealthGraphClient extends Client
      *
      * @TODO update factory method and docblock for parameters
      */
-    public static function factory($config = array())
+    public static function factory($config = array(), $logger = null)
     {
         $default = array('base_url' => 'https://api.runkeeper.com');
 
@@ -33,20 +33,29 @@ class HealthGraphClient extends Client
 
         $client = new self($config->get('base_url'));
         $client->setConfig($config);
-        $client->setDefaultOption('headers/Authorization', $config->get('token_type') . ' ' . $config->get('access_token'));
+        $client->setDefaultOption(
+            'headers/Authorization',
+            $config->get('token_type') . ' ' . $config->get('access_token')
+        );
         $client->setDescription(ServiceDescription::factory(__DIR__ . DIRECTORY_SEPARATOR . 'client.json'));
-
-        $client->setDefaultOption("debug", true);
 
         // Set the iterator resource factory based on the provided iterators config
         $clientClass = get_class();
         $prefix = substr($clientClass, 0, strrpos($clientClass, '\\'));
-        $client->setResourceIteratorFactory(new HealthGraphIteratorFactory(array(
-            "{$prefix}\\Common\\Iterator",
-        )));
+        $client->setResourceIteratorFactory(
+            new HealthGraphIteratorFactory(array("{$prefix}\\Common\\Iterator"))
+        );
+
+        if ($logger) {
+            $adapter = new \Guzzle\Log\PsrLogAdapter($logger);
+            $logPlugin = new \Guzzle\Plugin\Log\LogPlugin(
+                $adapter,
+                \Guzzle\Log\MessageFormatter::DEBUG_FORMAT
+            );
+            $client->addSubscriber($logPlugin);
+        }
 
         $client->getUser();
         return $client;
     }
-
 }
