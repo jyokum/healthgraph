@@ -168,34 +168,22 @@
                 }
             }
         },
-        "FeedDefaults": {
+        "abstract.Feed": {
             "httpMethod": "GET",
             "responseClass": "FeedResponse",
             "responseType": "model",
-            "data": {
-                "iteratorClass": "FeedIterator"
-            },
+            "data": {"iteratorClass": "FeedIterator"},
             "parameters": {
-                "pageSize": {
-                    "location": "query"
-                },
-                "noEarlierThan": {
-                    "location": "query"
-                },
-                "noLaterThan": {
-                    "location": "query"
-                },
-                "modifiedNoEarlierThan": {
-                    "location": "query"
-                },
-                "modifiedNoLaterThan": {
-                    "location": "query"
-                }
+                "pageSize": {"location": "query"},
+                "noEarlierThan": {"location": "query"},
+                "noLaterThan": {"location": "query"},
+                "modifiedNoEarlierThan": {"location": "query"},
+                "modifiedNoLaterThan": {"location": "query"}
 
             }
         },
         "GetFitnessActivityFeed": {
-            "extends": "FeedDefaults",
+            "extends": "abstract.Feed",
             "responseClass": "FitnessActivityFeedResponse",
             "uri": "{+hg.fitness_activities}",
             "summary": "Returns fitness (cardio) activities for the given user.",
@@ -225,15 +213,8 @@
             }
         },
         "GetFitnessActivitySummary": {
-            "uri": "{+uri}",
-            "httpMethod": "GET",
-            "responseClass": "FitnessActivitySummary",
+            "extends": "GetFitnessActivity",
             "parameters": {
-                "uri": {
-                    "location": "uri",
-                    "type": "string",
-                    "required": true
-                },
                 "Content-Type": {
                     "location": "header",
                     "static": true,
@@ -246,20 +227,11 @@
                 }
             }
         },
-        "NewFitnessActivity": {
-            "uri": "{+hg.fitness_activities}",
-            "httpMethod": "POST",
-            "responseClass": "GenericOutput",
+        "abstract.FitnessActivity": {
             "parameters": {
-                "Content-Type": {
-                    "location": "header",
-                    "static": true,
-                    "default": "application/vnd.com.runkeeper.NewFitnessActivity+json"
-                },
                 "type": {
                     "type": "string",
                     "location": "json",
-                    "required": true,
                     "enum": ["Running", "Cycling", "Mountain Biking", "Walking", "Hiking", "Downhill Skiing", "Cross-Country Skiing", "Snowboarding", "Skating", "Swimming", "Wheelchair", "Rowing", "Elliptical", "Other"]
                 },
                 "secondary_type": {
@@ -273,8 +245,7 @@
                 },
                 "start_time": {
                     "type": "string",
-                    "location": "json",
-                    "required": true
+                    "location": "json"
                 },
                 "total_distance": {
                     "type": "number",
@@ -282,8 +253,7 @@
                 },
                 "duration": {
                     "type": "number",
-                    "location": "json",
-                    "required": true
+                    "location": "json"
                 },
                 "average_heart_rate": {
                     "type": "integer",
@@ -319,10 +289,70 @@
                 }
             }
         },
-        "StrengthTrainingActivityFeed": {
-            "extends": "FeedDefaults",
+        "NewFitnessActivity": {
+            "extends": "abstract.FitnessActivity",
+            "uri": "{+hg.fitness_activities}",
+            "httpMethod": "POST",
+            "responseClass": "GenericOutput",
+            "parameters": {
+                "Content-Type": {
+                    "location": "header",
+                    "static": true,
+                    "default": "application/vnd.com.runkeeper.NewFitnessActivity+json"
+                },
+                "type": {
+                    "type": "string",
+                    "location": "json",
+                    "enum": ["Running", "Cycling", "Mountain Biking", "Walking", "Hiking", "Downhill Skiing", "Cross-Country Skiing", "Snowboarding", "Skating", "Swimming", "Wheelchair", "Rowing", "Elliptical", "Other"],
+                    "required": true
+                },
+                "start_time": {
+                    "type": "string",
+                    "location": "json",
+                    "required": true
+                },
+                "duration": {
+                    "type": "number",
+                    "location": "json",
+                    "required": true
+                }
+            }
+        },
+        "UpdateFitnessActivity": {
+            "extends": "abstract.FitnessActivity",
+            "uri": "{+uri}",
+            "httpMethod": "PUT",
+            "responseClass": "FitnessActivity",
+            "parameters": {
+                "uri": {
+                    "location": "uri",
+                    "type": "string",
+                    "required": true
+                },
+                "Content-Type": {
+                    "location": "header",
+                    "static": true,
+                    "default": "application/vnd.com.runkeeper.FitnessActivity+json"
+                }
+            }
+        },
+        "DeleteFitnessActivity": {
+            "uri": "{+uri}",
+            "httpMethod": "DELETE",
+            "responseClass": "GenericOutput",
+            "parameters": {
+                "uri": {
+                    "location": "uri",
+                    "type": "string",
+                    "required": true
+                }
+            }
+        },
+        "GetStrengthTrainingActivityFeed": {
+            "extends": "abstract.Feed",
             "uri": "{+hg.strength_training_activities}",
             "summary": "Returns strength activities for the given user.",
+            "responseClass": "StrengthTrainingActivityFeedResponse",
             "parameters": {
                 "Content-Type": {
                     "location": "header",
@@ -331,8 +361,129 @@
                 }
             }
         },
+        "GetStrengthTrainingActivity": {
+            "uri": "{+uri}",
+            "httpMethod": "GET",
+            "responseClass": "StrengthTrainingActivity",
+            "parameters": {
+                "uri": {
+                    "location": "uri",
+                    "type": "string",
+                    "required": true
+                },
+                "Content-Type": {
+                    "location": "header",
+                    "static": true,
+                    "default": "application/vnd.com.runkeeper.StrengthTrainingActivity+json"
+                }
+            }
+        },
+        "NewStrengthTrainingActivity": {
+            "uri": "{+hg.strength_training_activities}",
+            "httpMethod": "POST",
+            "responseClass": "GenericOutput",
+            "additionalParameters": false,
+            "parameters": {
+                "Content-Type": {
+                    "location": "header",
+                    "static": true,
+                    "default": "application/vnd.com.runkeeper.NewStrengthTrainingActivity+json"
+                },
+                "start_time": {
+                    "type": "string",
+                    "location": "json",
+                    "description": "The starting time for the activity (e.g., Sat, 1 Jan 2011 00:00:00)"
+                },
+                "notes": {
+                    "type": "string",
+                    "location": "json",
+                    "description": "Any notes that the user has associated with the activity",
+                    "maxLength": 1024
+                },
+                "total_calories": {
+                    "type": "number",
+                    "location": "json",
+                    "description": "The total calories burned (omitted if not available)"
+                },
+                "exercises": {
+                    "type": "array",
+                    "location": "json",
+                    "description": "The exercises performed during this strength training activity",
+                    "required": true,
+                    "minItems": 1,
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "primary_type": {
+                                "type": "string",
+                                "description": "The primary exercise type",
+                                "enum": ["Barbell Curl", "Dumbbell Curl", "Barbell Tricep Press", "Dumbbell Tricep Press", "Overhead Press", "Wrist Curl", "Tricep Kickback", "Bench Press", "Cable Crossover", "Dumbbell Fly", "Incline Bench", "Dips", "Pushup", "Pullup", "Back Raise", "Bent-Over Row", "Seated Row", "Chinup", "Lat Pulldown", "Seated Reverse Fly", "Military Press", "Upright Row", "Front Raise", "Side Lateral Raise", "Snatch", "Push Press", "Shrug", "Crunch Machine", "Crunch", "Ab Twist", "Bicycle Kick", "Hanging Leg Raise", "Hanging Knee Raise", "Reverse Crunch", "V Up", "Situp", "Squat", "Lunge", "Dead Lift", "Hamstring Curl", "Good Morning", "Clean", "Leg Press", "Leg Extension", "Other"]
+                            },
+                            "secondary_type": {
+                                "type": "string",
+                                "description": "The secondary exercise type"
+                            },
+                            "primary_muscle_group": {
+                                "type": "string",
+                                "description": "The primary muscle group",
+                                "required": true,
+                                "enum": ["Arms", "Chest", "Back", "Shoulders", "Abs", "Legs"]
+                            },
+                            "secondary_muscle_group": {
+                                "type": "string",
+                                "description": "The secondary muscle group",
+                                "enum": ["Arms", "Chest", "Back", "Shoulders", "Abs", "Legs"]
+                            },
+                            "routine": {
+                                "type": "string",
+                                "description": "Free-form tag for the routine of which this exercise is a part",
+                                "maxLength": 32
+                            },
+                            "notes": {
+                                "type": "string",
+                                "description": "Any notes for this exercise",
+                                "maxLength": 1024
+                            },
+                            "sets": {
+                                "type": "array",
+                                "description": "The sets performed during this exercise",
+                                "required": true,
+                                "minItems": 1,
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "weight": {
+                                            "type": "number",
+                                            "required": true
+                                        },
+                                        "repetitions": {
+                                            "type": "number",
+                                            "required": true
+                                        },
+                                        "notes": {
+                                            "type": "string",
+                                            "maxLength": 1024
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "post_to_facebook": {
+                    "type": "boolean",
+                    "location": "json",
+                    "description": "True to post this activity to Facebook, false to prevent posting (optional; if not specified, the user's default preference is used)"
+                },
+                "post_to_twitter": {
+                    "type": "boolean",
+                    "location": "json",
+                    "description": "True to post this activity to Twitter, false to prevent posting (optional; if not specified, the user's default preference is used)"
+                }
+            }
+        },
         "BackgroundActivitySetFeed": {
-            "extends": "FeedDefaults",
+            "extends": "abstract.Feed",
             "uri": "{+hg.background_activities}",
             "summary": "Returns background activities for the given user.",
             "parameters": {
@@ -344,7 +495,7 @@
             }
         },
         "SleepSetFeed": {
-            "extends": "FeedDefaults",
+            "extends": "abstract.Feed",
             "responseClass": "SleepSetFeedResponse",
             "uri": "{+hg.sleep}",
             "summary": "Returns sleep activities for the given user.",
@@ -357,7 +508,7 @@
             }
         },
         "NutritionSetFeed": {
-            "extends": "FeedDefaults",
+            "extends": "abstract.Feed",
             "uri": "{+hg.nutrition}",
             "summary": "Returns nutrition activities for the given user.",
             "parameters": {
@@ -369,7 +520,7 @@
             }
         },
         "WeightSetFeed": {
-            "extends": "FeedDefaults",
+            "extends": "abstract.Feed",
             "uri": "{+hg.weight}",
             "summary": "Returns weight activities for the given user.",
             "parameters": {
@@ -381,7 +532,7 @@
             }
         },
         "GeneralMeasurementSetFeed": {
-            "extends": "FeedDefaults",
+            "extends": "abstract.Feed",
             "uri": "{+hg.general_measurements}",
             "summary": "Returns general measurement activities for the given user.",
             "parameters": {
@@ -393,7 +544,7 @@
             }
         },
         "DiabetesMeasurementSetFeed": {
-            "extends": "FeedDefaults",
+            "extends": "abstract.Feed",
             "uri": "{+hg.diabetes}",
             "summary": "Returns diabetes activities for the given user.",
             "parameters": {
@@ -418,7 +569,7 @@
             }
         },
         "TeamFeed": {
-            "extends": "FeedDefaults",
+            "extends": "abstract.Feed",
             "uri": "{+hg.team}",
             "summary": "Returns records for the given user.",
             "parameters": {
@@ -531,9 +682,7 @@
                 "items": {
                     "type": "array",
                     "location": "json",
-                    "items": {
-                        "type": "object"
-                    }
+                    "items": {"type": "object"}
                 },
                 "previous": {
                     "type": "string",
@@ -551,9 +700,7 @@
                 "items": {
                     "type": "array",
                     "location": "json",
-                    "items": {
-                        "$ref": "FitnessActivityFeedItem"
-                    }
+                    "items": {"$ref": "FitnessActivityFeedItem"}
                 }
             }
         },
@@ -561,33 +708,15 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
-                "type": {
-                    "type": "string"
-                },
-                "start_time": {
-                    "type": "string"
-                },
-                "total_distance": {
-                    "type": "number"
-                },
-                "duration": {
-                    "type": "number"
-                },
-                "total_calories": {
-                    "type": "number"
-                },
-                "source": {
-                    "type": "string"
-                },
-                "entry_mode": {
-                    "type": "string"
-                },
-                "has_path": {
-                    "type": "boolean"
-                },
-                "uri": {
-                    "type": "string"
-                }
+                "type": {"type": "string"},
+                "start_time": {"type": "string"},
+                "total_distance": {"type": "number"},
+                "duration": {"type": "number"},
+                "total_calories": {"type": "number"},
+                "source": {"type": "string"},
+                "entry_mode": {"type": "string"},
+                "has_path": {"type": "boolean"},
+                "uri": {"type": "string"}
             }
         },
         "FitnessActivity": {
@@ -598,145 +727,192 @@
                     "type": "string",
                     "location": "json"
                 },
-                "userID": {
-                    "type": "integer"
-                },
-                "type": {
-                    "type": "string"
-                },
-                "secondary_type": {
-                    "type": "string"
-                },
-                "equipment": {
-                    "type": "string"
-                },
-                "start_time": {
-                    "type": "string"
-                },
-                "total_distance": {
-                    "type": "number"
-                },
+                "userID": {"type": "integer"},
+                "type": {"type": "string"},
+                "secondary_type": {"type": "string"},
+                "equipment": {"type": "string"},
+                "start_time": {"type": "string"},
+                "total_distance": {"type": "number"},
                 "distance": {
                     "type": "array",
                     "location": "json",
-                    "items": {
-                        "$ref": "Distance"
-                    }
+                    "items": {"$ref": "Distance"}
                 },
-                "duration": {
-                    "type": "number"
-                },
-                "average_heart_rate": {
-                    "type": "integer"
-                },
+                "duration": {"type": "number"},
+                "average_heart_rate": {"type": "integer"},
                 "heart_rate": {
                     "type": "array",
                     "location": "json",
-                    "items": {
-                        "$ref": "HeartRate"
-                    }
+                    "items": {"$ref": "HeartRate"}
                 },
-                "total_calories": {
-                    "type": "number"
-                },
+                "total_calories": {"type": "number"},
                 "calories": {
                     "type": "array",
                     "location": "json",
-                    "items": {
-                        "$ref": "Calories"
-                    }
+                    "items": {"$ref": "Calories"}
                 },
-                "climb": {
-                    "type": "number"
-                },
-                "notes": {
-                    "type": "string"
-                },
-                "is_live": {
-                    "type": "boolean"
-                },
+                "climb": {"type": "number"},
+                "notes": {"type": "string"},
+                "is_live": {"type": "boolean"},
                 "path": {
                     "type": "array",
                     "location": "json",
-                    "items": {
-                        "$ref": "Path"
-                    }
+                    "items": {"$ref": "Path"}
                 },
                 "images": {
                     "type": "array",
                     "location": "json",
-                    "items": {
-                        "$ref": "Image"
-                    }
+                    "items": {"$ref": "Image"}
                 },
-                "share": {
-                    "type": "string"
+                "share": {"type": "string"},
+                "share_map": {"type": "string"},
+                "source": {"type": "string"},
+                "entry_mode": {"type": "string"},
+                "activity": {"type": "string"},
+                "comments": {"type": "string"},
+                "previous": {"type": "string"},
+                "next": {"type": "string"},
+                "nearest_teammate_fitness_activities": {"type": "string"},
+                "nearest_strength_training_activity": {"type": "string"},
+                "nearest_teammate_strength_training_activities": {"type": "string"},
+                "nearest_background_activity": {"type": "string"},
+                "nearest_teammate_background_activities": {"type": "string"},
+                "nearest_sleep": {"type": "string"},
+                "nearest_teammate_sleep": {"type": "string"},
+                "nearest_nutrition": {"type": "string"},
+                "nearest_teammate_nutrition": {"type": "string"},
+                "nearest_weight": {"type": "string"},
+                "nearest_teammate_weight": {"type": "string"},
+                "nearest_general_measurement": {"type": "string"},
+                "nearest_teammate_general_measurements": {"type": "string"},
+                "nearest_diabetes": {"type": "string"},
+                "nearest_teammate_diabetes": {"type": "string"}
+            }
+        },
+        "StrengthTrainingActivityFeedResponse": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "items": {
+                    "type": "array",
+                    "location": "json",
+                    "items": {"$ref": "StrengthTrainingActivityFeedItem"}
+                }
+            }
+        },
+        "StrengthTrainingActivityFeedItem": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "start_time": {"type": "string"},
+                "uri": {"type": "string"}
+            }
+        },
+        "StrengthTrainingActivity": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "uri": {
+                    "type": "string",
+                    "location": "json",
+                    "description": "The URI for this activity"
                 },
-                "share_map": {
-                    "type": "string"
+                "userID ": {
+                    "type": "string",
+                    "description": "The unique ID of the user for the activity"
                 },
-                "source": {
-                    "type": "string"
+                "start_time ": {
+                    "type": "string",
+                    "description": "The starting time for the activity (e.g., Sat, 1 Jan 2011 00:00:00)"
                 },
-                "entry_mode": {
-                    "type": "string"
+                "total_calories ": {
+                    "type": "string",
+                    "description": "The total calories burned (omitted if not available)"
                 },
-                "activity": {
-                    "type": "string"
+                "notes": {
+                    "type": "string",
+                    "description": "Any notes that the user has associated with the activity (max. 1024 characters; optional)"
                 },
-                "comments": {
-                    "type": "string"
+                "exercises": {
+                    "type": "array",
+                    "location": "json",
+                    "items": {"$ref": "Exercise"}
                 },
-                "previous": {
+                "source ": {
                     "type": "string"
+                    , "description": "The name of the application that last modified this activity"
                 },
-                "next": {
+                "comments ": {
                     "type": "string"
+                    , "description": "The URI of the comment thread for this activity"
+                },
+                "previous ": {
+                    "type": "string"
+                    , "description": "The URI of the previous activity in the user's fitness feed (omitted for the oldest activity)"
+                },
+                "next ": {
+                    "type": "string"
+                    , "description": "The URI of the next activity in the user's fitness feed (omitted for the most-recent activity)"
+                },
+                "nearest_fitness_activity ": {
+                    "type": "string"
+                    , "description": "The URI of the fitness activity closest in time to this activity for the user (omitted if no fitness activities have been recorded)"
                 },
                 "nearest_teammate_fitness_activities": {
                     "type": "string"
-                },
-                "nearest_strength_training_activity": {
-                    "type": "string"
+                    , "description": "The URIs of the fitness activities closest in time to this activity for each friend (empty if no fitness activities have been recorded)"
                 },
                 "nearest_teammate_strength_training_activities": {
                     "type": "string"
+                    , "description": "The URIs of the strength training activities closest in time to this activity for each friend (empty if no strength training activities have been recorded)"
                 },
                 "nearest_background_activity": {
                     "type": "string"
+                    , "description": "The URI of the background activity closest in time to this activity for the user (omitted if no background activities have been recorded)"
                 },
-                "nearest_teammate_background_activities": {
+                "nearest_teammate_background_activities ": {
                     "type": "string"
+                    , "description": "The URIs of the background activities closest in time to this activity for each friend (empty if no background activities have been recorded)"
                 },
                 "nearest_sleep": {
                     "type": "string"
+                    , "description": "The URI of the sleep measurements closest in time to this activity for the user (omitted if no sleep measurements have been taken)"
                 },
-                "nearest_teammate_sleep": {
+                "nearest_teammate_sleep ": {
                     "type": "string"
+                    , "description": "The URIs of the sleep measurements closest in time to this activity for each friend (empty if no sleep measurements have been taken)"
                 },
                 "nearest_nutrition": {
                     "type": "string"
+                    , "description": "The URI of the nutrition measurement closest in time to this activity for the user (omitted if no nutrition measurements have been token)"
                 },
-                "nearest_teammate_nutrition": {
+                "nearest_teammate_nutrition ": {
                     "type": "string"
+                    , "description": "The URIs of the nutrition measurement closest in time to this activity for each friend (empty if no nutrition measurements have been token)"
                 },
-                "nearest_weight": {
+                "nearest_weight ": {
                     "type": "string"
+                    , "description": "The URI of the weight measurement closest in time to this activity for the user (omitted if no weight measurements have been token)"
                 },
                 "nearest_teammate_weight": {
                     "type": "string"
+                    , "description": "The URIs of the weight measurements closest in time to this activity for each friend (empty if no weight measurements have been token)"
                 },
                 "nearest_general_measurement": {
                     "type": "string"
+                    , "description": "The URI of the general measurement measurement closest in time to this activity for the user (omitted if no general measurements have been token)"
                 },
                 "nearest_teammate_general_measurements": {
                     "type": "string"
+                    , "description": "The URIs of the general measurements closest in time to this activity for each friend (empty if no general measurements have been token)"
                 },
-                "nearest_diabetes": {
+                "nearest_diabetes ": {
                     "type": "string"
+                    , "description": "The URI of the diabetes measurement closest in time to this activity for the user (omitted if no diabetes measurements have been token)"
                 },
                 "nearest_teammate_diabetes": {
                     "type": "string"
+                    , "description": "The URIs of the diabetes measurements closest in time to this activity for each friend (empty if no diabetes measurements have been token)"
                 }
             }
         },
@@ -746,39 +922,21 @@
                 "items": {
                     "type": "array",
                     "location": "json",
-                    "items": {
-                        "$ref": "SleepSetFeedFeedItem"
-                    }
+                    "items": {"$ref": "SleepSetFeedFeedItem"}
                 }
             }
         },
         "SleepSetFeedFeedItem": {
             "type": "object",
             "properties": {
-                "uri": {
-                    "type": "string"
-                },
-                "timestamp": {
-                    "type": "string"
-                },
-                "total_sleep": {
-                    "type": "number"
-                },
-                "deep": {
-                    "type": "number"
-                },
-                "rem": {
-                    "type": "number"
-                },
-                "light": {
-                    "type": "number"
-                },
-                "awake": {
-                    "type": "number"
-                },
-                "times_woken": {
-                    "type": "number"
-                }
+                "uri": {"type": "string"},
+                "timestamp": {"type": "string"},
+                "total_sleep": {"type": "number"},
+                "deep": {"type": "number"},
+                "rem": {"type": "number"},
+                "light": {"type": "number"},
+                "awake": {"type": "number"},
+                "times_woken": {"type": "number"}
             }
         },
         "Calories": {
@@ -874,6 +1032,65 @@
                     "description": "One of the following values: start, end, gps, pause, resume, manual"
                 }
             }
+        },
+        "Exercise": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "primary_type": {
+                    "type": "string",
+                    "description": "The primary exercise type"
+                },
+                "secondary_type": {
+                    "type": "string",
+                    "description": "The secondary exercise type"
+                },
+                "primary_muscle_group": {
+                    "type": "string",
+                    "description": "The primary muscle group"
+                },
+                "secondary_muscle_group": {
+                    "type": "string",
+                    "description": "The secondary muscle group"
+                },
+                "routine": {
+                    "type": "string",
+                    "description": "Free-form tag for the routine of which this exercise is a part"
+                },
+                "notes": {
+                    "type": "string",
+                    "description": "Any notes for this exercise"
+                },
+                "sets": {
+                    "type": "array",
+                    "description": "The sets performed during this exercise",
+                    "items": {
+                        "$ref": "ExerciseSet"
+                    }
+                }
+            }
+        },
+        "ExerciseSet": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "weight": {
+                    "type": "number"
+                },
+                "repetitions": {
+                    "type": "integer"
+                },
+                "notes": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "definitions": {
+        "sharing": {
+            "type": "string",
+            "location": "query",
+            "enum": ["Just Me", "Friends", "Everyone"]
         }
     }
 }
