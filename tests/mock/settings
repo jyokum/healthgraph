@@ -1,0 +1,10 @@
+HTTP/1.1 200 OK
+Server: nginx/1.2.1
+Date: Tue, 17 Dec 2013 14:00:50 GMT
+Content-Type: application/vnd.com.runkeeper.settings+json;charset=ISO-8859-1
+Content-Length: 969
+Connection: keep-alive
+Content-Language: en-US
+
+{"post_nutrition_twitter":false,"post_sleep_twitter":false,"weight_units":"lbs","share_background_activities":"Everyone","post_fitness_activity_facebook":false,"twitter_connected":false,"post_nutrition_facebook":false,"share_general_measurements":"Just Me","post_general_measurements_twitter":false,"first_day_of_week":"Sunday","post_live_fitness_activity_facebook":false,"post_general_measurements_facebook":false,"share_weight":"Just Me","facebook_connected":false,"share_nutrition":"Everyone","share_diabetes":"Just Me","distance_units":"mi","post_sleep_facebook":false,"post_diabetes_twitter":false,"post_live_fitness_activity_twitter":false,"post_fitness_activity_twitter":false,"post_weight_twitter":false,"post_background_activity_twitter":false,"post_diabetes_facebook":false,"share_fitness_activities":"Everyone","post_weight_facebook":false,"post_background_activity_facebook":false,"share_map":"Friends","foursquare_connected":false,"share_sleep":"Everyone"}
+

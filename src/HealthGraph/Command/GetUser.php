@@ -9,6 +9,10 @@ class GetUser extends AbstractCommand
 
     protected function build()
     {
+        $this->getClient()->setDefaultOption(
+            'headers/Authorization',
+            $this->data['token_type'] . ' ' . $this->data['access_token']
+        );
         $this->request = $this->client->get(
             '/user',
             array('Content-Type' => 'application/vnd.com.runkeeper.User+json')

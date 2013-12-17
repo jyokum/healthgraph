@@ -1,0 +1,9 @@
+HTTP/1.1 200 OK
+Server: nginx/1.2.1
+Date: Tue, 10 Dec 2013 13:00:40 GMT
+Content-Type: application/vnd.com.runkeeper.user+json;charset=ISO-8859-1
+Content-Length: 406
+Connection: keep-alive
+Content-Language: en-US
+
+{"strength_training_activities":"/strengthTrainingActivities","weight":"/weight","settings":"/settings","diabetes":"/diabetes","team":"/team","sleep":"/sleep","fitness_activities":"/fitnessActivities","change_log":"/changeLog","userID":12345678,"nutrition":"/nutrition","general_measurements":"/generalMeasurements","background_activities":"/backgroundActivities","records":"/records","profile":"/profile"}

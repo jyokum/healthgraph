@@ -11,8 +11,7 @@
     ],
     "require": {
         "php": ">=5.3.2",
-        "guzzle/guzzle": "*",
-        "monolog/monolog": "*"
+        "guzzle/guzzle": "*"
     },
     "autoload": {
         "psr-0": { "HealthGraph": "src/" }

@@ -1,0 +1,10 @@
+HTTP/1.1 200 OK
+Server: nginx/1.2.1
+Date: Tue, 17 Dec 2013 14:00:50 GMT
+Content-Type: application/vnd.com.runkeeper.profile+json;charset=ISO-8859-1
+Content-Length: 104
+Connection: keep-alive
+Content-Language: en-US
+
+{"name":"Dev","elite":"false","athlete_type":"Athlete","profile":"http://runkeeper.com/user/9876543210"}
+

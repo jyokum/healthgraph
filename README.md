@@ -79,7 +79,8 @@ use HealthGraph\HealthGraphClient;
 
 $token = some_function_to_retrieve_the_token();
 
-$hgc = HealthGraphClient::factory(array(
+$hgc = HealthGraphClient::factory();
+$hgc->getUser(array(
     'access_token' => $token['access_token'],
     'token_type' => $token['token_type'],
 ));
@@ -97,7 +98,8 @@ $activities = $hgc->FitnessActivityFeed()->getAll();
 ### Update profile
 
 ```php
-$hgc = HealthGraphClient::factory(array(
+$hgc = HealthGraphClient::factory();
+$hgc->getUser(array(
     'access_token' => $token['access_token'],
     'token_type' => $token['token_type'],
 ));
@@ -108,7 +110,8 @@ $hgc->UpdateProfile($data);
 ### Add a new fitness (cardio) activity
 
 ```php
-$hgc = HealthGraphClient::factory(array(
+$hgc = HealthGraphClient::factory();
+$hgc->getUser(array(
     'access_token' => $token['access_token'],
     'token_type' => $token['token_type'],
 ));

@@ -4,6 +4,19 @@
     "baseUrl": "https://api.runkeeper.com",
     "description": "Health Graph API client",
     "operations": {
+        "GetUser": {
+            "class": "\\HealthGraph\\Command\\GetUser",
+            "parameters": {
+                "access_token": {
+                    "type": "string",
+                    "required": true
+                },
+                "token_type": {
+                    "type": "string",
+                    "required": true
+                }
+            }
+        },
         "GetProfile": {
             "httpMethod": "GET",
             "uri": "{+hg.profile}",
@@ -1084,13 +1097,6 @@
                     "type": "string"
                 }
             }
-        }
-    },
-    "definitions": {
-        "sharing": {
-            "type": "string",
-            "location": "query",
-            "enum": ["Just Me", "Friends", "Everyone"]
         }
     }
 }
