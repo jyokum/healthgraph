@@ -1,0 +1,10 @@
+HTTP/1.1 200 OK
+Server: nginx/1.2.1
+Date: Tue, 10 Dec 2013 13:03:50 GMT
+Content-Type: application/vnd.com.runkeeper.FitnessActivityFeed+json;charset=ISO-8859-1
+Content-Length: 755
+Connection: keep-alive
+Last-Modified: Tue, 10 Dec 2013 13:03:50 GMT
+Content-Language: en-US
+
+{"size":40,"items":[{"type":"Running","start_time":"Tue, 1 Mar 2011 07:00:00","total_distance":70,"duration":10,"source":"RunKeeper","entry_mode":"API","has_map":"true","uri":"/activities/40"},{"type":"Running","start_time":"Thu, 3 Mar 2011 07:00:00","total_distance":70,"duration":10,"source":"RunKeeper","entry_mode":"Web","has_map":"true","uri":"/activities/39"},{"type":"Running","startTime":"Sat, 5 Mar 2011 11:00:00","total_distance":70,"duration":10,"source":"RunKeeper","entry_mode":"API","has_map":"true","uri":"/activities/38"},{"type":"Running","startTime":"Mon, 7 Mar 2011 07:00:00","total_distance":70,"duration":10,"source":"RunKeeper","entry_mode":"API","has_map":"false","uri":"/activities/37"}], "previous":"http://example.com?previous"}

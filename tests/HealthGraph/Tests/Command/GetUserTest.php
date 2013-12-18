@@ -1,6 +1,6 @@
 <?php
 
-namespace HealthGraph\Tests;
+namespace HealthGraph\Tests\Command;
 
 use HealthGraph\HealthGraphClient;
 
