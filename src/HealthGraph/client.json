@@ -13,6 +13,7 @@
                 },
                 "token_type": {
                     "type": "string",
+                    "default": "Bearer",
                     "required": true
                 }
             }
