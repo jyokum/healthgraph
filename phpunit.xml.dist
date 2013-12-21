@@ -8,10 +8,18 @@
         <var name="token_type" value="" />
     </php>
     <testsuites>
-        <testsuite name="jyokum/healthgraph">
-            <directory suffix="Test.php">./tests</directory>
+        <testsuite name="HealthGraph">
+            <directory suffix="Test.php">./tests/HealthGraph</directory>
+        </testsuite>
+        <testsuite name="Integration">
+            <directory suffix="Test.php">./tests/Integration</directory>
         </testsuite>
     </testsuites>
+    <groups>
+        <exclude>
+            <group>integration</group>
+        </exclude>
+    </groups>
     <filter>
         <whitelist>
             <directory>./</directory>

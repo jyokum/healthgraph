@@ -42,12 +42,12 @@ class HealthGraphClient extends Client
         if ($logger) {
             $adapter = new \Guzzle\Log\PsrLogAdapter($logger);
             $logPlugin = new \Guzzle\Plugin\Log\LogPlugin(
-                $adapter, \Guzzle\Log\MessageFormatter::DEBUG_FORMAT
+                $adapter,
+                \Guzzle\Log\MessageFormatter::DEBUG_FORMAT
             );
             $client->addSubscriber($logPlugin);
         }
 
         return $client;
     }
-
 }

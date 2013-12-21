@@ -392,17 +392,8 @@
                 }
             }
         },
-        "NewStrengthTrainingActivity": {
-            "uri": "{+hg.strength_training_activities}",
-            "httpMethod": "POST",
-            "responseClass": "GenericOutput",
-            "additionalParameters": false,
+        "abstract.StrengthTrainingActivity": {
             "parameters": {
-                "Content-Type": {
-                    "location": "header",
-                    "static": true,
-                    "default": "application/vnd.com.runkeeper.NewStrengthTrainingActivity+json"
-                },
                 "start_time": {
                     "type": "string",
                     "location": "json",
@@ -417,13 +408,12 @@
                 "total_calories": {
                     "type": "number",
                     "location": "json",
-                    "description": "The total calories burned (omitted if not available)"
+                    "description": "The total calories burned"
                 },
                 "exercises": {
                     "type": "array",
                     "location": "json",
                     "description": "The exercises performed during this strength training activity",
-                    "required": true,
                     "minItems": 1,
                     "items": {
                         "type": "object",
@@ -496,7 +486,92 @@
                 }
             }
         },
-        "BackgroundActivitySetFeed": {
+        "NewStrengthTrainingActivity": {
+            "extends": "abstract.StrengthTrainingActivity",
+            "uri": "{+hg.strength_training_activities}",
+            "httpMethod": "POST",
+            "responseClass": "GenericOutput",
+            "additionalParameters": false,
+            "parameters": {
+                "Content-Type": {
+                    "location": "header",
+                    "static": true,
+                    "default": "application/vnd.com.runkeeper.NewStrengthTrainingActivity+json"
+                },
+                "exercises": {
+                    "type": "array",
+                    "location": "json",
+                    "required": true,
+                    "minItems": 1,
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "primary_type": {
+                                "type": "string",
+                                "enum": ["Barbell Curl", "Dumbbell Curl", "Barbell Tricep Press", "Dumbbell Tricep Press", "Overhead Press", "Wrist Curl", "Tricep Kickback", "Bench Press", "Cable Crossover", "Dumbbell Fly", "Incline Bench", "Dips", "Pushup", "Pullup", "Back Raise", "Bent-Over Row", "Seated Row", "Chinup", "Lat Pulldown", "Seated Reverse Fly", "Military Press", "Upright Row", "Front Raise", "Side Lateral Raise", "Snatch", "Push Press", "Shrug", "Crunch Machine", "Crunch", "Ab Twist", "Bicycle Kick", "Hanging Leg Raise", "Hanging Knee Raise", "Reverse Crunch", "V Up", "Situp", "Squat", "Lunge", "Dead Lift", "Hamstring Curl", "Good Morning", "Clean", "Leg Press", "Leg Extension", "Other"]
+                            },
+                            "secondary_type": {"type": "string"},
+                            "primary_muscle_group": {
+                                "type": "string",
+                                "required": true,
+                                "enum": ["Arms", "Chest", "Back", "Shoulders", "Abs", "Legs"]
+                            },
+                            "secondary_muscle_group": {
+                                "type": "string",
+                                "enum": ["Arms", "Chest", "Back", "Shoulders", "Abs", "Legs"]
+                            },
+                            "routine": {"type": "string", "maxLength": 32},
+                            "notes": {"type": "string", "maxLength": 1024},
+                            "sets": {
+                                "type": "array",
+                                "required": true,
+                                "minItems": 1,
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "weight": {"type": "number", "required": true},
+                                        "repetitions": {"type": "number", "required": true},
+                                        "notes": {"type": "string", "maxLength": 1024}
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "UpdateStrengthTrainingActivity": {
+            "extends": "abstract.StrengthTrainingActivity",
+            "uri": "{+uri}",
+            "httpMethod": "PUT",
+            "responseClass": "GenericOutput",
+            "additionalParameters": false,
+            "parameters": {
+                "uri": {
+                    "location": "uri",
+                    "type": "string",
+                    "required": true
+                },
+                "Content-Type": {
+                    "location": "header",
+                    "static": true,
+                    "default": "application/vnd.com.runkeeper.StrengthTrainingActivity+json"
+                }
+            }
+        },
+        "DeleteStrengthTrainingActivity": {
+            "uri": "{+uri}",
+            "httpMethod": "DELETE",
+            "responseClass": "GenericOutput",
+            "parameters": {
+                "uri": {
+                    "location": "uri",
+                    "type": "string",
+                    "required": true
+                }
+            }
+        },
+        "GetBackgroundActivitySetFeed": {
             "extends": "abstract.Feed",
             "uri": "{+hg.background_activities}",
             "summary": "Returns background activities for the given user.",
@@ -508,7 +583,7 @@
                 }
             }
         },
-        "SleepSetFeed": {
+        "GetSleepSetFeed": {
             "extends": "abstract.Feed",
             "responseClass": "SleepSetFeedResponse",
             "uri": "{+hg.sleep}",
@@ -521,7 +596,7 @@
                 }
             }
         },
-        "NutritionSetFeed": {
+        "GetNutritionSetFeed": {
             "extends": "abstract.Feed",
             "uri": "{+hg.nutrition}",
             "summary": "Returns nutrition activities for the given user.",
@@ -533,7 +608,7 @@
                 }
             }
         },
-        "WeightSetFeed": {
+        "GetWeightSetFeed": {
             "extends": "abstract.Feed",
             "uri": "{+hg.weight}",
             "summary": "Returns weight activities for the given user.",
@@ -545,7 +620,7 @@
                 }
             }
         },
-        "GeneralMeasurementSetFeed": {
+        "GetGeneralMeasurementSetFeed": {
             "extends": "abstract.Feed",
             "uri": "{+hg.general_measurements}",
             "summary": "Returns general measurement activities for the given user.",
@@ -557,7 +632,7 @@
                 }
             }
         },
-        "DiabetesMeasurementSetFeed": {
+        "GetDiabetesMeasurementSetFeed": {
             "extends": "abstract.Feed",
             "uri": "{+hg.diabetes}",
             "summary": "Returns diabetes activities for the given user.",
@@ -569,7 +644,7 @@
                 }
             }
         },
-        "Records": {
+        "GetRecords": {
             "httpMethod": "GET",
             "uri": "{+hg.records}",
             "summary": "Returns records for the given user.",
@@ -582,7 +657,7 @@
                 }
             }
         },
-        "TeamFeed": {
+        "GetTeamFeed": {
             "extends": "abstract.Feed",
             "uri": "{+hg.team}",
             "summary": "Returns records for the given user.",
@@ -594,7 +669,7 @@
                 }
             }
         },
-        "ChangeLog": {
+        "GetChangeLog": {
             "httpMethod": "GET",
             "uri": "{+hg.change_log}",
             "summary": "Returns records for the given user.",
