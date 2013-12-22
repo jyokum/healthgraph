@@ -1,5 +1,44 @@
 {
     "operations": {
+        "abstract.feed": {
+            "httpMethod": "GET",
+            "responseClass": "FeedResponse",
+            "responseType": "model",
+            "data": {"iteratorClass": "FeedIterator"},
+            "parameters": {
+                "pageSize": {"location": "query"},
+                "noEarlierThan": {"location": "query"},
+                "noLaterThan": {"location": "query"},
+                "modifiedNoEarlierThan": {"location": "query"},
+                "modifiedNoLaterThan": {"location": "query"}
+
+            }
+        },
+        "abstract.update": {
+            "uri": "{+uri}",
+            "httpMethod": "PUT",
+            "responseClass": "GenericOutput",
+            "additionalParameters": false,
+            "parameters": {
+                "uri": {
+                    "location": "uri",
+                    "type": "string",
+                    "required": true
+                }
+            }
+        },
+        "abstract.delete": {
+            "uri": "{+uri}",
+            "httpMethod": "DELETE",
+            "responseClass": "GenericOutput",
+            "parameters": {
+                "uri": {
+                    "location": "uri",
+                    "type": "string",
+                    "required": true
+                }
+            }
+        },
         "abstract.FitnessActivity": {
             "parameters": {
                 "type": {
@@ -182,6 +221,51 @@
                     "location": "json",
                     "type": "boolean",
                     "description": "Whether to post these measurements to Facebook (optional; if omitted, the user's default setting will be used)"
+                }
+            }
+        },
+        "abstract.NutritionSet": {
+            "parameters": {
+                "calories": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity"
+                },
+                "carbohydrates": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in g"
+                },
+                "fat": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in g"
+                },
+                "fiber": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in g"
+                },
+                "protein": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in g"
+                },
+                "sodium": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in mg"
+                },
+                "water": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in fl oz"
+                },
+                "meal": {
+                    "location": "json",
+                    "type": "string",
+                    "description": "The meal, as one of the following values: breakfast,lunch, dinner, snack, other, unspecified",
+                    "enum": ["breakfast", "lunch", "dinner", "snack", "other", "unspecified"]
                 }
             }
         }

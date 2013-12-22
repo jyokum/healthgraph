@@ -2,30 +2,21 @@
 
 namespace HealthGraph\Tests\Operations;
 
-class BackgroundActivitySetFeedTest extends \Guzzle\Tests\GuzzleTestCase
+class NutritionSetTest extends BaseTest
 {
-    const OPERATION = 'GetBackgroundActivitySetFeed';
 
     protected function setUp()
     {
         $this->client = $this->getServiceBuilder()->get('client');
+        $this->base = 'NutritionSet';
     }
 
-    public function testCommandIsValid()
+    public function testPrepareNewCommand()
     {
-        $object = $this->client->getCommand(self::OPERATION);
-        $this->assertInstanceOf('\Guzzle\Service\Command\OperationCommand', $object);
-    }
-
-    public function testIteratorIsValid()
-    {
-        $object = $this->client->getIterator(self::OPERATION);
-        $this->assertInstanceOf('\HealthGraph\Common\Iterator\FeedIterator', $object);
-    }
-
-    public function testPrepareGetCommand()
-    {
-        $command = $this->client->getCommand(self::OPERATION);
+        $command = $this->client->getCommand('New' . $this->base, array(
+            'timestamp' => 'Sat, 1 Jan 2011 00:00:00',
+            'calories' => 100,
+        ));
         $command->prepare();
         $this->assertTrue($command->isPrepared());
     }
