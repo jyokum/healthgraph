@@ -25,7 +25,7 @@ class FeedIteratorTest extends \Guzzle\Tests\GuzzleTestCase
     {
         $client = $this->getServiceBuilder()->get('client');
         $this->setMockResponse($client, array('feed','feed_next'));
-        $command = $client->getCommand('abstract.Feed');
+        $command = $client->getCommand('abstract.feed');
         $iterator = new FeedIterator($command);
         $this->assertInstanceOf('HealthGraph\Common\Iterator\FeedIterator', $iterator);
 
@@ -49,7 +49,7 @@ class FeedIteratorTest extends \Guzzle\Tests\GuzzleTestCase
     {
         $client = $this->getServiceBuilder()->get('client');
         $this->setMockResponse($client, 'feed');
-        $command = $client->getCommand('abstract.Feed');
+        $command = $client->getCommand('abstract.feed');
         $iterator = new FeedIterator($command);
         $this->assertInstanceOf('HealthGraph\Common\Iterator\FeedIterator', $iterator);
 
@@ -64,7 +64,7 @@ class FeedIteratorTest extends \Guzzle\Tests\GuzzleTestCase
     {
         $client = $this->getServiceBuilder()->get('client');
         $this->setMockResponse($client, array('feed', 'feed_next'));
-        $command = $client->getCommand('abstract.Feed');
+        $command = $client->getCommand('abstract.feed');
         $iterator = new FeedIterator($command);
         $this->assertInstanceOf('HealthGraph\Common\Iterator\FeedIterator', $iterator);
 
