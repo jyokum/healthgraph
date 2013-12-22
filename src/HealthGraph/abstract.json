@@ -1,0 +1,189 @@
+{
+    "operations": {
+        "abstract.FitnessActivity": {
+            "parameters": {
+                "type": {
+                    "type": "string",
+                    "location": "json",
+                    "enum": ["Running", "Cycling", "Mountain Biking", "Walking", "Hiking", "Downhill Skiing", "Cross-Country Skiing", "Snowboarding", "Skating", "Swimming", "Wheelchair", "Rowing", "Elliptical", "Other"]
+                },
+                "secondary_type": {
+                    "type": "string",
+                    "location": "json"
+                },
+                "equipment": {
+                    "type": "string",
+                    "location": "json",
+                    "enum": ["None", "Treadmill", "Stationary Bike", "Elliptical", "Row Machine"]
+                },
+                "start_time": {
+                    "type": "string",
+                    "location": "json"
+                },
+                "total_distance": {
+                    "type": "number",
+                    "location": "json"
+                },
+                "duration": {
+                    "type": "number",
+                    "location": "json"
+                },
+                "average_heart_rate": {
+                    "type": "integer",
+                    "location": "json"
+                },
+                "heart_rate": {
+                    "type": "string",
+                    "location": "json"
+                },
+                "total_calories": {
+                    "type": "number",
+                    "location": "json"
+                },
+                "notes": {
+                    "type": "string",
+                    "location": "json"
+                },
+                "path": {
+                    "type": "number",
+                    "location": "json"
+                },
+                "post_to_facebook": {
+                    "type": "boolean",
+                    "location": "json"
+                },
+                "post_to_twitter": {
+                    "type": "boolean",
+                    "location": "json"
+                },
+                "detect_pauses": {
+                    "type": "boolean",
+                    "location": "json"
+                }
+            }
+        },
+        "abstract.StrengthTrainingActivity": {
+            "parameters": {
+                "start_time": {
+                    "type": "string",
+                    "location": "json",
+                    "description": "The starting time for the activity (e.g., Sat, 1 Jan 2011 00:00:00)"
+                },
+                "notes": {
+                    "type": "string",
+                    "location": "json",
+                    "description": "Any notes that the user has associated with the activity",
+                    "maxLength": 1024
+                },
+                "total_calories": {
+                    "type": "number",
+                    "location": "json",
+                    "description": "The total calories burned"
+                },
+                "exercises": {
+                    "type": "array",
+                    "location": "json",
+                    "description": "The exercises performed during this strength training activity",
+                    "minItems": 1,
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "primary_type": {
+                                "type": "string",
+                                "description": "The primary exercise type",
+                                "enum": ["Barbell Curl", "Dumbbell Curl", "Barbell Tricep Press", "Dumbbell Tricep Press", "Overhead Press", "Wrist Curl", "Tricep Kickback", "Bench Press", "Cable Crossover", "Dumbbell Fly", "Incline Bench", "Dips", "Pushup", "Pullup", "Back Raise", "Bent-Over Row", "Seated Row", "Chinup", "Lat Pulldown", "Seated Reverse Fly", "Military Press", "Upright Row", "Front Raise", "Side Lateral Raise", "Snatch", "Push Press", "Shrug", "Crunch Machine", "Crunch", "Ab Twist", "Bicycle Kick", "Hanging Leg Raise", "Hanging Knee Raise", "Reverse Crunch", "V Up", "Situp", "Squat", "Lunge", "Dead Lift", "Hamstring Curl", "Good Morning", "Clean", "Leg Press", "Leg Extension", "Other"]
+                            },
+                            "secondary_type": {
+                                "type": "string",
+                                "description": "The secondary exercise type"
+                            },
+                            "primary_muscle_group": {
+                                "type": "string",
+                                "description": "The primary muscle group",
+                                "required": true,
+                                "enum": ["Arms", "Chest", "Back", "Shoulders", "Abs", "Legs"]
+                            },
+                            "secondary_muscle_group": {
+                                "type": "string",
+                                "description": "The secondary muscle group",
+                                "enum": ["Arms", "Chest", "Back", "Shoulders", "Abs", "Legs"]
+                            },
+                            "routine": {
+                                "type": "string",
+                                "description": "Free-form tag for the routine of which this exercise is a part",
+                                "maxLength": 32
+                            },
+                            "notes": {
+                                "type": "string",
+                                "description": "Any notes for this exercise",
+                                "maxLength": 1024
+                            },
+                            "sets": {
+                                "type": "array",
+                                "description": "The sets performed during this exercise",
+                                "required": true,
+                                "minItems": 1,
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "weight": {
+                                            "type": "number",
+                                            "required": true
+                                        },
+                                        "repetitions": {
+                                            "type": "number",
+                                            "required": true
+                                        },
+                                        "notes": {
+                                            "type": "string",
+                                            "maxLength": 1024
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "post_to_facebook": {
+                    "type": "boolean",
+                    "location": "json",
+                    "description": "True to post this activity to Facebook, false to prevent posting (optional; if not specified, the user's default preference is used)"
+                },
+                "post_to_twitter": {
+                    "type": "boolean",
+                    "location": "json",
+                    "description": "True to post this activity to Twitter, false to prevent posting (optional; if not specified, the user's default preference is used)"
+                }
+            }
+        },
+        "abstract.BackgroundActivitySet": {
+            "parameters": {
+                "timestamp": {
+                    "location": "json",
+                    "type": "string",
+                    "description": "The timestamp (e.g., Sat, 1 Jan 2011 00:00:00)"
+                },
+                "calories_burned": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity (omitted if not available)"
+                },
+                "steps": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity (omitted if not available)"
+                },
+                "post_to_twitter": {
+                    "location": "json",
+                    "type": "boolean",
+                    "description": "Whether to post these measurements to Twitter (optional; if omitted, the user's default setting will be used)"
+                },
+                "post_to_facebook": {
+                    "location": "json",
+                    "type": "boolean",
+                    "description": "Whether to post these measurements to Facebook (optional; if omitted, the user's default setting will be used)"
+                }
+            }
+        }
+    }
+}

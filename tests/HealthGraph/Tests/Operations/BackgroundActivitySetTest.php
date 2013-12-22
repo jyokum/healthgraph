@@ -2,13 +2,13 @@
 
 namespace HealthGraph\Tests\Operations;
 
-class NutritionSetFeedTest extends BaseFeedTest
+class BackgroundActivitySetTest extends BaseTest
 {
 
     protected function setUp()
     {
         $this->client = $this->getServiceBuilder()->get('client');
-        $this->base = 'GetNutritionSetFeed';
+        $this->base = 'BackgroundActivitySet';
     }
 
 }
