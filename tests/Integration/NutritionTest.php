@@ -8,24 +8,29 @@ namespace HealthGraph\Tests\Integration;
 class NutritionTest extends \Guzzle\Tests\GuzzleTestCase
 {
 
+    protected static $client;
+
     protected function setUp()
     {
-        $this->client = $this->getServiceBuilder()->get('client');
-        $this->client->getUser(array(
-            'access_token' => $GLOBALS['access_token'],
-            'token_type' => $GLOBALS['token_type'],
-        ));
+        // We're only going to create and prime the client once
+        if (!isset(self::$client)) {
+            self::$client = $this->getServiceBuilder()->get('client');
+            self::$client->getUser(array(
+                'access_token' => $GLOBALS['access_token'],
+                'token_type' => $GLOBALS['token_type'],
+            ));
+        }
     }
 
     public function testUserIsLoaded()
     {
-        $this->assertTrue(is_numeric($this->client->getConfig('hg.userID')));
-        $this->assertNotNull($this->client->getConfig('hg.nutrition'));
+        $this->assertTrue(is_numeric(self::$client->getConfig('hg.userID')));
+        $this->assertNotNull(self::$client->getConfig('hg.nutrition'));
     }
 
     public function testNewNutritionSet()
     {
-        $command = $this->client->getCommand('NewNutritionSet', array(
+        $command = self::$client->getCommand('NewNutritionSet', array(
             'timestamp' => date(DATE_RFC1123),
             'calories' => 200,
         ));
@@ -41,7 +46,7 @@ class NutritionTest extends \Guzzle\Tests\GuzzleTestCase
      */
     public function testGetNutritionActivity($uri)
     {
-        $command = $this->client->getCommand('GetNutritionSet', array('uri' => $uri));
+        $command = self::$client->getCommand('GetNutritionSet', array('uri' => $uri));
         $result = $command->execute();
         $this->assertNotNull($result->get('uri'));
         $this->assertEquals(200, $result->get('calories'));
@@ -52,7 +57,7 @@ class NutritionTest extends \Guzzle\Tests\GuzzleTestCase
      */
     public function testUpdateNutritionSet($uri)
     {
-        $command = $this->client->getCommand('UpdateNutritionSet', array(
+        $command = self::$client->getCommand('UpdateNutritionSet', array(
             "uri" => $uri,
             "calories" => 250
         ));
@@ -61,18 +66,23 @@ class NutritionTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertEquals(250, $result->get('calories'));
     }
 
-    /**
-     * @depends testNewNutritionSet
-     */
-    public function testGetNutritionSetFeed($uri)
+    public function testGetNutritionSetFeed()
     {
-        $command = $this->client->getIterator('GetNutritionSetFeed')->setLimit(5);
+        $command = self::$client->getIterator('GetNutritionSetFeed')->setLimit(5);
         $result = $command->toArray();
 
+        $this->assertGreaterThanOrEqual(1, count($result));
         $this->assertLessThanOrEqual(5, count($result));
-        $this->assertEquals(250, $result[0]['calories']);
-        // @TODO the uri returned in the feed doesn't match the uri returned from new for some reason
-        // $this->assertEquals($uri, $result[0]['uri']);
+    }
+
+    public function testIterateFeedItems()
+    {
+        $feed = self::$client->getIterator('GetNutritionSetFeed')->setLimit(5);
+        foreach ($feed as $item) {
+            $command = self::$client->getCommand('GetNutritionSet', array('uri' => $item['uri']));
+            $result = $command->execute();
+            $this->assertEquals($item['uri'], $result->get('uri'));
+        }
     }
 
     /**
@@ -80,7 +90,7 @@ class NutritionTest extends \Guzzle\Tests\GuzzleTestCase
      */
     public function testDeleteNutritionSet($uri)
     {
-        $command = $this->client->getCommand('DeleteNutritionSet', array('uri' => $uri));
+        $command = self::$client->getCommand('DeleteNutritionSet', array('uri' => $uri));
         $result = $command->execute();
         $this->assertEquals(204, $result->get('status'));
     }
