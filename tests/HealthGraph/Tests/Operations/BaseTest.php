@@ -28,6 +28,13 @@ abstract class BaseTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertInstanceOf('\Guzzle\Service\Command\OperationCommand', $command);
     }
 
+    public function testGetResponseIsExpected()
+    {
+        $command = $this->client->getCommand('Get' . $this->base);
+        $op = $this->readAttribute($command, 'operation');
+        $this->assertEquals($this->base, $op->getResponseClass());
+    }
+
     public function testPrepareGetCommand()
     {
         $command = $this->client->getCommand('Get' . $this->base, array('uri' => '/foo'));
@@ -50,10 +57,13 @@ abstract class BaseTest extends \Guzzle\Tests\GuzzleTestCase
     {
         $command = $this->client->getCommand('New' . $this->base);
         $this->assertInstanceOf('\Guzzle\Service\Command\OperationCommand', $command);
+    }
 
-//        $op = $this->readAttribute($command, 'operation');
-//        $this->assertTrue($op->hasParam('timestamp'));
-//        $this->assertTrue($op->hasParam('steps'));
+    public function testNewResponseIsExpected()
+    {
+        $command = $this->client->getCommand('New' . $this->base);
+        $op = $this->readAttribute($command, 'operation');
+        $this->assertEquals('GenericOutput', $op->getResponseClass());
     }
 
     public function testPrepareNewCommand()
@@ -67,10 +77,13 @@ abstract class BaseTest extends \Guzzle\Tests\GuzzleTestCase
     {
         $command = $this->client->getCommand('Update' . $this->base);
         $this->assertInstanceOf('\Guzzle\Service\Command\OperationCommand', $command);
+    }
 
-//        $op = $this->readAttribute($command, 'operation');
-//        $this->assertTrue($op->hasParam('timestamp'));
-//        $this->assertTrue($op->hasParam('steps'));
+    public function testUpdateResponseIsExpected()
+    {
+        $command = $this->client->getCommand('Update' . $this->base);
+        $op = $this->readAttribute($command, 'operation');
+        $this->assertEquals($this->base, $op->getResponseClass());
     }
 
     public function testPrepareUpdateCommand()
@@ -95,6 +108,13 @@ abstract class BaseTest extends \Guzzle\Tests\GuzzleTestCase
     {
         $command = $this->client->getCommand('Delete' . $this->base);
         $this->assertInstanceOf('\Guzzle\Service\Command\OperationCommand', $command);
+    }
+
+    public function testDeleteResponseIsExpected()
+    {
+        $command = $this->client->getCommand('Delete' . $this->base);
+        $op = $this->readAttribute($command, 'operation');
+        $this->assertEquals('GenericOutput', $op->getResponseClass());
     }
 
     public function testPrepareDeleteCommand()

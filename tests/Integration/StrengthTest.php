@@ -4,6 +4,7 @@ namespace HealthGraph\Tests\Integration;
 
 /**
  * @group integration
+ * @group strength
  */
 class StrengthTest extends \Guzzle\Tests\GuzzleTestCase
 {

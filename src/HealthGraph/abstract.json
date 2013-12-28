@@ -125,83 +125,13 @@
                     "description": "The exercises performed during this strength training activity",
                     "minItems": 1,
                     "items": {
-                        "type": "object",
-                        "properties": {
-                            "primary_type": {
-                                "type": "string",
-                                "description": "The primary exercise type",
-                                "enum": ["Barbell Curl", "Dumbbell Curl", "Barbell Tricep Press", "Dumbbell Tricep Press", "Overhead Press", "Wrist Curl", "Tricep Kickback", "Bench Press", "Cable Crossover", "Dumbbell Fly", "Incline Bench", "Dips", "Pushup", "Pullup", "Back Raise", "Bent-Over Row", "Seated Row", "Chinup", "Lat Pulldown", "Seated Reverse Fly", "Military Press", "Upright Row", "Front Raise", "Side Lateral Raise", "Snatch", "Push Press", "Shrug", "Crunch Machine", "Crunch", "Ab Twist", "Bicycle Kick", "Hanging Leg Raise", "Hanging Knee Raise", "Reverse Crunch", "V Up", "Situp", "Squat", "Lunge", "Dead Lift", "Hamstring Curl", "Good Morning", "Clean", "Leg Press", "Leg Extension", "Other"]
-                            },
-                            "secondary_type": {
-                                "type": "string",
-                                "description": "The secondary exercise type"
-                            },
-                            "primary_muscle_group": {
-                                "type": "string",
-                                "description": "The primary muscle group",
-                                "required": true,
-                                "enum": ["Arms", "Chest", "Back", "Shoulders", "Abs", "Legs"]
-                            },
-                            "secondary_muscle_group": {
-                                "type": "string",
-                                "description": "The secondary muscle group",
-                                "enum": ["Arms", "Chest", "Back", "Shoulders", "Abs", "Legs"]
-                            },
-                            "routine": {
-                                "type": "string",
-                                "description": "Free-form tag for the routine of which this exercise is a part",
-                                "maxLength": 32
-                            },
-                            "notes": {
-                                "type": "string",
-                                "description": "Any notes for this exercise",
-                                "maxLength": 1024
-                            },
-                            "sets": {
-                                "type": "array",
-                                "description": "The sets performed during this exercise",
-                                "required": true,
-                                "minItems": 1,
-                                "items": {
-                                    "type": "object",
-                                    "properties": {
-                                        "weight": {
-                                            "type": "number",
-                                            "required": true
-                                        },
-                                        "repetitions": {
-                                            "type": "number",
-                                            "required": true
-                                        },
-                                        "notes": {
-                                            "type": "string",
-                                            "maxLength": 1024
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                        "$ref": "Exercise"
                     }
-                },
-                "post_to_facebook": {
-                    "type": "boolean",
-                    "location": "json",
-                    "description": "True to post this activity to Facebook, false to prevent posting (optional; if not specified, the user's default preference is used)"
-                },
-                "post_to_twitter": {
-                    "type": "boolean",
-                    "location": "json",
-                    "description": "True to post this activity to Twitter, false to prevent posting (optional; if not specified, the user's default preference is used)"
                 }
             }
         },
         "abstract.BackgroundActivitySet": {
             "parameters": {
-                "timestamp": {
-                    "location": "json",
-                    "type": "string",
-                    "description": "The timestamp (e.g., Sat, 1 Jan 2011 00:00:00)"
-                },
                 "calories_burned": {
                     "location": "json",
                     "type": "number",
@@ -211,16 +141,6 @@
                     "location": "json",
                     "type": "number",
                     "description": "The value of the measured quantity (omitted if not available)"
-                },
-                "post_to_twitter": {
-                    "location": "json",
-                    "type": "boolean",
-                    "description": "Whether to post these measurements to Twitter (optional; if omitted, the user's default setting will be used)"
-                },
-                "post_to_facebook": {
-                    "location": "json",
-                    "type": "boolean",
-                    "description": "Whether to post these measurements to Facebook (optional; if omitted, the user's default setting will be used)"
                 }
             }
         },
@@ -266,6 +186,40 @@
                     "type": "string",
                     "description": "The meal, as one of the following values: breakfast,lunch, dinner, snack, other, unspecified",
                     "enum": ["breakfast", "lunch", "dinner", "snack", "other", "unspecified"]
+                }
+            }
+        },
+        "abstract.SleepSet": {
+            "parameters": {
+                "total_sleep": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in min (omitted if not available)"
+                },
+                "deep": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in min (omitted if not available)"
+                },
+                "rem": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in min (omitted if not available)"
+                },
+                "light": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in min (omitted if not available)"
+                },
+                "awake": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in min (omitted if not available)"
+                },
+                "times_woken": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity (omitted if not available)"
                 }
             }
         }

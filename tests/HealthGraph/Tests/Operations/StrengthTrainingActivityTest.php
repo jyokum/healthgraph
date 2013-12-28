@@ -2,6 +2,9 @@
 
 namespace HealthGraph\Tests\Operations;
 
+/**
+ * @group strength
+ */
 class StrengthTrainingActivityTest extends BaseTest
 {
 
