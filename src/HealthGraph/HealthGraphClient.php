@@ -20,9 +20,12 @@ class HealthGraphClient extends Client
      *
      * @TODO update factory method and docblock for parameters
      */
-    public static function factory($config = array(), $logger = null)
+    public static function factory($config = array())
     {
-        $default = array('base_url' => 'https://api.runkeeper.com');
+        $default = array(
+            'base_url' => 'https://api.runkeeper.com',
+            'logger' => FALSE,
+        );
         $required = array('base_url');
 
         $config = Collection::fromConfig($config, $default, $required);
@@ -39,8 +42,8 @@ class HealthGraphClient extends Client
             new HealthGraphIteratorFactory(array("{$prefix}\\Common\\Iterator"))
         );
 
-        if ($logger) {
-            $adapter = new \Guzzle\Log\PsrLogAdapter($logger);
+        if ($config->get('logger')) {
+            $adapter = new \Guzzle\Log\PsrLogAdapter($config->get('logger'));
             $logPlugin = new \Guzzle\Plugin\Log\LogPlugin(
                 $adapter,
                 \Guzzle\Log\MessageFormatter::DEBUG_FORMAT
