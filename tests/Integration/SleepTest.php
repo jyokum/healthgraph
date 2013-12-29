@@ -4,9 +4,9 @@ namespace HealthGraph\Tests\Integration;
 
 /**
  * @group integration
- * @group nutrition
+ * @group background
  */
-class NutritionTest extends \Guzzle\Tests\GuzzleTestCase
+class SleepTest extends \Guzzle\Tests\GuzzleTestCase
 {
 
     protected static $client;
@@ -26,14 +26,14 @@ class NutritionTest extends \Guzzle\Tests\GuzzleTestCase
     public function testUserIsLoaded()
     {
         $this->assertTrue(is_numeric(self::$client->getConfig('hg.userID')));
-        $this->assertNotNull(self::$client->getConfig('hg.nutrition'));
+        $this->assertNotNull(self::$client->getConfig('hg.background_activities'));
     }
 
-    public function testNewNutritionSet()
+    public function testNewSleepSet()
     {
-        $command = self::$client->getCommand('NewNutritionSet', array(
+        $command = self::$client->getCommand('NewSleepSet', array(
             'timestamp' => date(DATE_RFC1123),
-            'calories' => 200,
+            'total_sleep' => 300,
         ));
         $result = $command->execute();
 
@@ -43,33 +43,33 @@ class NutritionTest extends \Guzzle\Tests\GuzzleTestCase
     }
 
     /**
-     * @depends testNewNutritionSet
+     * @depends testNewSleepSet
      */
-    public function testGetNutritionSet($uri)
+    public function testGetSleepSet($uri)
     {
-        $command = self::$client->getCommand('GetNutritionSet', array('uri' => $uri));
+        $command = self::$client->getCommand('GetSleepSet', array('uri' => $uri));
         $result = $command->execute();
         $this->assertNotNull($result->get('uri'));
-        $this->assertEquals(200, $result->get('calories'));
+        $this->assertEquals(300, $result->get('total_sleep'));
     }
 
     /**
-     * @depends testNewNutritionSet
+     * @depends testNewSleepSet
      */
-    public function testUpdateNutritionSet($uri)
+    public function testUpdateSleepSet($uri)
     {
-        $command = self::$client->getCommand('UpdateNutritionSet', array(
+        $command = self::$client->getCommand('UpdateSleepSet', array(
             "uri" => $uri,
-            "calories" => 250
+            "total_sleep" => 250
         ));
         $result = $command->execute();
 
-        $this->assertEquals(250, $result->get('calories'));
+        $this->assertEquals(250, $result->get('total_sleep'));
     }
 
-    public function testGetNutritionSetFeed()
+    public function testGetSleepSetFeed()
     {
-        $command = self::$client->getIterator('GetNutritionSetFeed')->setLimit(5);
+        $command = self::$client->getIterator('GetSleepSetFeed')->setLimit(5);
         $result = $command->toArray();
 
         $this->assertGreaterThanOrEqual(1, count($result));
@@ -78,20 +78,20 @@ class NutritionTest extends \Guzzle\Tests\GuzzleTestCase
 
     public function testIterateFeedItems()
     {
-        $feed = self::$client->getIterator('GetNutritionSetFeed')->setLimit(5);
+        $feed = self::$client->getIterator('GetSleepSetFeed')->setLimit(5);
         foreach ($feed as $item) {
-            $command = self::$client->getCommand('GetNutritionSet', array('uri' => $item['uri']));
+            $command = self::$client->getCommand('GetSleepSet', array('uri' => $item['uri']));
             $result = $command->execute();
             $this->assertEquals($item['uri'], $result->get('uri'));
         }
     }
 
     /**
-     * @depends testNewNutritionSet
+     * @depends testNewSleepSet
      */
-    public function testDeleteNutritionSet($uri)
+    public function testDeleteSleepSet($uri)
     {
-        $command = self::$client->getCommand('DeleteNutritionSet', array('uri' => $uri));
+        $command = self::$client->getCommand('DeleteSleepSet', array('uri' => $uri));
         $result = $command->execute();
         $this->assertEquals(204, $result->get('status'));
     }

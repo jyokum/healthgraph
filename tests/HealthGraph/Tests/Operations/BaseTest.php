@@ -16,10 +16,16 @@ abstract class BaseTest extends \Guzzle\Tests\GuzzleTestCase
     public function testOperationsExist()
     {
         $desc = $this->client->getDescription();
-        $this->assertTrue($desc->hasOperation('Get' . $this->base));
-        $this->assertTrue($desc->hasOperation('New' . $this->base));
-        $this->assertTrue($desc->hasOperation('Update' . $this->base));
-        $this->assertTrue($desc->hasOperation('Delete' . $this->base));
+        $this->assertTrue($desc->hasOperation('Get' . $this->base), 'Get' . $this->base . ' operation is missing');
+        $this->assertTrue($desc->hasOperation('New' . $this->base), 'New' . $this->base . ' operation is missing');
+        $this->assertTrue($desc->hasOperation('Update' . $this->base), 'Update' . $this->base . ' operation is missing');
+        $this->assertTrue($desc->hasOperation('Delete' . $this->base), 'Delete' . $this->base . ' operation is missing');
+    }
+
+    public function testModelsExist()
+    {
+        $desc = $this->client->getDescription();
+        $this->assertTrue($desc->hasModel($this->base), $this->base . ' model is missing');
     }
 
     public function testGetCommandIsValid()

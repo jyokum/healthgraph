@@ -4,9 +4,9 @@ namespace HealthGraph\Tests\Integration;
 
 /**
  * @group integration
- * @group nutrition
+ * @group weight
  */
-class NutritionTest extends \Guzzle\Tests\GuzzleTestCase
+class WeightTest extends \Guzzle\Tests\GuzzleTestCase
 {
 
     protected static $client;
@@ -26,14 +26,14 @@ class NutritionTest extends \Guzzle\Tests\GuzzleTestCase
     public function testUserIsLoaded()
     {
         $this->assertTrue(is_numeric(self::$client->getConfig('hg.userID')));
-        $this->assertNotNull(self::$client->getConfig('hg.nutrition'));
+        $this->assertNotNull(self::$client->getConfig('hg.weight'));
     }
 
-    public function testNewNutritionSet()
+    public function testNewWeightSet()
     {
-        $command = self::$client->getCommand('NewNutritionSet', array(
+        $command = self::$client->getCommand('NewWeightSet', array(
             'timestamp' => date(DATE_RFC1123),
-            'calories' => 200,
+            'weight' => 80,
         ));
         $result = $command->execute();
 
@@ -43,33 +43,33 @@ class NutritionTest extends \Guzzle\Tests\GuzzleTestCase
     }
 
     /**
-     * @depends testNewNutritionSet
+     * @depends testNewWeightSet
      */
-    public function testGetNutritionSet($uri)
+    public function testGetWeightSet($uri)
     {
-        $command = self::$client->getCommand('GetNutritionSet', array('uri' => $uri));
+        $command = self::$client->getCommand('GetWeightSet', array('uri' => $uri));
         $result = $command->execute();
         $this->assertNotNull($result->get('uri'));
-        $this->assertEquals(200, $result->get('calories'));
+        $this->assertEquals(80, $result->get('weight'));
     }
 
     /**
-     * @depends testNewNutritionSet
+     * @depends testNewWeightSet
      */
-    public function testUpdateNutritionSet($uri)
+    public function testUpdateWeightSet($uri)
     {
-        $command = self::$client->getCommand('UpdateNutritionSet', array(
+        $command = self::$client->getCommand('UpdateWeightSet', array(
             "uri" => $uri,
-            "calories" => 250
+            "weight" => 79.38
         ));
         $result = $command->execute();
 
-        $this->assertEquals(250, $result->get('calories'));
+        $this->assertEquals(79.38, $result->get('weight'));
     }
 
-    public function testGetNutritionSetFeed()
+    public function testGetWeightSetFeed()
     {
-        $command = self::$client->getIterator('GetNutritionSetFeed')->setLimit(5);
+        $command = self::$client->getIterator('GetWeightSetFeed')->setLimit(5);
         $result = $command->toArray();
 
         $this->assertGreaterThanOrEqual(1, count($result));
@@ -78,20 +78,20 @@ class NutritionTest extends \Guzzle\Tests\GuzzleTestCase
 
     public function testIterateFeedItems()
     {
-        $feed = self::$client->getIterator('GetNutritionSetFeed')->setLimit(5);
+        $feed = self::$client->getIterator('GetWeightSetFeed')->setLimit(5);
         foreach ($feed as $item) {
-            $command = self::$client->getCommand('GetNutritionSet', array('uri' => $item['uri']));
+            $command = self::$client->getCommand('GetWeightSet', array('uri' => $item['uri']));
             $result = $command->execute();
             $this->assertEquals($item['uri'], $result->get('uri'));
         }
     }
 
     /**
-     * @depends testNewNutritionSet
+     * @depends testNewWeightSet
      */
-    public function testDeleteNutritionSet($uri)
+    public function testDeleteWeightSet($uri)
     {
-        $command = self::$client->getCommand('DeleteNutritionSet', array('uri' => $uri));
+        $command = self::$client->getCommand('DeleteWeightSet', array('uri' => $uri));
         $result = $command->execute();
         $this->assertEquals(204, $result->get('status'));
     }

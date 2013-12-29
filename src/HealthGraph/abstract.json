@@ -222,6 +222,35 @@
                     "description": "The value of the measured quantity (omitted if not available)"
                 }
             }
+        },
+        "abstract.WeightSet": {
+            "parameters": {
+                "weight": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in kg"
+                },
+                "free_mass": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in kg"
+                },
+                "fat_percent": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity"
+                },
+                "mass_weight": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in kg"
+                },
+                "bmi": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity"
+                }
+            }
         }
     }
 }
