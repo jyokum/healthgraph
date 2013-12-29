@@ -17,7 +17,8 @@ class WeightSetTest extends BaseTest
     public function testPrepareNewCommand()
     {
         $command = $this->client->getCommand('New' . $this->base, array(
-            'timestamp' => 'Sat, 1 Jan 2011 00:00:00'
+            'timestamp' => 'Sat, 1 Jan 2011 00:00:00',
+            'weight' => 75,
         ));
         $command->prepare();
         $this->assertTrue($command->isPrepared());

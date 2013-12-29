@@ -630,6 +630,12 @@
                     "type": "string",
                     "description": "The timestamp (e.g., Sat, 1 Jan 2011 00:00:00)"
                 },
+                "weight": {
+                    "required": true,
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in kg"
+                },
                 "post_to_twitter": {
                     "location": "json",
                     "type": "boolean",
