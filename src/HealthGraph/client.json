@@ -915,7 +915,9 @@
         },
         "DiabetesMeasurementSet": {
             "type": "object",
-            "additionalProperties": false,
+            "additionalProperties": {
+                "$ref": "GeneralResponseItems"
+            },
             "properties": {
                 "uri": {"location": "json", "type": "string", "description": "The URI for this measurement set"},
                 "userID": {"location": "json", "type": "integer", "description": "The unique ID for the user"},
@@ -926,25 +928,7 @@
                 "hemoglobin_a1c": {"location": "json", "type": "number", "description": "The value of the measured quantity in g/dL"},
                 "insulin": {"location": "json", "type": "number", "description": "The value of the measured quantity in U"},
                 "c_peptide": {"location": "json", "type": "number", "description": "The value of the measured quantity in ng/mL"},
-                "triglyceride": {"location": "json", "type": "number", "description": "The value of the measured quantity in mg/dL"},
-                "source": {"location": "json", "type": "string", "description": "The name of the application that last modified this measurement set"},
-                "previous": {"location": "json", "type": "string", "description": "The URI of the previous measurement set for the user (omitted for the oldest measurement set)"},
-                "next": {"location": "json", "type": "string", "description": "The URI of the next measurement set for the user (omitted for the most-recent measurement set)"},
-                "nearest_fitness_activity": {"location": "json", "type": "string", "description": "The URI of the fitness activity closest in time to this activity for the user (omitted if no fitness activities have been recorded)"},
-                "nearest_teammate_fitness_activity": {"location": "json", "type": "array", "description": "The URIs of the fitness activities closest in time to this activity for each friend (empty if no fitness activities have been recorded)"},
-                "nearest_strength_training_activity": {"location": "json", "type": "string", "description": "The URI of the strength training activity closest in time to this activity for the user (omitted if no strength training activities have been recorded)"},
-                "nearest_teammate_strength_training_activities": {"location": "json", "type": "array", "description": "The URIs of the strength training activities closest in time to this activity for each friend (empty if no strength training activities have been recorded)"},
-                "nearest_teammate_background_activities": {"location": "json", "type": "array", "description": "The URIs of the background activities closest in time to this activity for each friend (empty if no background activities have been recorded)"},
-                "nearest_sleep": {"location": "json", "type": "string", "description": "The URI of the sleep measurement set closest in time to this activity for the user (omitted if no sleep measurements have been taken)"},
-                "nearest_teammate_sleep": {"location": "json", "type": "array", "description": "The URIs of the sleep measurement sets closest in time to this activity for each friend (empty if no sleep measurements have been taken)"},
-                "nearest_nutrition": {"location": "json", "type": "string", "description": "The URI of the nutrition measurement sets closest in time to this activity for the user (omitted if no nutrition measurements have been token)"},
-                "nearest_teammate_nutrition": {"location": "json", "type": "array", "description": "The URIs of the nutrition measurement sets closest in time to this activity for each friend (empty if no nutrition measurements have been token)"},
-                "nearest_weight": {"location": "json", "type": "string", "description": "The URI of the weight measurement sets closest in time to this activity for the user (omitted if no weight measurements have been token)"},
-                "nearest_teammate_weight": {"location": "json", "type": "array", "description": "The URIs of the weight measurement sets closest in time to this activity for each friend (empty if no weight measurements have been token)"},
-                "nearest_general_measurement": {"location": "json", "type": "string", "description": "The URI of the general measurement set measurement closest in time to this activity for the user (omitted if no general measurements have been token)"},
-                "nearest_teammate_general_measurements": {"location": "json", "type": "array", "description": "The URIs of the general measurement sets closest in time to this activity for each friend (empty if no general measurements have been token)"},
-                "nearest_diabetes": {"location": "json", "type": "string", "description": "The URI of the diabetes measurement sets closest in time to this activity for the user (omitted if no diabetes measurements have been token)"},
-                "nearest_teammate_diabetes": {"location": "json", "type": "array", "description": "The URIs of the diabetes measurement sets closest in time to this activity for each friend (empty if no diabetes measurements have been token)"}
+                "triglyceride": {"location": "json", "type": "number", "description": "The value of the measured quantity in mg/dL"}
             }
         },
         "FitnessActivityFeedResponse": {
@@ -974,7 +958,9 @@
         },
         "FitnessActivity": {
             "type": "object",
-            "additionalProperties": false,
+            "additionalProperties": {
+                "$ref": "GeneralResponseItems"
+            },
             "properties": {
                 "uri": {
                     "type": "string",
@@ -1019,27 +1005,9 @@
                 },
                 "share": {"type": "string"},
                 "share_map": {"type": "string"},
-                "source": {"type": "string"},
                 "entry_mode": {"type": "string"},
                 "activity": {"type": "string"},
-                "comments": {"type": "string"},
-                "previous": {"type": "string"},
-                "next": {"type": "string"},
-                "nearest_teammate_fitness_activities": {"type": "string"},
-                "nearest_strength_training_activity": {"type": "string"},
-                "nearest_teammate_strength_training_activities": {"type": "string"},
-                "nearest_background_activity": {"type": "string"},
-                "nearest_teammate_background_activities": {"type": "string"},
-                "nearest_sleep": {"type": "string"},
-                "nearest_teammate_sleep": {"type": "string"},
-                "nearest_nutrition": {"type": "string"},
-                "nearest_teammate_nutrition": {"type": "string"},
-                "nearest_weight": {"type": "string"},
-                "nearest_teammate_weight": {"type": "string"},
-                "nearest_general_measurement": {"type": "string"},
-                "nearest_teammate_general_measurements": {"type": "string"},
-                "nearest_diabetes": {"type": "string"},
-                "nearest_teammate_diabetes": {"type": "string"}
+                "comments": {"type": "string"}
             }
         },
         "StrengthTrainingActivityFeedResponse": {
@@ -1063,23 +1031,21 @@
         },
         "StrengthTrainingActivity": {
             "type": "object",
-            "additionalProperties": false,
+            "additionalProperties": {
+                "$ref": "GeneralResponseItems"
+            },
             "properties": {
                 "uri": {
                     "type": "string",
-                    "location": "json",
-                    "description": "The URI for this activity"
+                    "location": "json"
                 },
-                "userID ": {
-                    "type": "string",
-                    "description": "The unique ID of the user for the activity"
-                },
+                "userID": {"type": "integer"},
                 "start_time ": {
                     "type": "string",
                     "description": "The starting time for the activity (e.g., Sat, 1 Jan 2011 00:00:00)"
                 },
                 "total_calories ": {
-                    "type": "string",
+                    "type": "number",
                     "description": "The total calories burned (omitted if not available)"
                 },
                 "notes": {
@@ -1091,81 +1057,9 @@
                     "location": "json",
                     "items": {"$ref": "Exercise"}
                 },
-                "source ": {
-                    "type": "string",
-                    "description": "The name of the application that last modified this activity"
-                },
                 "comments ": {
                     "type": "string",
                     "description": "The URI of the comment thread for this activity"
-                },
-                "previous ": {
-                    "type": "string",
-                    "description": "The URI of the previous activity in the user's fitness feed (omitted for the oldest activity)"
-                },
-                "next ": {
-                    "type": "string",
-                    "description": "The URI of the next activity in the user's fitness feed (omitted for the most-recent activity)"
-                },
-                "nearest_fitness_activity ": {
-                    "type": "string",
-                    "description": "The URI of the fitness activity closest in time to this activity for the user (omitted if no fitness activities have been recorded)"
-                },
-                "nearest_teammate_fitness_activities": {
-                    "type": "string",
-                    "description": "The URIs of the fitness activities closest in time to this activity for each friend (empty if no fitness activities have been recorded)"
-                },
-                "nearest_teammate_strength_training_activities": {
-                    "type": "string",
-                    "description": "The URIs of the strength training activities closest in time to this activity for each friend (empty if no strength training activities have been recorded)"
-                },
-                "nearest_background_activity": {
-                    "type": "string",
-                    "description": "The URI of the background activity closest in time to this activity for the user (omitted if no background activities have been recorded)"
-                },
-                "nearest_teammate_background_activities ": {
-                    "type": "string",
-                    "description": "The URIs of the background activities closest in time to this activity for each friend (empty if no background activities have been recorded)"
-                },
-                "nearest_sleep": {
-                    "type": "string",
-                    "description": "The URI of the sleep measurements closest in time to this activity for the user (omitted if no sleep measurements have been taken)"
-                },
-                "nearest_teammate_sleep ": {
-                    "type": "string",
-                    "description": "The URIs of the sleep measurements closest in time to this activity for each friend (empty if no sleep measurements have been taken)"
-                },
-                "nearest_nutrition": {
-                    "type": "string",
-                    "description": "The URI of the nutrition measurement closest in time to this activity for the user (omitted if no nutrition measurements have been token)"
-                },
-                "nearest_teammate_nutrition ": {
-                    "type": "string",
-                    "description": "The URIs of the nutrition measurement closest in time to this activity for each friend (empty if no nutrition measurements have been token)"
-                },
-                "nearest_weight ": {
-                    "type": "string",
-                    "description": "The URI of the weight measurement closest in time to this activity for the user (omitted if no weight measurements have been token)"
-                },
-                "nearest_teammate_weight": {
-                    "type": "string",
-                    "description": "The URIs of the weight measurements closest in time to this activity for each friend (empty if no weight measurements have been token)"
-                },
-                "nearest_general_measurement": {
-                    "type": "string",
-                    "description": "The URI of the general measurement measurement closest in time to this activity for the user (omitted if no general measurements have been token)"
-                },
-                "nearest_teammate_general_measurements": {
-                    "type": "string",
-                    "description": "The URIs of the general measurements closest in time to this activity for each friend (empty if no general measurements have been token)"
-                },
-                "nearest_diabetes ": {
-                    "type": "string",
-                    "description": "The URI of the diabetes measurement closest in time to this activity for the user (omitted if no diabetes measurements have been token)"
-                },
-                "nearest_teammate_diabetes": {
-                    "type": "string",
-                    "description": "The URIs of the diabetes measurements closest in time to this activity for each friend (empty if no diabetes measurements have been token)"
                 }
             }
         },
@@ -1192,7 +1086,9 @@
         },
         "BackgroundActivitySet": {
             "type": "object",
-            "additionalProperties": false,
+            "additionalProperties": {
+                "$ref": "GeneralResponseItems"
+            },
             "properties": {
                 "uri": {
                     "location": "json",
@@ -1214,78 +1110,6 @@
                 "steps": {
                     "type": "number",
                     "description": "The value of the measured quantity (omitted if not available)"
-                },
-                "source": {
-                    "type": "string",
-                    "description": "The name of the application that last modified this measurement set"
-                },
-                "previous": {
-                    "type": "string",
-                    "description": "The URI of the previous measurement set for the user (omitted for the oldest measurement set)"
-                },
-                "next": {
-                    "type": "string",
-                    "description": "The URI of the next measurement set for the user (omitted for the most-recent measurement set)"
-                },
-                "nearest_fitness_activity": {
-                    "type": "string",
-                    "description": "The URI of the fitness activity closest in time to this activity for the user (omitted if no fitness activities have been recorded)"
-                },
-                "nearest_teammate_fitness_activity": {
-                    "type": "array",
-                    "description": "The URIs of the fitness activities closest in time to this activity for each friend (empty if no fitness activities have been recorded)"
-                },
-                "nearest_strength_training_activity": {
-                    "type": "string",
-                    "description": "The URI of the strength training activity closest in time to this activity for the user (omitted if no strength training activities have been recorded)"
-                },
-                "nearest_teammate_strength_training_activities": {
-                    "type": "array",
-                    "description": "The URIs of the strength training activities closest in time to this activity for each friend (empty if no strength training activities have been recorded)"
-                },
-                "nearest_teammate_background_activities": {
-                    "type": "array",
-                    "description": "The URIs of the background activities closest in time to this activity for each friend (empty if no background activities have been recorded)"
-                },
-                "nearest_sleep": {
-                    "type": "string",
-                    "description": "The URI of the sleep measurement set closest in time to this activity for the user (omitted if no sleep measurements have been taken)"
-                },
-                "nearest_teammate_sleep": {
-                    "type": "array",
-                    "description": "The URIs of the sleep measurement sets closest in time to this activity for each friend (empty if no sleep measurements have been taken)"
-                },
-                "nearest_nutrition": {
-                    "type": "string",
-                    "description": "The URI of the nutrition measurement sets closest in time to this activity for the user (omitted if no nutrition measurements have been token)"
-                },
-                "nearest_teammate_nutrition": {
-                    "type": "array",
-                    "description": "The URIs of the nutrition measurement sets closest in time to this activity for each friend (empty if no nutrition measurements have been token)"
-                },
-                "nearest_weight": {
-                    "type": "string",
-                    "description": "The URI of the weight measurement sets closest in time to this activity for the user (omitted if no weight measurements have been token)"
-                },
-                "nearest_teammate_weight": {
-                    "type": "array",
-                    "description": "The URIs of the weight measurement sets closest in time to this activity for each friend (empty if no weight measurements have been token)"
-                },
-                "nearest_general_measurement": {
-                    "type": "string",
-                    "description": "The URI of the general measurement set measurement closest in time to this activity for the user (omitted if no general measurements have been token)"
-                },
-                "nearest_teammate_general_measurements": {
-                    "type": "array",
-                    "description": "The URIs of the general measurement sets closest in time to this activity for each friend (empty if no general measurements have been token)"
-                },
-                "nearest_diabetes": {
-                    "type": "string",
-                    "description": "The URI of the diabetes measurement sets closest in time to this activity for the user (omitted if no diabetes measurements have been token)"
-                },
-                "nearest_teammate_diabetes": {
-                    "type": "array",
-                    "description": "The URIs of the diabetes measurement sets closest in time to this activity for each friend (empty if no diabetes measurements have been token)"
                 }
             }
         },
@@ -1317,7 +1141,9 @@
         },
         "NutritionSet": {
             "type": "object",
-            "additionalProperties": false,
+            "additionalProperties": {
+                "$ref": "GeneralResponseItems"
+            },
             "properties": {
                 "uri": {
                     "type": "string",
@@ -1363,86 +1189,6 @@
                 "meal": {
                     "type": "string",
                     "description": "The meal, as one of the following values:breakfast, lunch, dinner, snack, other,unspecified"
-                },
-                "source": {
-                    "type": "string",
-                    "description": "The name of the application that last modified this measurement set"
-                },
-                "previous": {
-                    "type": "string",
-                    "description": "The URI of the previous measurement set for the user (omitted for the oldest measurement set)"
-                },
-                "next": {
-                    "type": "string",
-                    "description": "The URI of the next measurement set for the user (omitted for the most-recent measurement set)"
-                },
-                "nearest_fitness_activity": {
-                    "type": "string",
-                    "description": "The URI of the fitness activity closest in time to this activity for the user (omitted if no fitness activities have been recorded)"
-                },
-                "nearest_teammate_fitness_activities": {
-                    "type": "array",
-                    "description": "The URIs of the fitness activities closest in time to this activity for each friend (empty if no fitness activities have been recorded)",
-                    "items": {"$ref": "Uri"}
-                },
-                "nearest_strength_training_activity": {
-                    "type": "string",
-                    "description": "The URI of the strength training activity closest in time to this activity for the user (omitted if no strength training activities have been recorded)"
-                },
-                "nearest_teammate_strength_training_activities": {
-                    "type": "array",
-                    "description": "The URIs of the strength training activities closest in time to this activity for each friend (empty if no strength training activities have been recorded)",
-                    "items": {"$ref": "Uri"}
-                },
-                "nearest_teammate_background_activities": {
-                    "type": "array",
-                    "description": "The URIs of the background activities closest in time to this activity for each friend (empty if no background activities have been recorded)",
-                    "items": {"$ref": "Uri"}
-                },
-                "nearest_sleep": {
-                    "type": "string",
-                    "description": "The URI of the sleep measurement set closest in time to this activity for the user (omitted if no sleep measurements have been taken)"
-                },
-                "nearest_teammate_sleep": {
-                    "type": "array",
-                    "description": "The URIs of the sleep measurement sets closest in time to this activity for each friend (empty if no sleep measurements have been taken)",
-                    "items": {"$ref": "Uri"}
-                },
-                "nearest_nutrition": {
-                    "type": "string",
-                    "description": "The URI of the nutrition measurement sets closest in time to this activity for the user (omitted if no nutrition measurements have been token)"
-                },
-                "nearest_teammate_nutrition": {
-                    "type": "array",
-                    "description": "The URIs of the nutrition measurement sets closest in time to this activity for each friend (empty if no nutrition measurements have been token)",
-                    "items": {"$ref": "Uri"}
-                },
-                "nearest_weight": {
-                    "type": "string",
-                    "description": "The URI of the weight measurement sets closest in time to this activity for the user (omitted if no weight measurements have been token)"
-                },
-                "nearest_teammate_weight": {
-                    "type": "array",
-                    "description": "The URIs of the weight measurement sets closest in time to this activity for each friend (empty if no weight measurements have been token)",
-                    "items": {"$ref": "Uri"}
-                },
-                "nearest_general_measurement": {
-                    "type": "string",
-                    "description": "The URI of the general measurement set measurement closest in time to this activity for the user (omitted if no general measurements have been token)"
-                },
-                "nearest_teammate_general_measurements": {
-                    "type": "array",
-                    "description": "The URIs of the general measurement sets closest in time to this activity for each friend (empty if no general measurements have been token)",
-                    "items": {"$ref": "Uri"}
-                },
-                "nearest_diabetes": {
-                    "type": "string",
-                    "description": "The URI of the diabetes measurement sets closest in time to this activity for the user (omitted if no diabetes measurements have been token)"
-                },
-                "nearest_teammate_diabetes": {
-                    "type": "array",
-                    "description": "The URIs of the diabetes measurement sets closest in time to this activity for each friend (empty if no diabetes measurements have been token)",
-                    "items": {"$ref": "Uri"}
                 }
             }
         },
@@ -1471,6 +1217,9 @@
         },
         "SleepSet": {
             "type": "object",
+            "additionalProperties": {
+                "$ref": "GeneralResponseItems"
+            },
             "properties": {
                 "uri": {
                     "location": "json",
@@ -1508,78 +1257,6 @@
                 "times_woken": {
                     "type": "number",
                     "description": "The value of the measured quantity (omitted if not available)"
-                },
-                "source": {
-                    "type": "string",
-                    "description": "The name of the application that last modified this measurement set"
-                },
-                "previous": {
-                    "type": "string",
-                    "description": "The URI of the previous measurement set for the user (omitted for the oldest measurement set)"
-                },
-                "next": {
-                    "type": "string",
-                    "description": "The URI of the next measurement set for the user (omitted for the most-recent measurement set)"
-                },
-                "nearest_fitness_activity": {
-                    "type": "string",
-                    "description": "The URI of the fitness activity closest in time to this activity for the user (omitted if no fitness activities have been recorded)"
-                },
-                "nearest_teammate_fitness_activity": {
-                    "type": "array",
-                    "description": "The URIs of the fitness activities closest in time to this activity for each friend (empty if no fitness activities have been recorded)"
-                },
-                "nearest_strength_training_activity": {
-                    "type": "string",
-                    "description": "The URI of the strength training activity closest in time to this activity for the user (omitted if no strength training activities have been recorded)"
-                },
-                "nearest_teammate_strength_training_activities": {
-                    "type": "array",
-                    "description": "The URIs of the strength training activities closest in time to this activity for each friend (empty if no strength training activities have been recorded)"
-                },
-                "nearest_teammate_background_activities": {
-                    "type": "array",
-                    "description": "The URIs of the background activities closest in time to this activity for each friend (empty if no background activities have been recorded)"
-                },
-                "nearest_sleep": {
-                    "type": "string",
-                    "description": "The URI of the sleep measurement set closest in time to this activity for the user (omitted if no sleep measurements have been taken)"
-                },
-                "nearest_teammate_sleep": {
-                    "type": "array",
-                    "description": "The URIs of the sleep measurement sets closest in time to this activity for each friend (empty if no sleep measurements have been taken)"
-                },
-                "nearest_nutrition": {
-                    "type": "string",
-                    "description": "The URI of the nutrition measurement sets closest in time to this activity for the user (omitted if no nutrition measurements have been token)"
-                },
-                "nearest_teammate_nutrition": {
-                    "type": "array",
-                    "description": "The URIs of the nutrition measurement sets closest in time to this activity for each friend (empty if no nutrition measurements have been token)"
-                },
-                "nearest_weight": {
-                    "type": "string",
-                    "description": "The URI of the weight measurement sets closest in time to this activity for the user (omitted if no weight measurements have been token)"
-                },
-                "nearest_teammate_weight": {
-                    "type": "array",
-                    "description": "The URIs of the weight measurement sets closest in time to this activity for each friend (empty if no weight measurements have been token)"
-                },
-                "nearest_general_measurement": {
-                    "type": "string",
-                    "description": "The URI of the general measurement set measurement closest in time to this activity for the user (omitted if no general measurements have been token)"
-                },
-                "nearest_teammate_general_measurements": {
-                    "type": "array",
-                    "description": "The URIs of the general measurement sets closest in time to this activity for each friend (empty if no general measurements have been token)"
-                },
-                "nearest_diabetes": {
-                    "type": "string",
-                    "description": "The URI of the diabetes measurement sets closest in time to this activity for the user (omitted if no diabetes measurements have been token)"
-                },
-                "nearest_teammate_diabetes": {
-                    "type": "array",
-                    "description": "The URIs of the diabetes measurement sets closest in time to this activity for each friend (empty if no diabetes measurements have been token)"
                 }
             }
         },
@@ -1608,6 +1285,9 @@
         },
         "WeightSet": {
             "type": "object",
+            "additionalProperties": {
+                "$ref": "GeneralResponseItems"
+            },
             "properties": {
                 "uri": {"location": "json", "type": "string", "description": "The URI for this measurement set"},
                 "userID": {"location": "json", "type": "integer", "description": "The unique ID for the user"},
@@ -1616,25 +1296,7 @@
                 "free_mass": {"location": "json", "type": "number", "description": "The value of the measured quantity in kg (omitted if not available)"},
                 "fat_percent": {"location": "json", "type": "number", "description": "The value of the measured quantity (omitted if not available)"},
                 "mass_weight": {"location": "json", "type": "number", "description": "The value of the measured quantity in kg (omitted if not available)"},
-                "bmi": {"location": "json", "type": "number", "description": "The value of the measured quantity (omitted if not available)"},
-                "source": {"location": "json", "type": "string", "description": "The name of the application that last modified this measurement set"},
-                "previous": {"location": "json", "type": "string", "description": "The URI of the previous measurement set for the user (omitted for the oldest measurement set)"},
-                "next": {"location": "json", "type": "string", "description": "The URI of the next measurement set for the user (omitted for the most-recent measurement set)"},
-                "nearest_fitness_activity": {"location": "json", "type": "string", "description": "The URI of the fitness activity closest in time to this activity for the user (omitted if no fitness activities have been recorded)"},
-                "nearest_teammate_fitness_activity": {"location": "json", "type": "array", "description": "The URIs of the fitness activities closest in time to this activity for each friend (empty if no fitness activities have been recorded)"},
-                "nearest_strength_training_activity": {"location": "json", "type": "string", "description": "The URI of the strength training activity closest in time to this activity for the user (omitted if no strength training activities have been recorded)"},
-                "nearest_teammate_strength_training_activities": {"location": "json", "type": "array", "description": "The URIs of the strength training activities closest in time to this activity for each friend (empty if no strength training activities have been recorded)"},
-                "nearest_teammate_background_activities": {"location": "json", "type": "array", "description": "The URIs of the background activities closest in time to this activity for each friend (empty if no background activities have been recorded)"},
-                "nearest_sleep": {"location": "json", "type": "string", "description": "The URI of the sleep measurement set closest in time to this activity for the user (omitted if no sleep measurements have been taken)"},
-                "nearest_teammate_sleep": {"location": "json", "type": "array", "description": "The URIs of the sleep measurement sets closest in time to this activity for each friend (empty if no sleep measurements have been taken)"},
-                "nearest_nutrition": {"location": "json", "type": "string", "description": "The URI of the nutrition measurement sets closest in time to this activity for the user (omitted if no nutrition measurements have been token)"},
-                "nearest_teammate_nutrition": {"location": "json", "type": "array", "description": "The URIs of the nutrition measurement sets closest in time to this activity for each friend (empty if no nutrition measurements have been token)"},
-                "nearest_weight": {"location": "json", "type": "string", "description": "The URI of the weight measurement sets closest in time to this activity for the user (omitted if no weight measurements have been token)"},
-                "nearest_teammate_weight": {"location": "json", "type": "array", "description": "The URIs of the weight measurement sets closest in time to this activity for each friend (empty if no weight measurements have been token)"},
-                "nearest_general_measurement": {"location": "json", "type": "string", "description": "The URI of the general measurement set measurement closest in time to this activity for the user (omitted if no general measurements have been token)"},
-                "nearest_teammate_general_measurements": {"location": "json", "type": "array", "description": "The URIs of the general measurement sets closest in time to this activity for each friend (empty if no general measurements have been token)"},
-                "nearest_diabetes": {"location": "json", "type": "string", "description": "The URI of the diabetes measurement sets closest in time to this activity for the user (omitted if no diabetes measurements have been token)"},
-                "nearest_teammate_diabetes": {"location": "json", "type": "array", "description": "The URIs of the diabetes measurement sets closest in time to this activity for each friend (empty if no diabetes measurements have been token)"}
+                "bmi": {"location": "json", "type": "number", "description": "The value of the measured quantity (omitted if not available)"}
             }
         },
         "Calories": {
@@ -1781,6 +1443,85 @@
                 "notes": {
                     "type": "string"
                 }
+            }
+        },
+        "GeneralResponseItems": {
+            "type": "object",
+            "properties": {
+                "source": {
+                    "location": "json",
+                    "type": "string",
+                    "description": "The name of the application that last modified this measurement set"
+                },
+                "previous": {
+                    "type": "string",
+                    "description": "The URI of the previous measurement set for the user (omitted for the oldest measurement set)"
+                },
+                "next": {
+                    "type": "string",
+                    "description": "The URI of the next measurement set for the user (omitted for the most-recent measurement set)"
+                },
+                "nearest_fitness_activity": {
+                    "type": "string",
+                    "description": "The URI of the fitness activity closest in time to this activity for the user (omitted if no fitness activities have been recorded)"
+                },
+                "nearest_teammate_fitness_activity": {
+                    "type": "array",
+                    "description": "The URIs of the fitness activities closest in time to this activity for each friend (empty if no fitness activities have been recorded)"
+                },
+                "nearest_strength_training_activity": {
+                    "type": "string",
+                    "description": "The URI of the strength training activity closest in time to this activity for the user (omitted if no strength training activities have been recorded)"
+                },
+                "nearest_teammate_strength_training_activities": {
+                    "type": "array",
+                    "description": "The URIs of the strength training activities closest in time to this activity for each friend (empty if no strength training activities have been recorded)"
+                },
+                "nearest_teammate_background_activities": {
+                    "type": "array",
+                    "description": "The URIs of the background activities closest in time to this activity for each friend (empty if no background activities have been recorded)"
+                },
+                "nearest_sleep": {
+                    "type": "string",
+                    "description": "The URI of the sleep measurement set closest in time to this activity for the user (omitted if no sleep measurements have been taken)"
+                },
+                "nearest_teammate_sleep": {
+                    "type": "array",
+                    "description": "The URIs of the sleep measurement sets closest in time to this activity for each friend (empty if no sleep measurements have been taken)"
+                },
+                "nearest_nutrition": {
+                    "type": "string",
+                    "description": "The URI of the nutrition measurement sets closest in time to this activity for the user (omitted if no nutrition measurements have been token)"
+                },
+                "nearest_teammate_nutrition": {
+                    "type": "array",
+                    "description": "The URIs of the nutrition measurement sets closest in time to this activity for each friend (empty if no nutrition measurements have been token)"
+                },
+                "nearest_weight": {
+                    "type": "string",
+                    "description": "The URI of the weight measurement sets closest in time to this activity for the user (omitted if no weight measurements have been token)"
+                },
+                "nearest_teammate_weight": {
+                    "type": "array",
+                    "description": "The URIs of the weight measurement sets closest in time to this activity for each friend (empty if no weight measurements have been token)"
+                },
+                "nearest_general_measurement": {
+                    "type": "string",
+                    "description": "The URI of the general measurement set measurement closest in time to this activity for the user (omitted if no general measurements have been token)"
+                },
+                "nearest_teammate_general_measurements": {
+                    "type": "array",
+                    "description": "The URIs of the general measurement sets closest in time to this activity for each friend (empty if no general measurements have been token)"
+                },
+                "nearest_diabetes": {
+                    "type": "string",
+                    "description": "The URI of the diabetes measurement sets closest in time to this activity for the user (omitted if no diabetes measurements have been token)"
+                },
+                "nearest_teammate_diabetes": {
+                    "type": "array",
+                    "description": "The URIs of the diabetes measurement sets closest in time to this activity for each friend (empty if no diabetes measurements have been token)"
+                }
+
             }
         }
     }

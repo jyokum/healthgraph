@@ -28,6 +28,16 @@ abstract class BaseTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertTrue($desc->hasModel($this->base), $this->base . ' model is missing');
     }
 
+    public function testModelHasGeneralResponseItems()
+    {
+        $desc = $this->client->getDescription();
+        $mod = $desc->getModel($this->base);
+        $add = $mod->getAdditionalProperties();
+        $this->assertNotNull($mod->getProperty('uri'));
+        $this->assertNotNull($mod->getProperty('userID'));
+        $this->assertNotNull($add->getProperty('source'));
+    }
+
     public function testGetCommandIsValid()
     {
         $command = $this->client->getCommand('Get' . $this->base);
