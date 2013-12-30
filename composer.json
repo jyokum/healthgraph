@@ -1,8 +1,9 @@
 {
     "name": "jyokum/healthgraph",
     "type": "library",
-    "description": "Health Graph",
-    "keywords": ["Guzzle"],
+    "description": "PHP wrapper for the RunKeeper Health Graph API built on Guzzle",
+    "keywords": ["Health Graph", "RunKeeper", "Guzzle"],
+    "homepage": "https://github.com/jyokum/healthgraph",
     "authors": [
         {
             "name": "Jeff Yokum",

@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/jyokum/healthgraph.png?branch=master)](https://travis-ci.org/jyokum/healthgraph)
 # Health Graph API
 
-Guzzle client for interacting with the Health Graph API by RunKeeper
+PHP client wrapper for the RunKeeper Health Graph API
 
 ### Installation via Composer
 
