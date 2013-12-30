@@ -9,6 +9,9 @@ if (isset($GLOBALS['monolog_on']) && $GLOBALS['monolog_on']) {
     $log = new \Monolog\Logger('Log');
     $log->pushHandler(new \Monolog\Handler\StreamHandler($GLOBALS['monolog_log']));
 }
+ else {
+    $log = FALSE;
+}
 
 // Register services with the GuzzleTestCase
 Guzzle\Tests\GuzzleTestCase::setMockBasePath(__DIR__ . DIRECTORY_SEPARATOR . 'mock');
