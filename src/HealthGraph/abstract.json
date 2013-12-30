@@ -140,6 +140,130 @@
                 }
             }
         },
+        "abstract.GeneralMeasurementSet": {
+            "parameters": {
+                "systolic": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in mmHg"
+                },
+                "diastolic": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in mmHg"
+                },
+                "total_cholesterol": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in mg/dL"
+                },
+                "hdl": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in mg/dL"
+                },
+                "ldl": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in mg/dL"
+                },
+                "vitamin_d": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in ng/mL"
+                },
+                "hscrp": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in mg/L"
+                },
+                "crp": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in mg/L"
+                },
+                "tsh": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in mlU/L"
+                },
+                "uric_acid": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in mg/dL"
+                },
+                "resting_heartrate": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in bpm"
+                },
+                "blood_calcium": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in mg/dL"
+                },
+                "blood_magnesium": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in mg/dL"
+                },
+                "creatine_kinase": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in U/L"
+                },
+                "blood_vitamin_b12": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in pg/mL"
+                },
+                "blood_folic_acid": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in ng/mL"
+                },
+                "ferritin": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in ng/mL"
+                },
+                "il6": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in mg/dL"
+                },
+                "testosterone": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in mg/dL"
+                },
+                "blood_potassium": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in mg/dL"
+                },
+                "blood_sodium": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in mg/dL"
+                },
+                "blood_zinc": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in mug/dL"
+                },
+                "blood_chromium": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in mug/dL"
+                },
+                "white_cell_count": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in nmol/muL"
+                }
+            }
+        },
         "abstract.StrengthTrainingActivity": {
             "parameters": {
                 "start_time": {

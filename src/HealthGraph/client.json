@@ -666,6 +666,7 @@
             "extends": "abstract.feed",
             "uri": "{+hg.general_measurements}",
             "summary": "Returns general measurement activities for the given user.",
+            "responseClass": "GeneralMeasurementSetFeedResponse",
             "parameters": {
                 "Content-Type": {
                     "location": "header",
@@ -673,6 +674,67 @@
                     "default": "application/vnd.com.runkeeper.GeneralMeasurementSetFeed+json"
                 }
             }
+        },
+        "GetGeneralMeasurementSet": {
+            "uri": "{+uri}",
+            "httpMethod": "GET",
+            "responseClass": "GeneralMeasurementSet",
+            "parameters": {
+                "uri": {
+                    "location": "uri",
+                    "type": "string",
+                    "required": true
+                },
+                "Content-Type": {
+                    "location": "header",
+                    "static": true,
+                    "default": "application/vnd.com.runkeeper.GeneralMeasurementSet+json"
+                }
+            }
+        },
+        "NewGeneralMeasurementSet": {
+            "extends": "abstract.GeneralMeasurementSet",
+            "uri": "{+hg.general_measurements}",
+            "httpMethod": "POST",
+            "responseClass": "GenericOutput",
+            "additionalParameters": false,
+            "parameters": {
+                "Content-Type": {
+                    "location": "header",
+                    "static": true,
+                    "default": "application/vnd.com.runkeeper.NewGeneralMeasurementSet+json"
+                },
+                "timestamp": {
+                    "required": true,
+                    "location": "json",
+                    "type": "string",
+                    "description": "The timestamp (e.g., Sat, 1 Jan 2011 00:00:00)"
+                },
+                "post_to_twitter": {
+                    "location": "json",
+                    "type": "boolean",
+                    "description": "Whether to post these measurements to Twitter"
+                },
+                "post_to_facebook": {
+                    "location": "json",
+                    "type": "boolean",
+                    "description": "Whether to post these measurements to Facebook"
+                }
+            }
+        },
+        "UpdateGeneralMeasurementSet": {
+            "extends": ["abstract.update", "abstract.GeneralMeasurementSet"],
+            "responseClass": "GeneralMeasurementSet",
+            "parameters": {
+                "Content-Type": {
+                    "location": "header",
+                    "static": true,
+                    "default": "application/vnd.com.runkeeper.GeneralMeasurementSet+json"
+                }
+            }
+        },
+        "DeleteGeneralMeasurementSet": {
+            "extends": "abstract.delete"
         },
         "GetDiabetesMeasurementSetFeed": {
             "extends": "abstract.feed",
@@ -1008,6 +1070,168 @@
                 "entry_mode": {"type": "string"},
                 "activity": {"type": "string"},
                 "comments": {"type": "string"}
+            }
+        },
+        "GeneralMeasurementSetFeedResponse": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "items": {
+                    "type": "array",
+                    "location": "json",
+                    "items": {"$ref": "GeneralMeasurementSetFeedItem"}
+                }
+            }
+        },
+        "GeneralMeasurementSetFeedItem": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "start_time": {"type": "string"},
+                "uri": {"type": "string"}
+            }
+        },
+        "GeneralMeasurementSet": {
+            "type": "object",
+            "additionalProperties": {
+                "$ref": "GeneralResponseItems"
+            },
+            "properties": {
+                "uri": {
+                    "location": "json",
+                    "type": "string",
+                    "description": "The URI for this measurement set"
+                },
+                "userID": {
+                    "location": "json",
+                    "type": "integer",
+                    "description": "The unique ID for the user"
+                },
+                "timestamp": {
+                    "location": "json",
+                    "type": "string",
+                    "description": "The timestamp (e.g., Sat, 1 Jan 2011 00:00:00)"
+                },
+                "systolic": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in mmHg"
+                },
+                "diastolic": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in mmHg"
+                },
+                "total_cholesterol": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in mg/dL"
+                },
+                "hdl": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in mg/dL"
+                },
+                "ldl": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in mg/dL"
+                },
+                "vitamin_d": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in ng/mL"
+                },
+                "hscrp": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in mg/L"
+                },
+                "crp": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in mg/L"
+                },
+                "tsh": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in mlU/L"
+                },
+                "uric_acid": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in mg/dL"
+                },
+                "resting_heartrate": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in bpm"
+                },
+                "blood_calcium": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in mg/dL"
+                },
+                "blood_magnesium": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in mg/dL"
+                },
+                "creatine_kinase": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in U/L"
+                },
+                "blood_vitamin_b12": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in pg/mL"
+                },
+                "blood_folic_acid": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in ng/mL"
+                },
+                "ferritin": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in ng/mL"
+                },
+                "il6": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in mg/dL"
+                },
+                "testosterone": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in mg/dL"
+                },
+                "blood_potassium": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in mg/dL"
+                },
+                "blood_sodium": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in mg/dL"
+                },
+                "blood_zinc": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in mug/dL"
+                },
+                "blood_chromium": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in mug/dL"
+                },
+                "white_cell_count": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in nmol/muL"
+                }
             }
         },
         "StrengthTrainingActivityFeedResponse": {
