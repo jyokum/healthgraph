@@ -1,7 +1,9 @@
+[![Latest Stable Version](https://poser.pugx.org/jyokum/healthgraph/v/stable.png)](https://packagist.org/packages/jyokum/healthgraph)
+[![Total Downloads](https://poser.pugx.org/jyokum/healthgraph/downloads.png)](https://packagist.org/packages/jyokum/healthgraph)
 [![Build Status](https://travis-ci.org/jyokum/healthgraph.png?branch=master)](https://travis-ci.org/jyokum/healthgraph)
-# Health Graph API
+# Health Graph Client
 
-PHP client wrapper for the RunKeeper Health Graph API
+The Health Graph Client is a PHP wrapper for the Health Graph API
 
 ### Installation via Composer
 
