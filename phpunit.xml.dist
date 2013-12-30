@@ -6,6 +6,8 @@
         <var name="redirect_url" value="http://example.com" />
         <var name="access_token" value="" />
         <var name="token_type" value="" />
+        <var name="monolog_on" value="false" />
+        <var name="monolog_log" value="./client.log" />
     </php>
     <testsuites>
         <testsuite name="HealthGraph">
