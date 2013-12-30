@@ -39,6 +39,45 @@
                 }
             }
         },
+        "abstract.DiabetesMeasurementSet": {
+            "parameters": {
+                "fasting_plasma_glucose_test": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in mg/dL"
+                },
+                "oral_glucose_tolerance_test": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in mg/dL"
+                },
+                "random_plasma_glucose_test": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in mg/dL"
+                },
+                "hemoglobin_a1c": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in g/dL"
+                },
+                "insulin": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in U"
+                },
+                "c_peptide": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in ng/mL"
+                },
+                "triglyceride": {
+                    "location": "json",
+                    "type": "number",
+                    "description": "The value of the measured quantity in mg/dL"
+                }
+            }
+        },
         "abstract.FitnessActivity": {
             "parameters": {
                 "type": {

@@ -678,6 +678,7 @@
             "extends": "abstract.feed",
             "uri": "{+hg.diabetes}",
             "summary": "Returns diabetes activities for the given user.",
+            "responseClass": "DiabetesMeasurementSetFeedResponse",
             "parameters": {
                 "Content-Type": {
                     "location": "header",
@@ -685,6 +686,67 @@
                     "default": "application/vnd.com.runkeeper.DiabetesMeasurementSetFeed+json"
                 }
             }
+        },
+        "GetDiabetesMeasurementSet": {
+            "uri": "{+uri}",
+            "httpMethod": "GET",
+            "responseClass": "DiabetesMeasurementSet",
+            "parameters": {
+                "uri": {
+                    "location": "uri",
+                    "type": "string",
+                    "required": true
+                },
+                "Content-Type": {
+                    "location": "header",
+                    "static": true,
+                    "default": "application/vnd.com.runkeeper.DiabetesMeasurementSet+json"
+                }
+            }
+        },
+        "NewDiabetesMeasurementSet": {
+            "extends": "abstract.DiabetesMeasurementSet",
+            "uri": "{+hg.diabetes}",
+            "httpMethod": "POST",
+            "responseClass": "GenericOutput",
+            "additionalParameters": false,
+            "parameters": {
+                "Content-Type": {
+                    "location": "header",
+                    "static": true,
+                    "default": "application/vnd.com.runkeeper.NewDiabetesMeasurementSet+json"
+                },
+                "timestamp": {
+                    "required": true,
+                    "location": "json",
+                    "type": "string",
+                    "description": "The timestamp (e.g., Sat, 1 Jan 2011 00:00:00)"
+                },
+                "post_to_twitter": {
+                    "location": "json",
+                    "type": "boolean",
+                    "description": "Whether to post these measurements to Twitter"
+                },
+                "post_to_facebook": {
+                    "location": "json",
+                    "type": "boolean",
+                    "description": "Whether to post these measurements to Facebook"
+                }
+            }
+        },
+        "UpdateDiabetesMeasurementSet": {
+            "extends": ["abstract.update", "abstract.DiabetesMeasurementSet"],
+            "responseClass": "DiabetesMeasurementSet",
+            "parameters": {
+                "Content-Type": {
+                    "location": "header",
+                    "static": true,
+                    "default": "application/vnd.com.runkeeper.DiabetesMeasurementSet+json"
+                }
+            }
+        },
+        "DeleteDiabetesMeasurementSet": {
+            "extends": "abstract.delete"
         },
         "GetRecords": {
             "httpMethod": "GET",
@@ -823,6 +885,66 @@
                     "type": "string",
                     "location": "json"
                 }
+            }
+        },
+        "DiabetesMeasurementSetFeedResponse": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "items": {
+                    "type": "array",
+                    "location": "json",
+                    "items": {"$ref": "DiabetesMeasurementSetFeedItem"}
+                }
+            }
+        },
+        "DiabetesMeasurementSetFeedItem": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "uri": {"type": "string"},
+                "timestamp": {"type": "string"},
+                "fasting_plasma_glucose_test": {"type": "number"},
+                "oral_glucose_tolerance_test": {"type": "number"},
+                "random_plasma_glucose_test": {"type": "number"},
+                "hemoglobin_a1c": {"type": "number"},
+                "insulin": {"type": "number"},
+                "c_peptide": {"type": "number"},
+                "triglyceride": {"type": "number"}
+            }
+        },
+        "DiabetesMeasurementSet": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "uri": {"location": "json", "type": "string", "description": "The URI for this measurement set"},
+                "userID": {"location": "json", "type": "integer", "description": "The unique ID for the user"},
+                "timestamp": {"location": "json", "type": "string", "description": "The timestamp (e.g., Sat, 1 Jan 2011 00:00:00)"},
+                "fasting_plasma_glucose_test": {"location": "json", "type": "number", "description": "The value of the measured quantity in mg/dL"},
+                "oral_glucose_tolerance_test": {"location": "json", "type": "number", "description": "The value of the measured quantity in mg/dL"},
+                "random_plasma_glucose_test": {"location": "json", "type": "number", "description": "The value of the measured quantity in mg/dL"},
+                "hemoglobin_a1c": {"location": "json", "type": "number", "description": "The value of the measured quantity in g/dL"},
+                "insulin": {"location": "json", "type": "number", "description": "The value of the measured quantity in U"},
+                "c_peptide": {"location": "json", "type": "number", "description": "The value of the measured quantity in ng/mL"},
+                "triglyceride": {"location": "json", "type": "number", "description": "The value of the measured quantity in mg/dL"},
+                "source": {"location": "json", "type": "string", "description": "The name of the application that last modified this measurement set"},
+                "previous": {"location": "json", "type": "string", "description": "The URI of the previous measurement set for the user (omitted for the oldest measurement set)"},
+                "next": {"location": "json", "type": "string", "description": "The URI of the next measurement set for the user (omitted for the most-recent measurement set)"},
+                "nearest_fitness_activity": {"location": "json", "type": "string", "description": "The URI of the fitness activity closest in time to this activity for the user (omitted if no fitness activities have been recorded)"},
+                "nearest_teammate_fitness_activity": {"location": "json", "type": "array", "description": "The URIs of the fitness activities closest in time to this activity for each friend (empty if no fitness activities have been recorded)"},
+                "nearest_strength_training_activity": {"location": "json", "type": "string", "description": "The URI of the strength training activity closest in time to this activity for the user (omitted if no strength training activities have been recorded)"},
+                "nearest_teammate_strength_training_activities": {"location": "json", "type": "array", "description": "The URIs of the strength training activities closest in time to this activity for each friend (empty if no strength training activities have been recorded)"},
+                "nearest_teammate_background_activities": {"location": "json", "type": "array", "description": "The URIs of the background activities closest in time to this activity for each friend (empty if no background activities have been recorded)"},
+                "nearest_sleep": {"location": "json", "type": "string", "description": "The URI of the sleep measurement set closest in time to this activity for the user (omitted if no sleep measurements have been taken)"},
+                "nearest_teammate_sleep": {"location": "json", "type": "array", "description": "The URIs of the sleep measurement sets closest in time to this activity for each friend (empty if no sleep measurements have been taken)"},
+                "nearest_nutrition": {"location": "json", "type": "string", "description": "The URI of the nutrition measurement sets closest in time to this activity for the user (omitted if no nutrition measurements have been token)"},
+                "nearest_teammate_nutrition": {"location": "json", "type": "array", "description": "The URIs of the nutrition measurement sets closest in time to this activity for each friend (empty if no nutrition measurements have been token)"},
+                "nearest_weight": {"location": "json", "type": "string", "description": "The URI of the weight measurement sets closest in time to this activity for the user (omitted if no weight measurements have been token)"},
+                "nearest_teammate_weight": {"location": "json", "type": "array", "description": "The URIs of the weight measurement sets closest in time to this activity for each friend (empty if no weight measurements have been token)"},
+                "nearest_general_measurement": {"location": "json", "type": "string", "description": "The URI of the general measurement set measurement closest in time to this activity for the user (omitted if no general measurements have been token)"},
+                "nearest_teammate_general_measurements": {"location": "json", "type": "array", "description": "The URIs of the general measurement sets closest in time to this activity for each friend (empty if no general measurements have been token)"},
+                "nearest_diabetes": {"location": "json", "type": "string", "description": "The URI of the diabetes measurement sets closest in time to this activity for the user (omitted if no diabetes measurements have been token)"},
+                "nearest_teammate_diabetes": {"location": "json", "type": "array", "description": "The URIs of the diabetes measurement sets closest in time to this activity for each friend (empty if no diabetes measurements have been token)"}
             }
         },
         "FitnessActivityFeedResponse": {
