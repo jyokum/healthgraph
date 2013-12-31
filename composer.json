@@ -4,12 +4,17 @@
     "description": "PHP wrapper for the RunKeeper Health Graph API built on Guzzle",
     "keywords": ["Health Graph", "RunKeeper", "Guzzle"],
     "homepage": "https://github.com/jyokum/healthgraph",
+    "license": "GPL-2.0",
     "authors": [
         {
             "name": "Jeff Yokum",
             "email": "jyokum@gmail.com"
         }
     ],
+    "support": {
+        "issues": "https://github.com/jyokum/healthgraph/issues",
+        "source": "https://github.com/jyokum/healthgraph"
+    },
     "require": {
         "php": ">=5.3.2",
         "guzzle/guzzle": "*"
@@ -20,8 +25,8 @@
     },
     "autoload": {
         "psr-0": {
-            "HealthGraph": "src/",
-            "HealthGraph\\Tests": "tests/"
+            "HealthGraph\\": "src/",
+            "HealthGraph\\Tests\\": "tests/"
         }
     }
 }
