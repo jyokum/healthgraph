@@ -4,6 +4,9 @@ namespace HealthGraph\Tests\Command;
 
 use HealthGraph\HealthGraphClient;
 
+/**
+ * @group user
+ */
 class GetUserTest extends \Guzzle\Tests\GuzzleTestCase
 {
 

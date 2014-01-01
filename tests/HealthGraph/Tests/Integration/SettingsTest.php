@@ -4,6 +4,7 @@ namespace HealthGraph\Tests\Integration;
 
 /**
  * @group integration
+ * @group settings
  */
 class SettingsTest extends \Guzzle\Tests\GuzzleTestCase
 {

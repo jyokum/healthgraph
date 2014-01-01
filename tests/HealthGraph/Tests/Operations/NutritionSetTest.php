@@ -2,6 +2,9 @@
 
 namespace HealthGraph\Tests\Operations;
 
+/**
+ * @group nutrition
+ */
 class NutritionSetTest extends BaseTest
 {
 

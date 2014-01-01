@@ -2,6 +2,9 @@
 
 namespace HealthGraph\Tests\Operations;
 
+/**
+ * @group settings
+ */
 class SettingsTest extends \Guzzle\Tests\GuzzleTestCase
 {
 

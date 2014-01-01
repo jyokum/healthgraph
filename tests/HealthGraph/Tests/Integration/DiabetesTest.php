@@ -6,22 +6,8 @@ namespace HealthGraph\Tests\Integration;
  * @group integration
  * @group diabetes
  */
-class DiabetesTest extends \Guzzle\Tests\GuzzleTestCase
+class DiabetesTest extends BaseIntegrationTest
 {
-
-    protected static $client;
-
-    protected function setUp()
-    {
-        // We're only going to create and prime the client once
-        if (!isset(self::$client)) {
-            self::$client = $this->getServiceBuilder()->get('client');
-            self::$client->getUser(array(
-                'access_token' => $GLOBALS['access_token'],
-                'token_type' => $GLOBALS['token_type'],
-            ));
-        }
-    }
 
     public function testUserIsLoaded()
     {
@@ -38,6 +24,7 @@ class DiabetesTest extends \Guzzle\Tests\GuzzleTestCase
         $result = $command->execute();
 
         $this->assertNotNull($result->get('location'));
+        self::$creations[] = $result->get('location');
 
         return $result->get('location');
     }

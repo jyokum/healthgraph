@@ -12,9 +12,10 @@
     <testsuites>
         <testsuite name="HealthGraph">
             <directory suffix="Test.php">./tests/HealthGraph</directory>
+            <exclude>./tests/HealthGraph/Tests/Integration</exclude>
         </testsuite>
         <testsuite name="Integration">
-            <directory suffix="Test.php">./tests/Integration</directory>
+            <directory suffix="Test.php">./tests/HealthGraph/Tests/Integration</directory>
         </testsuite>
     </testsuites>
     <groups>

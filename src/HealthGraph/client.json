@@ -183,6 +183,45 @@
                 }
             }
         },
+        "GetCommentThread": {
+            "uri": "{+uri}",
+            "httpMethod": "GET",
+            "responseClass": "CommentThread",
+            "parameters": {
+                "uri": {
+                    "location": "uri",
+                    "type": "string",
+                    "required": true
+                },
+                "Content-Type": {
+                    "location": "header",
+                    "static": true,
+                    "default": "application/vnd.com.runkeeper.CommentThread+json"
+                }
+            }
+        },
+        "NewComment": {
+            "uri": "{+uri}",
+            "httpMethod": "POST",
+            "responseClass": "CommentThread",
+            "parameters": {
+                "uri": {
+                    "location": "uri",
+                    "type": "string",
+                    "required": true
+                },
+                "Content-Type": {
+                    "location": "header",
+                    "static": true,
+                    "default": "application/vnd.com.runkeeper.Comment+json"
+                },
+                "comment": {
+                    "location": "json",
+                    "type": "string",
+                    "required": true
+                }
+            }
+        },
         "GetFitnessActivityFeed": {
             "extends": "abstract.feed",
             "responseClass": "FitnessActivityFeedResponse",
@@ -1534,6 +1573,48 @@
                 "calories": {
                     "type": "number",
                     "description": "The total calories burned since the start of the activity"
+                }
+            }
+        },
+        "CommentThread": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "uri": {
+                    "location": "json",
+                    "type": "string",
+                    "description": "The URI for this thread"
+                },
+                "userID": {
+                    "type": "integer",
+                    "description": "The unique ID for the user that completed the commented-on activity"
+                },
+                "comments": {
+                    "type": "array",
+                    "description": "The comments",
+                    "items": {"$ref": "Comment"}
+                }
+            }
+        },
+        "Comment": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "timestamp": {
+                    "type": "string",
+                    "description": "The time at which the comment was posted"
+                },
+                "userID": {
+                    "type": "integer",
+                    "description": "The unique ID for the user that left the comment"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The display name of the user that left the comment"
+                },
+                "comment": {
+                    "type": "string",
+                    "description": "The comment"
                 }
             }
         },

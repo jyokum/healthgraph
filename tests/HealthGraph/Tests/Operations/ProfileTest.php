@@ -2,6 +2,9 @@
 
 namespace HealthGraph\Tests\Operations;
 
+/**
+ * @group profile
+ */
 class ProfileTest extends \Guzzle\Tests\GuzzleTestCase
 {
 
