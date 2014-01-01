@@ -27,7 +27,7 @@ class SettingsTest extends \Guzzle\Tests\GuzzleTestCase
 
     public function testPrepareGetCommand()
     {
-        $command = $this->client->getCommand('UpdateSettings');
+        $command = $this->client->getCommand('GetSettings');
         $command->prepare();
         $this->assertTrue($command->isPrepared());
     }

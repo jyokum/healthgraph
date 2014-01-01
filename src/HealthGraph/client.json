@@ -853,7 +853,7 @@
             "httpMethod": "GET",
             "uri": "{+hg.records}",
             "summary": "Returns records for the given user.",
-            "responseClass": "GenericOutput",
+            "responseClass": "Records",
             "parameters": {
                 "Content-Type": {
                     "location": "header",
@@ -1695,6 +1695,51 @@
                 "type": {
                     "type": "string",
                     "description": "One of the following values: start, end, gps, pause, resume, manual"
+                }
+            }
+        },
+        "Records": {
+            "type": "object",
+            "additionalProperties": {
+                "location": "json",
+                "type": "array",
+                "items": {
+                    "$ref": "Record"
+                }
+             }
+        },
+        "Record": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "activity_type": {
+                    "location": "json",
+                    "type": "string",
+                    "description": "The type of activity, as one of the following values: Running, Cycling, Mountain Biking, Walking, Hiking, Downhill Skiing, Cross-Country Skiing, Snowboarding, Skating, Swimming, Wheelchair, Rowing, Elliptical, Other"
+                },
+                "stats": {
+                    "location": "json",
+                    "type": "array",
+                    "description": "The statistics for the activity type (empty if no records are available)",
+                    "items": {"$ref": "Stat"}
+                }
+            }
+        },
+        "Stat": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "stat_type": {
+                    "type": "string",
+                    "description": "The type of statistic, as one of the following values: BEST_ACTIVITY, BEST_WEEK, LAST_WEEK, THIS_WEEK, BEST_MONTH, LAST_MONTH, THIS_MONTH, OVERALL"
+                },
+                "value": {
+                    "type": "number",
+                    "description": "The record distance value"
+                },
+                "date": {
+                    "type": "string",
+                    "description": "The date of the record (e.g., Sat, 1 Jan 2011 00:00:00)"
                 }
             }
         },
