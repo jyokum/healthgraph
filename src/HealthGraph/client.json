@@ -914,7 +914,7 @@
             "httpMethod": "GET",
             "uri": "{+hg.change_log}",
             "summary": "Returns records for the given user.",
-            "responseClass": "GenericOutput",
+            "responseClass": "ChangeLog",
             "parameters": {
                 "Content-Type": {
                     "location": "header",
@@ -1643,6 +1643,36 @@
                 }
             }
         },
+        "ChangeLog": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "fitness_activities": {"location": "json", "type": "array", "items": {"$ref": "Changes"}},
+                "strength_training_activities": {"location": "json", "type": "array", "items": {"$ref": "Changes"}},
+                "background_activities": {"location": "json", "type": "array", "items": {"$ref": "Changes"}},
+                "diabetes": {"location": "json", "type": "array", "items": {"$ref": "Changes"}},
+                "general_measurements": {"location": "json", "type": "array", "items": {"$ref": "Changes"}},
+                "nutrition": {"location": "json", "type": "array", "items": {"$ref": "Changes"}},
+                "sleep": {"location": "json", "type": "array", "items": {"$ref": "Changes"}},
+                "weight": {"location": "json", "type": "array", "items": {"$ref": "Changes"}}
+            }
+        },
+        "Changes": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "modified": {
+                    "location": "json",
+                    "type": "array",
+                    "description": "The portion of the feed that represents newly-created and/or updated items; the exact format is identical to that used in the regular feed for the resource type"
+                },
+                "deleted": {
+                    "location": "json",
+                    "type": "array",
+                    "description": "The URIs of those items that have been deleted"
+                }
+            }
+        },
         "CommentThread": {
             "type": "object",
             "additionalProperties": false,
@@ -1773,7 +1803,7 @@
                 "items": {
                     "$ref": "Record"
                 }
-             }
+            }
         },
         "Record": {
             "type": "object",
