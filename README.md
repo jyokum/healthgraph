@@ -109,7 +109,25 @@ $data = array('athlete_type' => 'Athlete');
 $hgc->UpdateProfile($data);
 ```
 
-### Add a new fitness (cardio) activity
+### Get fitness activities
+
+```php
+$hgc = HealthGraphClient::factory();
+$hgc->getUser(array(
+    'access_token' => $token['access_token'],
+    'token_type' => $token['token_type'],
+));
+
+// Get the entire feed, this could return a lot of data.
+$command = $hgc->getIterator('GetFitnessActivityFeed');
+$result = $command->toArray();
+
+// Get the 5 most recent activities.
+$command = $hgc->getIterator('GetFitnessActivityFeed')->setLimit(5);
+$result = $command->toArray();
+```
+
+### Add a new fitness activity
 
 ```php
 $hgc = HealthGraphClient::factory();
