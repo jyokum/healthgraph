@@ -862,15 +862,51 @@
                 }
             }
         },
-        "GetTeamFeed": {
+        "GetFriendFeed": {
             "extends": "abstract.feed",
             "uri": "{+hg.team}",
             "summary": "Returns records for the given user.",
+            "responseClass": "FriendFeedResponse",
             "parameters": {
                 "Content-Type": {
                     "location": "header",
                     "static": true,
                     "default": "application/vnd.com.runkeeper.TeamFeed+json"
+                }
+            }
+        },
+        "GetFriend": {
+            "httpMethod": "GET",
+            "uri": "{+uri}",
+            "responseClass": "Friend",
+            "parameters": {
+                "Content-Type": {
+                    "location": "header",
+                    "static": true,
+                    "default": "application/vnd.com.runkeeper.Member+json"
+                },
+                "uri": {
+                    "location": "uri",
+                    "type": "string",
+                    "required": true
+                }
+            }
+        },
+        "NewFriend": {
+            "httpMethod": "POST",
+            "uri": "{+hg.team}",
+            "responseClass": "GenericOutput",
+            "parameters": {
+                "Content-Type": {
+                    "location": "header",
+                    "static": true,
+                    "default": "application/vnd.com.runkeeper.Invitation+json"
+                },
+                "userID": {
+                    "location": "json",
+                    "type": "string",
+                    "description": "The ID of the user to invite",
+                    "required": true
                 }
             }
         },
@@ -1109,6 +1145,37 @@
                 "entry_mode": {"type": "string"},
                 "activity": {"type": "string"},
                 "comments": {"type": "string"}
+            }
+        },
+        "FriendFeedResponse": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "items": {
+                    "type": "array",
+                    "location": "json",
+                    "items": {"$ref": "FriendFeedItem"}
+                }
+            }
+        },
+        "FriendFeedItem": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "reply": {"type": "string"},
+                "userID": {"type": "integer"},
+                "name": {"type": "string"},
+                "profile": {"type": "string"},
+                "uri": {"type": "string"}
+            }
+        },
+        "Friend": {
+            "type": "object",
+            "properties": {
+                "userID": {"location": "json", "type": "integer"},
+                "name": {"type": "string"},
+                "profile": {"type": "string"},
+                "status": {"type": "string"}
             }
         },
         "GeneralMeasurementSetFeedResponse": {
