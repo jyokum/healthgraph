@@ -123,7 +123,7 @@
                     "location": "json"
                 },
                 "path": {
-                    "type": "number",
+                    "type": "array",
                     "location": "json"
                 },
                 "post_to_facebook": {
